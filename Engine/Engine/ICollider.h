@@ -7,7 +7,7 @@
 
 class ICollider
 {
-private:
+protected:
 
 	ICollider();
 	~ICollider();

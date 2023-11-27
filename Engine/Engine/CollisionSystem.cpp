@@ -15,7 +15,13 @@ void CollisionSystem::Destroy()
 
 void CollisionSystem::Update()
 {
-
+	for(auto& collider1 : colliders)
+	{
+		for (auto& collider2 : colliders)
+		{
+			ResolveCollision(collider1, collider2);
+		}
+	}
 }
 
 void CollisionSystem::AddCollider(ICollider* collider)
