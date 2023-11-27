@@ -52,46 +52,48 @@ void InputSystem::update()
                     // Handle 'D' key press
                     handleKeyPress(SDLK_d);
                     break;
-                case SDL_KEYUP:
-
-                    switch (event.key.keysym.sym) {
-                    case SDLK_w:
-                        // Handle 'W' key release
-                        handleKeyRelease(SDLK_w);
-                        break;
-                    case SDLK_s:
-                        // Handle 'S' key release
-                        handleKeyRelease(SDLK_s);
-                        break;
-                    case SDLK_a:
-                        // Handle 'A' key release
-                        handleKeyRelease(SDLK_a);
-                        break;
-                    case SDLK_d:
-                        // Handle 'D' key release
-                        handleKeyRelease(SDLK_d);
-                        break;
-                        // ... handle other keys ...
-                    }
-                    break;
+               
                     // Update keyStates and call function pointer if it exists
                     keyStates[event.key.keysym.sym] = (event.type == SDL_KEYDOWN);
                     if (keyEventHandlers.find(event.key.keysym.sym) != keyEventHandlers.end()) {
                         keyEventHandlers[event.key.keysym.sym]();
                     }
                     break;
-                case SDL_MOUSEBUTTONDOWN:
-                case SDL_MOUSEBUTTONUP:
-                    // Update mouseButtonStates and call function pointer if it exists
-                    mouseButtonStates[event.button.button] = (event.type == SDL_MOUSEBUTTONDOWN);
-                    if (mouseEventHandlers.find(event.button.button) != mouseEventHandlers.end()) {
-                        mouseEventHandlers[event.button.button]();
-                    }
-                    break;
                     // ... handle other events
                 }
             }
 
+        case SDL_KEYUP:
+
+            switch (event.key.keysym.sym) {
+            case SDLK_w:
+                // Handle 'W' key release
+                handleKeyRelease(SDLK_w);
+                break;
+            case SDLK_s:
+                // Handle 'S' key release
+                handleKeyRelease(SDLK_s);
+                break;
+            case SDLK_a:
+                // Handle 'A' key release
+                handleKeyRelease(SDLK_a);
+                break;
+            case SDLK_d:
+                // Handle 'D' key release
+                handleKeyRelease(SDLK_d);
+                break;
+                // ... handle other keys ...
+            }
+            break;
+
+        case SDL_MOUSEBUTTONDOWN:
+        case SDL_MOUSEBUTTONUP:
+            // Update mouseButtonStates and call function pointer if it exists
+            mouseButtonStates[event.button.button] = (event.type == SDL_MOUSEBUTTONDOWN);
+            if (mouseEventHandlers.find(event.button.button) != mouseEventHandlers.end()) {
+                mouseEventHandlers[event.button.button]();
+            }
+            break;
         }
     }
 }
@@ -198,6 +200,8 @@ void InputSystem::registerKeyEventHandler(SDL_Keycode key, std::function<void()>
 {
 
 	keyEventHandlers[key] = handler; 
+
+
 }
 
 void InputSystem::registerMouseEventHandler(Uint8 button, std::function<void()> handler)
