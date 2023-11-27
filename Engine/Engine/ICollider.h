@@ -5,6 +5,11 @@
 
 #include "EngineCore.h"
 
+enum class ColliderType {
+	Box,
+	Circle,
+	// ... potentially more collider types
+};
 class ICollider
 {
 protected:
@@ -18,6 +23,8 @@ protected:
 public:
 
 	std::string id;
+
+	virtual ColliderType GetType() const = 0;
 
 	virtual void OnCollisionEnter(ICollider*) = 0;
 	virtual void OnCollisionExit(ICollider*) = 0;
