@@ -2,6 +2,7 @@
 #include "Engine.h"
 #include "EngineTime.h"
 #include "RenderSystem.h"
+#include "CollisionSystem.h"
 #include "Entity.h"
 
 #include <thread>
@@ -16,6 +17,7 @@ void Engine::Initialize()
 {
 	Engine_Register();
 
+	CollisionSystem::Instance().Initialize();
 	RenderSystem::Instance().Initialize();
 }
 
@@ -35,6 +37,7 @@ void Engine::GameLoop()
 	{
 		Time::Instance().Update();
 
+		CollisionSystem::Instance().Update();
 		RenderSystem::Instance().Update();
 
 		if (Time::Instance().TotalTime() > 5.0f)

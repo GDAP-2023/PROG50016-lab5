@@ -19,7 +19,7 @@ void CollisionSystem::Update()
 	{
 		for (auto& collider2 : colliders)
 		{
-			ResolveCollision(collider1, collider2);
+			collider1->CheckCollision(collider2);
 		}
 	}
 }
