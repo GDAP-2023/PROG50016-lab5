@@ -12,6 +12,7 @@ class CollisionSystem
 public:
 
 	std::list<ICollider*> colliders;
+	//for resolve collision, may need to make colliders a list of pairs of colliders and their last non-colliding position
 
 public:
 	static CollisionSystem& Instance()
@@ -26,7 +27,8 @@ public:
 	void AddCollider(ICollider*);
 	void RemoveCollider(ICollider*);
 
-	std::list<std::pair<ICollider,ICollider>> BroadPhaseDetection();
+	std::list<std::pair<ICollider*,ICollider*>> BroadPhaseDetection();
+	//broad phase = narrow down what might be colliding, no need for square/circle specifics
 	void ResolveCollision(ICollider*, ICollider*);
 
 protected:
@@ -39,6 +41,10 @@ protected:
 
 private:
 	static CollisionSystem* instance;
+	std::list<int> idList;
+	int idCount = 0;
+
+	bool checkCollisionRough(ICollider*, ICollider*);
 
 	friend class Engine;
 	friend class ICollider;

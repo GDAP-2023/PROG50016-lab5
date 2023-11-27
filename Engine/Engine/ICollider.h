@@ -7,6 +7,11 @@
 
 class ICollider
 {
+private: 
+	int size = 0;
+	int x = 0;
+	int y = 0;
+
 protected:
 
 	ICollider();
