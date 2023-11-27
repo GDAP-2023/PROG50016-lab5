@@ -11,7 +11,7 @@ class CollisionSystem
 {
 public:
 
-	std::list<ICollider> colliders;
+	std::list<ICollider*> colliders;
 
 public:
 	static CollisionSystem& Instance()

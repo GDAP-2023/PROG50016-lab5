@@ -8,15 +8,22 @@
 class ICollider
 {
 private:
-	std::string id;
 
 	ICollider();
 	~ICollider();
 
+protected:
+	virtual void Destroy() = 0;
+
 public:
 
+	std::string id;
+
+	virtual void OnCollisionEnter(ICollider*) = 0;
+	virtual void OnCollisionExit(ICollider*) = 0;
 	virtual bool CheckCollision(ICollider) = 0;
 
+	friend class CollisionSystem;
 };
 
 
