@@ -41,6 +41,7 @@ void RenderSystem::Initialize()
 	if (document.hasKey("fullscreen"))
 	{
 		_fullScreen = document["fullScreen"].ToBool();
+		std::cout << "WINDOW FOUND IT IS: " << _fullScreen << std::endl;
 	}
 	
 	//_fullscreen is set to start as false so if fullscreen isn't in the RenderSettings the system defaults to not full screen 
@@ -78,6 +79,16 @@ void RenderSystem::Update()
 void RenderSystem::Load()
 {
 
+}
+
+SDL_Window& RenderSystem::GetWindow()
+{
+	return *_window;
+}
+
+SDL_Renderer& RenderSystem::GetRenderer()
+{
+	return *_renderer;
 }
 
 void RenderSystem::AddRenderable(Renderable* renderable)

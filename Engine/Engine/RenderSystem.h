@@ -24,6 +24,9 @@ class RenderSystem
 
 	static RenderSystem* _instance;
 
+	SDL_Window* _window = nullptr;
+	SDL_Renderer* _renderer = nullptr;
+
 	inline explicit RenderSystem();
 
 	inline ~RenderSystem();
@@ -32,9 +35,6 @@ class RenderSystem
 	inline RenderSystem& operator=(RenderSystem const&) = delete;
 
 protected:
-
-	SDL_Window* _window = nullptr;
-	SDL_Renderer* _renderer = nullptr;
 
 	void Initialize();
 
@@ -47,6 +47,10 @@ protected:
 public:
 
 	static RenderSystem& Instance();
+
+	SDL_Window& GetWindow();
+
+	SDL_Renderer& GetRenderer();
 
 	void AddRenderable(Renderable* renderable);
 
