@@ -98,7 +98,7 @@ bool CollisionSystem::CheckCollisionBoundingVolumes(ICollider* collider1, IColli
 }
 
 
-float DistanceSquared(const Vector2& a, const Vector2& b) {
+float DistanceSquared(const CollisionSystem::Vector2& a, const CollisionSystem::Vector2& b) {
 	float dx = a.x - b.x;
 	float dy = a.y - b.y;
 	return dx * dx + dy * dy;
@@ -141,9 +141,9 @@ bool CollisionSystem::BoxCircleCollision(ICollider* box, ICollider* circle) {
 }
 */
 
-struct Vector2
+struct CollisionSystem::Vector2
 {
-	float x, y;
+	float x, y = 0;
 
 	Vector2(float x, float y) : x(x), y(y) {}
 
