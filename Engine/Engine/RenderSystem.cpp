@@ -1,15 +1,15 @@
 #include "EngineCore.h"
 #include "RenderSystem.h"
-#include "IRenderable.h"
+#include "Renderable.h"
 
 RenderSystem* RenderSystem::instance = nullptr;
 
-void RenderSystem::AddRenderable(IRenderable* renderable)
+void RenderSystem::AddRenderable(Renderable* renderable)
 {
 	renderables.push_back(renderable);
 }
 
-void RenderSystem::RemoveRenderable(IRenderable* renderable)
+void RenderSystem::RemoveRenderable(Renderable* renderable)
 {
 	renderables.remove(renderable);
 }

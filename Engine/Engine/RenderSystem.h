@@ -6,7 +6,7 @@
 #include <string>
 #include <list>
 
-class IRenderable;
+class Renderable;
 
 class RenderSystem
 {
@@ -15,7 +15,7 @@ private:
 	unsigned int width = 1280;
 	unsigned int height = 720;
 	bool fullScreen = false;
-	std::list<IRenderable*> renderables;
+	std::list<Renderable*> renderables;
 
 public:
 	static RenderSystem& Instance()
@@ -27,8 +27,8 @@ public:
 		return *instance;
 	}
 
-	void AddRenderable(IRenderable* renderable);
-	void RemoveRenderable(IRenderable* renderable);
+	void AddRenderable(Renderable* renderable);
+	void RemoveRenderable(Renderable* renderable);
 
 protected:
 	void Initialize();

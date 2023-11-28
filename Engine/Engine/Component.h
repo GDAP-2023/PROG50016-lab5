@@ -17,7 +17,6 @@ public:
 
 	void Initialize() override;
 	virtual void Update();
-	virtual const std::string& GetComponentType() = 0;
 
 	friend class Entity;
 };
