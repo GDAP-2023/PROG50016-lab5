@@ -1,0 +1,55 @@
+{
+    "AssetManager": {
+        "Assets": [
+            {
+                "className": "Texture",
+                "GUID": "012"
+            },
+            {
+                "className": "Font",
+                "GUID": "098"
+            }
+        ]
+    },
+    "Scene": {
+        "Name": "First Scene",
+        "GUID": "1a9e5171-c7ab-47d4-9af4-d490d1494201",
+        "Render": true,
+        "Entities": [
+            {
+                "Name": "Camera",
+                "GUID": "812",
+                "Components": [
+                    {
+                        "ClassName": "Transform",
+                        "ClassData": {
+                            "Position": [0.5, 2.3, 5.7],
+                            "Rotation": 30.65,
+                            "Scale": [1, 2]
+                        }
+                    }
+                ]
+            },
+            {
+                "Name": "Player",
+                "GUID": "813",
+                "Components": [
+                    {
+                        "ClassName": "Transform",
+                        "ClassData": {
+                            "Position": [0, 0, 0],
+                            "Rotation": 180,
+                            "Scale": [1.5, 1.5]
+                        }
+                    },
+                    {
+                        "ClassName": "Sprite",
+                        "ClassData": {
+
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+}

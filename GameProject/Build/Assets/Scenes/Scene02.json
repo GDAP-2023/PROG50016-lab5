@@ -1,0 +1,27 @@
+{
+    "AssetManager": {
+        "Assets": [
+        ]
+    },
+    "Scene": {
+        "Name": "Second Scene",
+        "GUID": "45f479c9-f110-43c5-be35-9fbbc5d7d694",
+        "Render": false,
+        "Entities": [
+            {
+                "Name": "Camera",
+                "GUID": "812",
+                "Components": [
+                    {
+                        "ClassName": "Transform",
+                        "ClassData": {
+                            "Position": [0.5, -7, 5.7],
+                            "Rotation": 30.65,
+                            "Scale": [1, 1]
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+}
