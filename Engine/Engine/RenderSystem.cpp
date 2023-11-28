@@ -1,17 +1,28 @@
 #include "EngineCore.h"
 #include "RenderSystem.h"
 #include "Renderable.h"
+#include "SDL_image.h"
+#include "SDL_ttf.h"
 
-RenderSystem* RenderSystem::instance = nullptr;
+RenderSystem* RenderSystem::_instance = nullptr;
 
-void RenderSystem::AddRenderable(Renderable* renderable)
+RenderSystem& RenderSystem::Instance()
 {
-	renderables.push_back(renderable);
+	if (_instance == nullptr)
+	{
+		_instance = new RenderSystem();
+	}
+	return *_instance;
 }
 
-void RenderSystem::RemoveRenderable(Renderable* renderable)
+RenderSystem::RenderSystem()
 {
-	renderables.remove(renderable);
+
+}
+
+RenderSystem::~RenderSystem()
+{
+
 }
 
 void RenderSystem::Initialize()
@@ -19,29 +30,16 @@ void RenderSystem::Initialize()
 	std::ifstream inputStream("../Assets/RenderSettings.json");
 	std::string str((std::istreambuf_iterator<char>(inputStream)), std::istreambuf_iterator<char>());
 	json::JSON document = json::JSON::Load(str);
-
-	std::cout << str.c_str() << std::endl;
-
-	THROW_RUNTIME_ERROR(!document.hasKey("name"), "Render Settings must have a name");
-	name = document["name"].ToString();
-	THROW_RUNTIME_ERROR(!document.hasKey("width"), "Render Settings must have a width");
-	width = document["width"].ToInt();
-	THROW_RUNTIME_ERROR(!document.hasKey("height"), "Render Settings must have a height");
-	height = document["height"].ToInt();
-
-	if (document.hasKey("fullscreen"));
-	{
-		fullScreen = document["fullScreen"].ToBool();
-	}
 }
 
 void RenderSystem::Destroy()
 {
+	
 }
 
 void RenderSystem::Update()
 {
-	for (auto& renderable : renderables)
+	for (Renderable* renderable : _renderables)
 	{
 		renderable->Render();
 	}
@@ -49,4 +47,15 @@ void RenderSystem::Update()
 
 void RenderSystem::Load()
 {
+
+}
+
+void RenderSystem::AddRenderable(Renderable* renderable)
+{
+	_renderables.push_back(renderable);
+}
+
+void RenderSystem::RemoveRenderable(Renderable* renderable)
+{
+	_renderables.remove(renderable);
 }
