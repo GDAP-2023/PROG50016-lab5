@@ -33,6 +33,9 @@ class RenderSystem
 
 protected:
 
+	SDL_Window* _window = nullptr;
+	SDL_Renderer* _renderer = nullptr;
+
 	void Initialize();
 
 	void Update();
