@@ -35,11 +35,11 @@ protected:
 
 	void Restart();
 
-	void Stop() { running = false; }
+	void Stop();
 
-	void Play() { running = true; }
+	void Play();
 
-	void Pause() {}
+	void Pause();
 };
 
 #endif
