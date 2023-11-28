@@ -5,7 +5,7 @@
     "Scene": {
         "Name": "First Scene",
         "GUID": "fe0ca67d-8cb3-46f8-a3a2-99e61e7afcd2",
-        "Render": false,
+        "IsEnabled": false,
         "Entities": []
     }
 }
