@@ -32,8 +32,10 @@ float BoxCollider::GetBroadPhaseRadius() const
 	return std::sqrt(m_rect.w*m_rect.w + m_rect.h*m_rect.h);
 }
 
-
-
+ColliderType BoxCollider::GetType() const
+{
+	return ColliderType::Box;
+}
 
 // Called when the collider enters a collision
 void BoxCollider::OnCollisionEnter(ICollider* other) {

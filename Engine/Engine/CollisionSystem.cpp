@@ -16,9 +16,46 @@ void CollisionSystem::Destroy()
 
 void CollisionSystem::Update()
 {
-	std::list<std::pair<ICollider*, ICollider*>> potentialCollisions = BroadPhaseDetection();
+	auto potentialCollisions = BroadPhaseDetection();
+	auto currentFrameCollisions = NarrowPhaseDetection(potentialCollisions);
 
-	NarrowPhaseDetection(potentialCollisions);
+	std::set<std::pair<ICollider*, ICollider*>> collisionsToRemove;
+
+	// Handle new and ongoing collisions
+	for (const auto& collisionPair : currentFrameCollisions) {
+		if (ongoingCollisions.find(collisionPair) == ongoingCollisions.end()) 
+		{
+			// New collision
+			collisionPair.first->OnCollisionEnter(collisionPair.second);
+			collisionPair.second->OnCollisionEnter(collisionPair.first);
+		}
+		else 
+		{
+			// Ongoing collision
+			collisionPair.first->OnCollisionStay(collisionPair.second);
+			collisionPair.second->OnCollisionStay(collisionPair.first);
+		}
+	}
+
+	// Determine which collisions have ended
+	for (const auto& oldCollision : ongoingCollisions) 
+	{
+		if (currentFrameCollisions.find(oldCollision) == currentFrameCollisions.end()) 
+		{
+			collisionsToRemove.insert(oldCollision);
+			oldCollision.first->OnCollisionExit(oldCollision.second);
+			oldCollision.second->OnCollisionExit(oldCollision.first);
+		}
+	}
+
+	// Remove ended collisions from ongoing collisions
+	for (const auto& collisionToRemove : collisionsToRemove) 
+	{
+		ongoingCollisions.erase(collisionToRemove);
+	}
+
+	// Update ongoing collisions for the next frame
+	ongoingCollisions = std::move(currentFrameCollisions);
 
 	/*
 	for(auto& collider1 : colliders)
@@ -75,7 +112,10 @@ std::list<std::pair<ICollider*, ICollider*>> CollisionSystem::BroadPhaseDetectio
 	return potentialCollisions;
 }
 
-void CollisionSystem::NarrowPhaseDetection(const std::list<std::pair<ICollider*, ICollider*>>& potentialCollisions) {
+std::set<std::pair<ICollider*, ICollider*>> CollisionSystem::NarrowPhaseDetection(const std::list<std::pair<ICollider*, ICollider*>>& potentialCollisions) {
+	
+	std::set<std::pair<ICollider*, ICollider*>> currentFrameCollisions;
+
 	for (const auto& collisionPair : potentialCollisions) {
 		ICollider* collider1 = collisionPair.first;
 		ICollider* collider2 = collisionPair.second;
@@ -83,29 +123,35 @@ void CollisionSystem::NarrowPhaseDetection(const std::list<std::pair<ICollider*,
 		bool isCollision = false;
 
 		// Circle vs Circle Collision Check
-		if (collider1->GetType() == ColliderType::Circle && collider2->GetType() == ColliderType::Circle) {
+		if (collider1->GetType() == ColliderType::Circle && collider2->GetType() == ColliderType::Circle) 
+		{
 			isCollision = CircleCircleCollision(static_cast<CircleCollider*>(collider1), static_cast<CircleCollider*>(collider2));
 		}
 		// Box vs Box Collision Check (to be implemented)
-		else if (collider1->GetType() == ColliderType::Box && collider2->GetType() == ColliderType::Box) {
+		else if (collider1->GetType() == ColliderType::Box && collider2->GetType() == ColliderType::Box)
+		{
 			isCollision = BoxBoxCollision(static_cast<BoxCollider*>(collider1), static_cast<BoxCollider*>(collider2));
 		}
 		// Circle vs Box Collision Check (to be implemented)
-		else if (collider1->GetType() == ColliderType::Circle && collider2->GetType() == ColliderType::Box) {
+		else if (collider1->GetType() == ColliderType::Circle && collider2->GetType() == ColliderType::Box) 
+		{
 			isCollision = CircleBoxCollision(collider1, static_cast<BoxCollider*>(collider2));
 		}
 		// Box vs Circle Collision Check (to be implemented)
-		else if (collider1->GetType() == ColliderType::Box && collider2->GetType() == ColliderType::Circle) {
+		else if (collider1->GetType() == ColliderType::Box && collider2->GetType() == ColliderType::Circle) 
+		{
 			isCollision = CircleBoxCollision(collider2, static_cast<BoxCollider*>(collider1));
 		}
 
 		// Handle collision
-		if (isCollision) {
-			collider1->OnCollisionEnter(collider2);
-			collider2->OnCollisionEnter(collider1);
+		if (isCollision)
+		{
+			currentFrameCollisions.insert(collisionPair);
 		}
 	}
+	return currentFrameCollisions;
 }
+
 
 
 

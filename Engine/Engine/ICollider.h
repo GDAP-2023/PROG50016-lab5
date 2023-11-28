@@ -40,6 +40,7 @@ public:
 	virtual CollisionSystem::Vector2 GetPosition() const = 0;
 
 	virtual void OnCollisionEnter(ICollider*) = 0;
+	virtual void OnCollisionStay(ICollider*) = 0;
 	virtual void OnCollisionExit(ICollider*) = 0;
 	virtual bool CheckCollision(ICollider*) = 0;
 

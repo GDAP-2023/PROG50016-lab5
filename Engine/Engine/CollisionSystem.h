@@ -9,7 +9,7 @@
 #include "EngineCore.h"
 #include <utility>
 #include "SDL.h"
-
+#include<set>
 
 class CollisionSystem
 {
@@ -17,7 +17,9 @@ public:
 
 	std::list<ICollider*> colliders;
 	//for resolve collision, may need to make colliders a list of pairs of colliders and their last non-colliding position
-	
+	std::set<std::pair<ICollider*, ICollider*>> ongoingCollisions;
+
+
 public:
 	static CollisionSystem& Instance()
 	{
@@ -33,7 +35,7 @@ public:
 
 	std::list<std::pair<ICollider*,ICollider*>> BroadPhaseDetection();
 	//broad phase = narrow down what might be colliding, no need for square/circle specifics
-	void NarrowPhaseDetection(const std::list<std::pair<ICollider*, ICollider*>>& potentialCollisions);
+	std::set<std::pair<ICollider*, ICollider*>> NarrowPhaseDetection(const std::list<std::pair<ICollider*, ICollider*>>& potentialCollisions);
 	
 	void ResolveCollision(ICollider*, ICollider*);
 	struct Vector2;
@@ -58,7 +60,6 @@ private:
 	std::list<int> idList;
 	int idCount = 0;
 
-	bool checkCollisionRough(ICollider*, ICollider*);
 
 	friend class Engine;
 	friend class ICollider;

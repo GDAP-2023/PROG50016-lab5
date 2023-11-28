@@ -32,6 +32,10 @@ float CircleCollider::GetBroadPhaseRadius() const
 {
 	return m_radius;
 }
+ColliderType CircleCollider::GetType() const
+{
+	return ColliderType::Circle;
+}
 
 
 // Called when the collider enters a collision
