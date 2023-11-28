@@ -25,12 +25,12 @@ RenderSystem::~RenderSystem()
 
 void RenderSystem::Initialize()
 {
+	//Pulls RenderWindow information from the RenderSettings file loated in Assets
 	std::ifstream inputStream("../Assets/RenderSettings.json");
 	std::string str((std::istreambuf_iterator<char>(inputStream)), std::istreambuf_iterator<char>());
 	json::JSON document = json::JSON::Load(str);
 
-	std::cout << str.c_str() << std::endl;
-
+	//Hard stops if any of important information is missing from the RenderSettings file
 	THROW_RUNTIME_ERROR(!document.hasKey("name"), "Render Settings must have a name");
 	_name = document["name"].ToString();
 	THROW_RUNTIME_ERROR(!document.hasKey("width"), "Render Settings must have a width");
@@ -41,6 +41,11 @@ void RenderSystem::Initialize()
 	if (document.hasKey("fullscreen"))
 	{
 		_fullScreen = document["fullScreen"].ToBool();
+	}
+	
+	//_fullscreen is set to start as false so if fullscreen isn't in the RenderSettings the system defaults to not full screen 
+	if(_fullScreen == true)
+	{
 		_window = SDL_CreateWindow(_name.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, _width, _height, SDL_WINDOW_FULLSCREEN);
 	}
 	else
@@ -53,7 +58,8 @@ void RenderSystem::Initialize()
 
 void RenderSystem::Destroy()
 {
-	
+	SDL_DestroyWindow(_window);
+	SDL_DestroyRenderer(_renderer);
 }
 
 void RenderSystem::Update()
