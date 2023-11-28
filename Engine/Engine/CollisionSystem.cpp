@@ -18,10 +18,7 @@ void CollisionSystem::Update()
 {
 	std::list<std::pair<ICollider*, ICollider*>> potentialCollisions = BroadPhaseDetection();
 
-	for (auto& colliderPair : potentialCollisions)
-	{
-		CheckCollisionBoundingVolumes(colliderPair.first, colliderPair.second);
-	}
+	NarrowPhaseDetection(potentialCollisions);
 
 	/*
 	for(auto& collider1 : colliders)
@@ -50,7 +47,7 @@ void CollisionSystem::SetID(ICollider* collider)
 
 std::list<std::pair<ICollider*, ICollider*>> CollisionSystem::BroadPhaseDetection()
 {
-	//incomplete
+
 	std::list<std::pair<ICollider*, ICollider*>> potentialCollisions;
 	for (auto it1 = colliders.begin(); it1 != colliders.end(); ++it1) {
 		for (auto it2 = std::next(it1); it2 != colliders.end(); ++it2) {
@@ -78,32 +75,41 @@ std::list<std::pair<ICollider*, ICollider*>> CollisionSystem::BroadPhaseDetectio
 	return potentialCollisions;
 }
 
+void CollisionSystem::NarrowPhaseDetection(const std::list<std::pair<ICollider*, ICollider*>>& potentialCollisions) {
+	for (const auto& collisionPair : potentialCollisions) {
+		ICollider* collider1 = collisionPair.first;
+		ICollider* collider2 = collisionPair.second;
 
+		bool isCollision = false;
 
+		// Circle vs Circle Collision Check
+		if (collider1->GetType() == ColliderType::Circle && collider2->GetType() == ColliderType::Circle) {
+			isCollision = CircleCircleCollision(static_cast<CircleCollider*>(collider1), static_cast<CircleCollider*>(collider2));
+		}
+		// Box vs Box Collision Check (to be implemented)
+		else if (collider1->GetType() == ColliderType::Box && collider2->GetType() == ColliderType::Box) {
+			isCollision = BoxBoxCollision(static_cast<BoxCollider*>(collider1), static_cast<BoxCollider*>(collider2));
+		}
+		// Circle vs Box Collision Check (to be implemented)
+		else if (collider1->GetType() == ColliderType::Circle && collider2->GetType() == ColliderType::Box) {
+			isCollision = CircleBoxCollision(collider1, static_cast<BoxCollider*>(collider2));
+		}
+		// Box vs Circle Collision Check (to be implemented)
+		else if (collider1->GetType() == ColliderType::Box && collider2->GetType() == ColliderType::Circle) {
+			isCollision = CircleBoxCollision(collider2, static_cast<BoxCollider*>(collider1));
+		}
 
-void CollisionSystem::ResolveCollision(ICollider* col1, ICollider* col2)
-{
-
+		// Handle collision
+		if (isCollision) {
+			collider1->OnCollisionEnter(collider2);
+			collider2->OnCollisionEnter(collider1);
+		}
+	}
 }
 
-bool CollisionSystem::CheckCollisionBoundingVolumes(ICollider* collider1, ICollider* collider2) {
-	ColliderType type1 = collider1->GetType();
-	ColliderType type2 = collider2->GetType();
 
-	if (type1 == ColliderType::Circle && type2 == ColliderType::Circle) {
-		return CircleCircleCollision(static_cast<CircleCollider*>(collider1), static_cast<CircleCollider*>(collider2));
-	}
-	else if (type1 == ColliderType::Box && type2 == ColliderType::Box) {
-		return BoxBoxCollision(static_cast<BoxCollider*>(collider1), static_cast<BoxCollider*>(collider2));
-	}
-	else if (type1 == ColliderType::Box && type2 == ColliderType::Circle) {
-		return BoxCircleCollision(static_cast<BoxCollider*>(collider1), static_cast<CircleCollider*>(collider2));
-	}
-	else if (type1 == ColliderType::Circle && type2 == ColliderType::Box) {
-		return BoxCircleCollision(static_cast<BoxCollider*>(collider2), static_cast<CircleCollider*>(collider1));
-	}
-	return false; // If types do not match any known collision checks
-}
+
+
 
 
 float DistanceSquared(const CollisionSystem::Vector2& a, const CollisionSystem::Vector2& b) {
@@ -129,25 +135,25 @@ bool CollisionSystem::BoxBoxCollision(ICollider* box1, ICollider* box2) {
 		bounds1.y + bounds1.h < bounds2.y || bounds2.y + bounds2.h < bounds1.y);
 }
 
-// Helper function for Box-Circle collision
-/*
-bool CollisionSystem::BoxCircleCollision(ICollider* box, ICollider* circle) {
+
+
+bool CollisionSystem::CircleBoxCollision(ICollider* box, ICollider* circle) {
 	auto bounds = box->GetBounds();
 	Vector2 circleCenter = circle->GetPosition();
 	float circleRadius = circle->GetRadius();
 
-	// Find the closest point on the AABB to the circle center
-	float closestX = std::max(bounds.x, std::min(circleCenter.x, bounds.x + bounds.w));
-	float closestY = std::max(bounds.y, std::min(circleCenter.y, bounds.y + bounds.h));
+	//Find the closest point on the AABB to the circle center
+	float closestX = std::max(float(bounds.x), std::min(circleCenter.x, float(bounds.x + bounds.w)));
+	float closestY = std::max(float(bounds.y), std::min(circleCenter.y, float(bounds.y + bounds.h)));
 
-	// Calculate the distance between the circle's center and this closest point
+	//Calculate the distance between the circle's center and this closest point
 	Vector2 closestPoint(closestX, closestY);
 	float distanceSquared = (circleCenter - closestPoint).LengthSquared();
 
-	// If the distance is less than the circle's radius, an intersection occurs
+	//If the distance is less than the circle's radius, an intersection occurs
 	return distanceSquared < (circleRadius * circleRadius);
 }
-*/
+
 
 struct CollisionSystem::Vector2
 {
@@ -164,3 +170,9 @@ struct CollisionSystem::Vector2
 		return x * x + y * y;
 	}
 };
+
+
+void CollisionSystem::ResolveCollision(ICollider* col1, ICollider* col2)
+{
+
+}

@@ -10,6 +10,7 @@
 #include <utility>
 #include "SDL.h"
 
+
 class CollisionSystem
 {
 public:
@@ -32,6 +33,8 @@ public:
 
 	std::list<std::pair<ICollider*,ICollider*>> BroadPhaseDetection();
 	//broad phase = narrow down what might be colliding, no need for square/circle specifics
+	void NarrowPhaseDetection(const std::list<std::pair<ICollider*, ICollider*>>& potentialCollisions);
+	
 	void ResolveCollision(ICollider*, ICollider*);
 	struct Vector2;
 
@@ -47,8 +50,8 @@ private:
 
 	bool CircleCircleCollision(ICollider*, ICollider*);
 	bool BoxBoxCollision(ICollider*, ICollider*);
-	bool BoxCircleCollision(ICollider*, ICollider*);
-	bool CheckCollisionBoundingVolumes(ICollider*, ICollider*);
+	bool CircleBoxCollision(ICollider*, ICollider*);
+
 
 private:
 	static CollisionSystem* instance;
