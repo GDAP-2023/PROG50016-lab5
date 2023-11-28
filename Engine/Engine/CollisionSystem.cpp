@@ -16,13 +16,21 @@ void CollisionSystem::Destroy()
 
 void CollisionSystem::Update()
 {
+	std::list<std::pair<ICollider*, ICollider*>> potentialCollisions = BroadPhaseDetection();
+
+	for (auto& colliderPair : potentialCollisions)
+	{
+		CheckCollisionBoundingVolumes(colliderPair.first, colliderPair.second);
+	}
+
+	/*
 	for(auto& collider1 : colliders)
 	{
 		for (auto& collider2 : colliders)
 		{
 			ResolveCollision(collider1, collider2);
 		}
-	}
+	}*/
 }
 
 void CollisionSystem::AddCollider(ICollider* collider)
@@ -63,7 +71,6 @@ std::list<std::pair<ICollider*, ICollider*>> CollisionSystem::BroadPhaseDetectio
 			if(positionDiff.LengthSquared()<= (radiusSum * radiusSum))
 			{
 				potentialCollisions.push_back(std::make_pair(collider1, collider2));
-			
 			}
 		}
 	}
@@ -78,6 +85,7 @@ void CollisionSystem::ResolveCollision(ICollider* col1, ICollider* col2)
 {
 
 }
+
 bool CollisionSystem::CheckCollisionBoundingVolumes(ICollider* collider1, ICollider* collider2) {
 	ColliderType type1 = collider1->GetType();
 	ColliderType type2 = collider2->GetType();
