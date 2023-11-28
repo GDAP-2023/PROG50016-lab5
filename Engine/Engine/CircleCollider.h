@@ -26,6 +26,7 @@ public:
 
 	bool CheckCollision(ICollider* other);
 
+	CollisionSystem::Vector2 GetPosition() const override;
 
 	void OnCollisionEnter(ICollider* other);
 

@@ -4,6 +4,8 @@
 #define _ICOLLIDER_H
 
 #include "EngineCore.h"
+#include "SDL.h"
+#include "CollisionSystem.h"
 
 enum class ColliderType {
 	Box,
@@ -12,10 +14,14 @@ enum class ColliderType {
 };
 class ICollider
 {
-private: 
+protected: 
 	int size = 0;
 	int x = 0;
 	int y = 0;
+
+private:
+	float GetRadius();
+	SDL_Rect GetBounds();
 
 protected:
 
@@ -31,7 +37,7 @@ public:
 
 	virtual ColliderType GetType() const = 0;
 	virtual float GetBroadPhaseRadius() const = 0;
-	virtual Vector2 GetPosition() const = 0;
+	virtual CollisionSystem::Vector2 GetPosition() const = 0;
 
 	virtual void OnCollisionEnter(ICollider*) = 0;
 	virtual void OnCollisionExit(ICollider*) = 0;

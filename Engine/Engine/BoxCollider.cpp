@@ -23,7 +23,7 @@ bool BoxCollider::CheckCollision(ICollider* other)
 
 void BoxCollider::SetSize(int width,int height)
 {
-	m_rect= { transform->x,transform->y,width,height };
+	m_rect= { x, y,width,height };
 }
 
 

@@ -7,6 +7,7 @@
 #include"ICollider.h"
 #include"Component.h"
 #include"CollisionSystem.h"
+#include"SDL.h"
 class BoxCollider: public ICollider,public Component
 {
 private:
@@ -23,7 +24,7 @@ protected:
 public:
 
 	void SetSize(int width, int height);
-	Vector2 GetPosition() const override;
+	CollisionSystem::Vector2 GetPosition() const override;
 	float GetBroadPhaseRadius() const override;
 	bool CheckCollision(ICollider* other);
 

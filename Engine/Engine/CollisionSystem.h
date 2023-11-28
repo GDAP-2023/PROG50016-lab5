@@ -4,9 +4,11 @@
 #define _COLLISIONSYSTEM_H
 
 #include "ICollider.h"
+#include "BoxCollider.h"
+#include "CircleCollider.h"
 #include "EngineCore.h"
 #include <utility>
-
+#include "SDL.h"
 
 class CollisionSystem
 {
@@ -31,6 +33,7 @@ public:
 	std::list<std::pair<ICollider*,ICollider*>> BroadPhaseDetection();
 	//broad phase = narrow down what might be colliding, no need for square/circle specifics
 	void ResolveCollision(ICollider*, ICollider*);
+	struct Vector2;
 
 protected:
 
@@ -39,6 +42,13 @@ protected:
 	void Update();
 
 	void SetID(ICollider*);
+
+private:
+
+	bool CircleCircleCollision(ICollider*, ICollider*);
+	bool BoxBoxCollision(ICollider*, ICollider*);
+	bool BoxCircleCollision(ICollider*, ICollider*);
+	bool CheckCollisionBoundingVolumes(ICollider*, ICollider*);
 
 private:
 	static CollisionSystem* instance;

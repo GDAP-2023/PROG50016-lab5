@@ -62,7 +62,7 @@ std::list<std::pair<ICollider*, ICollider*>> CollisionSystem::BroadPhaseDetectio
 			float radiusSum = radius1 + radius2;
 			if(positionDiff.LengthSquared()<= (radiusSum * radiusSum))
 			{
-				potentialCollisions.push_back(std::make_pair(collider1, collider2);
+				potentialCollisions.push_back(std::make_pair(collider1, collider2));
 			
 			}
 		}
@@ -105,14 +105,14 @@ float DistanceSquared(const Vector2& a, const Vector2& b) {
 }
 
 // Helper function for Circle-Circle collision
-bool CircleCircleCollision(ICollider* circle1, ICollider* circle2) {
+bool CollisionSystem::CircleCircleCollision(ICollider* circle1, ICollider* circle2) {
 	Vector2 positionDiff = circle1->GetPosition() - circle2->GetPosition();
 	float radiusSum = circle1->GetRadius() + circle2->GetRadius();
 	return positionDiff.LengthSquared() <= (radiusSum * radiusSum);
 }
 
 // Helper function for Box-Box collision using AABB (Axis-Aligned Bounding Box)
-bool BoxBoxCollision(ICollider* box1, ICollider* box2) {
+bool CollisionSystem::BoxBoxCollision(ICollider* box1, ICollider* box2) {
 	auto bounds1 = box1->GetBounds();
 	auto bounds2 = box2->GetBounds();
 
@@ -122,7 +122,8 @@ bool BoxBoxCollision(ICollider* box1, ICollider* box2) {
 }
 
 // Helper function for Box-Circle collision
-bool BoxCircleCollision(ICollider* box, ICollider* circle) {
+/*
+bool CollisionSystem::BoxCircleCollision(ICollider* box, ICollider* circle) {
 	auto bounds = box->GetBounds();
 	Vector2 circleCenter = circle->GetPosition();
 	float circleRadius = circle->GetRadius();
@@ -138,17 +139,7 @@ bool BoxCircleCollision(ICollider* box, ICollider* circle) {
 	// If the distance is less than the circle's radius, an intersection occurs
 	return distanceSquared < (circleRadius * circleRadius);
 }
-
-
-
-bool CollisionSystem::CircleCircleBroadPhaseCheck(const Vector2& position1, float radius1, const Vector2& position2, float radius2) 
-{
-	Vector2 positionDiff = position1 - position2;
-	float radiusSum = radius1 + radius2;
-	return positionDiff.LengthSquared() <= (radiusSum * radiusSum);
-}
-
-
+*/
 
 struct Vector2
 {
