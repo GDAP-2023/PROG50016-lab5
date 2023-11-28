@@ -13,11 +13,11 @@ public:
 	friend class Engine;
 
 	static InputSystem& Instance() {
-	
+
 		if (instance == nullptr)
 		{
 			instance = new InputSystem();
-			
+
 		}
 		return *instance;
 	}
@@ -40,14 +40,14 @@ public:
 	void registerMouseEventHandler(Uint8 button, bool onPress, std::function<void()> handler);
 
 
-	
+
 
 private:
 	bool keyStates[256];
 	bool mouseButtonStates[5];
-	InputSystem(const& inputSystem);
+	InputSystem(const InputSystem&) = delete;
 
-	InputSystem operator = (const& InputSystem);
+	InputSystem operator = (const InputSystem&) = delete;
 	static InputSystem* instance;
 	std::map<SDL_Keycode, std::function<void()>> keyPressHandlers;
 	std::map<SDL_Keycode, std::function<void()>> keyReleaseHandlers;
