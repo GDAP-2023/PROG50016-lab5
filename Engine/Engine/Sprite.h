@@ -10,9 +10,10 @@ class Sprite : public Renderable
 {
 	DECLARE_DYNAMIC_DERIVED_CLASS(Sprite, Renderable);
 
-private:
+protected:
 	SDL_Texture* texture;
-	SDL_Rect sourceRect;
+	SDL_Rect sourceRect = { 0,0,0,0 };
+	SDL_Rect targetRect = { 0,0,0,0 };
 
 	void Initialize();
 
@@ -27,7 +28,7 @@ public:
 
 	void SetNewTexture(SDL_Texture* _texture);
 
-protected:
+public:
 	Sprite();
 	~Sprite();
 };
