@@ -5,15 +5,14 @@ IMPLEMENT_ABSTRACT_CLASS(Object)
 
 Object::Object()
 {
-	std::cout << "Object is Created" << std::endl;
+	UUID _uid;
+	CreateUUID(&_uid);
+
+	uid = GUIDToSTRCODE(_uid);
+	guid = GUIDTostring(_uid);
 }
 
-Object::~Object()
+void Object::Load(json::JSON& json_component)
 {
-	std::cout << "Object is Destroyed" << std::endl;
+	// Function to be added
 }
-
-//void Object::Initialize()
-//{
-//	std::cout << "Object is Initialized" << std::endl;
-//}
