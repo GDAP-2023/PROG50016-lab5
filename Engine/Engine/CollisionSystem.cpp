@@ -87,11 +87,6 @@ void CollisionSystem::RemoveCollider(ICollider* collider)
 	colliders.remove(collider);
 }
 
-void CollisionSystem::SetID(ICollider* collider)
-{
-	collider->id = "";
-}
-
 std::list<std::pair<ICollider*, ICollider*>> CollisionSystem::BroadPhaseDetection()
 {
 

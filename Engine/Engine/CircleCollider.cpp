@@ -55,7 +55,9 @@ std::list<Entity*> CircleCollider::OnCollisionEnter(ICollider* other) {
 		}
 		else if (((Component*)collisionPairs.second)->GetId() == ((Component*)other)->GetId() && ((Component*)collisionPairs.first)->GetId() == GetId())
 		{
-		
+			int otherId = ((Component*)other)->GetId();
+			Entity* toAdd = SceneManager::Get().FindEntityById(otherId);;
+			result.push_back(toAdd);
 		}
 	}
 	return result;
@@ -64,12 +66,42 @@ std::list<Entity*> CircleCollider::OnCollisionEnter(ICollider* other) {
 // Called when the collider stays in collision
 std::list<Entity*> CircleCollider::OnCollisionStay(ICollider* other) {
 	std::list<Entity*> result;
+	for (auto collisionPairs : CollisionSystem::Instance().stayCollisions)
+	{
+		if (((Component*)collisionPairs.first)->GetId() == ((Component*)other)->GetId() && ((Component*)collisionPairs.second)->GetId() == GetId())
+		{
+			int otherId = ((Component*)other)->GetId();
+			Entity* toAdd = SceneManager::Get().FindEntityById(otherId);;
+			result.push_back(toAdd);
+		}
+		else if (((Component*)collisionPairs.second)->GetId() == ((Component*)other)->GetId() && ((Component*)collisionPairs.first)->GetId() == GetId())
+		{
+			int otherId = ((Component*)other)->GetId();
+			Entity* toAdd = SceneManager::Get().FindEntityById(otherId);;
+			result.push_back(toAdd);
+		}
+	}
 	return result;
 }
 
 // Called when the collider exits a collision
 std::list<Entity*> CircleCollider::OnCollisionExit(ICollider* other) {
 	std::list<Entity*> result;
+	for (auto collisionPairs : CollisionSystem::Instance().exitCollisions)
+	{
+		if (((Component*)collisionPairs.first)->GetId() == ((Component*)other)->GetId() && ((Component*)collisionPairs.second)->GetId() == GetId())
+		{
+			int otherId = ((Component*)other)->GetId();
+			Entity* toAdd = SceneManager::Get().FindEntityById(otherId);;
+			result.push_back(toAdd);
+		}
+		else if (((Component*)collisionPairs.second)->GetId() == ((Component*)other)->GetId() && ((Component*)collisionPairs.first)->GetId() == GetId())
+		{
+			int otherId = ((Component*)other)->GetId();
+			Entity* toAdd = SceneManager::Get().FindEntityById(otherId);;
+			result.push_back(toAdd);
+		}
+	}
 	return result;
 }
 
