@@ -4,18 +4,22 @@
 #define _ANIMATED_SPRITE_H_
 
 #include "Sprite.h"
-class AnimatedSprite : public Sprite
-{
+class AnimatedSprite : public Sprite {
 	DECLARE_DYNAMIC_DERIVED_CLASS(AnimatedSprite, Sprite);
 public:
+	SDL_Rect spriteRect = { 0,0,0,0 };
 	int spriteSheetRows = 0;
-	int spriteSheetColumn = 0;
-	int spriteCount = 0;
+	int spriteSheetColumns = 0;
+
+	int spriteWidth = 0;
+	int spriteHeight = 0;
+
+	int totalFrames = 0;
 	int defaultFrameNumber = 0;
 	float animationDelay = 0.1f;
 
 private:
-	int frameCount = 0;
+	int currentFrame = 0;
 	bool running = true;
 	bool loop = false;
 
@@ -31,7 +35,7 @@ protected:
 	AnimatedSprite();
 	~AnimatedSprite();
 
-	void SetSpriteSheet(int rows, int cols, int spriteCount);
+	void SetSpriteSheet(int rows, int cols, int frames);
 
 	void Restart();
 
