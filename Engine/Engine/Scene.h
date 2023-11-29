@@ -6,10 +6,11 @@ class Entity;
 class Scene
 {
 private:
-	std::list<Entity*> entities;
+	std::string guid = "";
+	STRCODE uid = 0;
 	std::string name = "";
-	int guid = 0;
 
+	std::list<Entity*> entities;
 	std::list<Entity*> entitiesToDestroy;
 
 protected:
@@ -26,14 +27,20 @@ public:
 	// Only enabled scenes get updated & rendered
 	bool isEnabled = true;
 
+	Scene();
+	Scene(std::string guid);
+	~Scene();
+
 	Entity* CreateEntity();
 	Entity* FindEntityById(int entityGUID);
 	std::list<Entity*> FindEntityByName();  // entities can have same name
 	std::list<Entity*> FindEntityWithComponent(std::string componentClassName);
 	bool RemoveEntity(int entityGUID);
 
+	// Getters
+	std::string GetGUID();
+	STRCODE GetUID();
 	std::string& GetName();
-	int GetGUID();
 
 	friend class SceneManager;
 };
