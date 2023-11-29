@@ -1,41 +1,62 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="AnimatedSprite.cpp" />
-    <ClCompile Include="Component.cpp" />
-    <ClCompile Include="Engine.cpp" />
-    <ClCompile Include="Engine_Register.cpp" />
-    <ClCompile Include="Entity.cpp" />
-    <ClCompile Include="InputSystem.cpp" />
-    <ClCompile Include="FontSprite.cpp" />
-    <ClCompile Include="Renderable.cpp" />
-    <ClCompile Include="json.cpp" />
-    <ClCompile Include="mersenne.cpp" />
-    <ClCompile Include="Object.cpp" />
-    <ClCompile Include="EngineTime.cpp" />
-    <ClCompile Include="RenderSystem.cpp" />
-    <ClCompile Include="Sprite.cpp" />
-    <ClCompile Include="TypeClass.cpp" />
-    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="AnimatedSprite.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Component.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine_Register.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineTime.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="FontSprite.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="InputSystem.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="json.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="mersenne.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderable.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderSystem.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeClass.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AnimatedSprite.h" />
-    <ClInclude Include="Component.h" />
-    <ClInclude Include="Engine.h" />
-    <ClInclude Include="EngineCore.h" />
-    <ClInclude Include="Entity.h" />
-    <ClInclude Include="InputSystem.h" />
-    <ClInclude Include="FontSprite.h" />
-    <ClInclude Include="Renderable.h" />
-    <ClInclude Include="json.hpp" />
-    <ClInclude Include="Object.h" />
-    <ClInclude Include="EngineTime.h" />
-    <ClInclude Include="randomc.h" />
-    <ClInclude Include="RenderSystem.h" />
-    <ClInclude Include="Sprite.h" />
-    <ClInclude Include="StandardTypes.h" />
-    <ClInclude Include="TypeClass.h" />
-    <ClInclude Include="Player.h" />
     <ClCompile Include="Component.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
@@ -78,12 +99,60 @@
     <ClCompile Include="FontSprite.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
-    <ClCompile Include="SceneManager.cpp">
-      <Filter>Source Files\Systems</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene.cpp">
-      <Filter>Source Files\Systems</Filter>
-    </ClCompile>
+    <ClInclude Include="AnimatedSprite.h">
+      <Filter>Components.h</Filter>
+    </ClInclude>
+    <ClInclude Include="Component.h">
+      <Filter>Components.h</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine.h">
+      <Filter>Systems.h</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineCore.h">
+      <Filter>Core.h</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineTime.h">
+      <Filter>Systems.h</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Systems.h</Filter>
+    </ClInclude>
+    <ClInclude Include="FontSprite.h">
+      <Filter>Components.h</Filter>
+    </ClInclude>
+    <ClInclude Include="InputSystem.h">
+      <Filter>Systems.h</Filter>
+    </ClInclude>
+    <ClInclude Include="json.hpp">
+      <Filter>Core.h</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>Core.h</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Game.h</Filter>
+    </ClInclude>
+    <ClInclude Include="randomc.h">
+      <Filter>Core.h</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderable.h">
+      <Filter>Systems.h</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderSystem.h">
+      <Filter>Systems.h</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Systems.h</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>Systems.h</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite.h">
+      <Filter>Components.h</Filter>
+    </ClInclude>
+    <ClInclude Include="StandardTypes.h">
+      <Filter>Core.h</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Component.h">
@@ -131,11 +200,34 @@
     <ClInclude Include="FontSprite.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
-    <ClInclude Include="SceneManager.h">
-      <Filter>Header Files\Systems</Filter>
+    <ClInclude Include="TypeClass.h">
+      <Filter>Core.h</Filter>
     </ClInclude>
-    <ClInclude Include="Scene.h">
-      <Filter>Header Files\Systems</Filter>
-    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Components.h">
+      <UniqueIdentifier>{fae3c044-bae8-4089-8368-f69c901a960a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core.h">
+      <UniqueIdentifier>{8160a25b-ea35-4534-9206-ae8fa38d1aaf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game.h">
+      <UniqueIdentifier>{0393f2a8-6645-483d-a9fe-789cb7b6e4f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems.h">
+      <UniqueIdentifier>{9df936dd-1187-4c69-8bb3-7e51cc778069}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components">
+      <UniqueIdentifier>{879805e9-83d3-4bdf-a25b-53bfe2a8891b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core">
+      <UniqueIdentifier>{1f2a1f6f-75d9-4607-bd66-280a28fe2cb2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{ac789124-9101-46b1-9b99-2478046a0f31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System">
+      <UniqueIdentifier>{a1e8821f-40ea-4022-ad17-ccb6a5bb2241}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>
