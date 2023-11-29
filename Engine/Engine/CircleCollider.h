@@ -11,7 +11,7 @@ class CircleCollider : public ICollider, public Component
 {
 private:
 	float m_radius;
-
+	bool isSolid = false;
 public:
 	CircleCollider();
 protected:
@@ -22,8 +22,12 @@ public:
 
 	void SetRadius(float radius);
 	float GetBroadPhaseRadius() const override;
-	bool CheckCollision(ICollider* other);
-	CollisionSystem::Vector2 GetPosition() const override;
+
+	virtual bool IsSolid() const = 0;
+	virtual void SetSolid(bool solid) = 0;
+
+	bool HandleCollision(ICollider* other);
+	Vector2 GetPosition() const override;
 
 
 	ColliderType GetType() const override;

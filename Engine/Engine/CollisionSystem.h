@@ -10,6 +10,7 @@
 #include <utility>
 #include "SDL.h"
 #include<set>
+#include "Vector2.h"
 
 class CollisionSystem
 {
@@ -38,7 +39,7 @@ public:
 	std::set<std::pair<ICollider*, ICollider*>> NarrowPhaseDetection(const std::list<std::pair<ICollider*, ICollider*>>& potentialCollisions);
 	
 	void ResolveCollision(ICollider*, ICollider*);
-	struct Vector2;
+
 
 protected:
 

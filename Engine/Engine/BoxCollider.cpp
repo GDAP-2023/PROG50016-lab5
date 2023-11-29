@@ -20,7 +20,7 @@ void BoxCollider::Destroy()
 
 }
 
-bool BoxCollider::CheckCollision(ICollider* other)
+bool BoxCollider::HandleCollision(ICollider* other)
 {
 	return false;
 }
@@ -54,4 +54,15 @@ void BoxCollider::OnCollisionStay(ICollider* other) {
 // Called when the collider exits a collision
 void BoxCollider::OnCollisionExit(ICollider* other) {
 	// Implement what happens when a collision ends here
+}
+
+
+
+bool BoxCollider::IsSolid() const
+{
+	return isSolid;
+}
+void BoxCollider::SetSolid(bool solid)
+{
+	isSolid = solid;
 }

@@ -171,10 +171,9 @@
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="EngineTime.cpp" />
     <ClCompile Include="RenderSystem.cpp" />
-    <ClCompile Include="Scene.cpp" />
-    <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="TypeClass.cpp" />
+    <ClCompile Include="Vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimatedSprite.h" />
@@ -193,11 +192,10 @@
     <ClInclude Include="EngineTime.h" />
     <ClInclude Include="randomc.h" />
     <ClInclude Include="RenderSystem.h" />
-    <ClInclude Include="Scene.h" />
-    <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="StandardTypes.h" />
     <ClInclude Include="TypeClass.h" />
+    <ClInclude Include="Vector2.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

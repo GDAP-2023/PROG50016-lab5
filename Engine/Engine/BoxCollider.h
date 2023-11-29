@@ -12,7 +12,7 @@ class BoxCollider: public ICollider,public Component
 {
 private:
 	SDL_Rect m_rect;
-
+	bool isSolid = false;
 	Component transform;
 
 public:
@@ -26,11 +26,14 @@ public:
 
 	void SetSize(int width, int height);
 
-	CollisionSystem::Vector2 GetPosition() const override;
+	Vector2 GetPosition() const override;
 	ColliderType GetType() const override;
 
+	virtual bool IsSolid() const = 0;
+	virtual void SetSolid(bool solid) = 0;
+
 	float GetBroadPhaseRadius() const override;
-	bool CheckCollision(ICollider* other);
+	bool HandleCollision(ICollider* other);
 
 
 

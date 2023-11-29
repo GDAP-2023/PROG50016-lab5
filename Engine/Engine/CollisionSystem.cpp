@@ -22,18 +22,26 @@ void CollisionSystem::Update()
 	std::set<std::pair<ICollider*, ICollider*>> collisionsToRemove;
 
 	// Handle new and ongoing collisions
-	for (const auto& collisionPair : currentFrameCollisions) {
-		if (ongoingCollisions.find(collisionPair) == ongoingCollisions.end()) 
+	for (const auto& collisionPair : currentFrameCollisions)
+	{
+		if (collisionPair.first->IsSolid() && collisionPair.second->IsSolid())
 		{
-			// New collision
-			collisionPair.first->OnCollisionEnter(collisionPair.second);
-			collisionPair.second->OnCollisionEnter(collisionPair.first);
+			ResolveCollision(collisionPair.first, collisionPair.second);
 		}
 		else 
 		{
-			// Ongoing collision
-			collisionPair.first->OnCollisionStay(collisionPair.second);
-			collisionPair.second->OnCollisionStay(collisionPair.first);
+			if (ongoingCollisions.find(collisionPair) == ongoingCollisions.end()) 
+			{
+				// New collision
+				collisionPair.first->OnCollisionEnter(collisionPair.second);
+				collisionPair.second->OnCollisionEnter(collisionPair.first);
+			}
+			else 
+			{
+				// Ongoing collision
+				collisionPair.first->OnCollisionStay(collisionPair.second);
+				collisionPair.second->OnCollisionStay(collisionPair.first);
+			}
 		}
 	}
 
@@ -57,14 +65,6 @@ void CollisionSystem::Update()
 	// Update ongoing collisions for the next frame
 	ongoingCollisions = std::move(currentFrameCollisions);
 
-	/*
-	for(auto& collider1 : colliders)
-	{
-		for (auto& collider2 : colliders)
-		{
-			ResolveCollision(collider1, collider2);
-		}
-	}*/
 }
 
 void CollisionSystem::AddCollider(ICollider* collider)
@@ -157,8 +157,8 @@ std::set<std::pair<ICollider*, ICollider*>> CollisionSystem::NarrowPhaseDetectio
 
 
 
-
-float DistanceSquared(const CollisionSystem::Vector2& a, const CollisionSystem::Vector2& b) {
+// Helper function for calculating distance between two points
+float DistanceSquared(const Vector2& a, const Vector2& b) {
 	float dx = a.x - b.x;
 	float dy = a.y - b.y;
 	return dx * dx + dy * dy;
@@ -182,7 +182,7 @@ bool CollisionSystem::BoxBoxCollision(ICollider* box1, ICollider* box2) {
 }
 
 
-
+// Helper function for Circle-Box collision using AABB (Axis-Aligned Bounding Box)
 bool CollisionSystem::CircleBoxCollision(ICollider* box, ICollider* circle) {
 	auto bounds = box->GetBounds();
 	Vector2 circleCenter = circle->GetPosition();
@@ -201,24 +201,16 @@ bool CollisionSystem::CircleBoxCollision(ICollider* box, ICollider* circle) {
 }
 
 
-struct CollisionSystem::Vector2
-{
-	float x, y = 0;
-
-	Vector2(float x, float y) : x(x), y(y) {}
-
-	// Overload the - operator to get the difference between two vectors
-	Vector2 operator-(const Vector2& rhs) const {
-		return Vector2(x - rhs.x, y - rhs.y);
-	}
-
-	float LengthSquared() const {
-		return x * x + y * y;
-	}
-};
-
 
 void CollisionSystem::ResolveCollision(ICollider* col1, ICollider* col2)
 {
-
+	// Both colliders are solid, revert to previous positions
+	col1->ResetPosition();
+	col2->ResetPosition();
 }
+
+//void CollisionSystem::ResolveCollision(ICollider* col1, ICollider* col2)
+//{
+//	col1->HandleCollision(col2);
+//	col2->HandleCollision(col1);
+//}

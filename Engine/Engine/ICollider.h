@@ -8,18 +8,28 @@
 #include "CollisionSystem.h"
 #include "Entity.h"
 #include "SceneManager.h"
+#include "Vector2.h"
 
 enum class ColliderType {
 	Box,
 	Circle,
 	// ... potentially more collider types
 };
+
+
 class ICollider
 {
 protected: 
 	int size = 0;
 	int x = 0;
 	int y = 0;
+	bool isSolid = false;
+	
+	Vector2 previousPosition;
+
+public:
+	virtual bool IsSolid() const = 0 ;
+	virtual void SetSolid(bool solid) = 0 ;
 
 private:
 	float GetRadius();
@@ -40,12 +50,18 @@ public:
 
 	virtual ColliderType GetType() const = 0;
 	virtual float GetBroadPhaseRadius() const = 0;
-	virtual CollisionSystem::Vector2 GetPosition() const = 0;
+
+
+	virtual Vector2 GetPosition() const = 0;
 
 	virtual void OnCollisionEnter(ICollider*) = 0;
 	virtual void OnCollisionStay(ICollider*) = 0;
 	virtual void OnCollisionExit(ICollider*) = 0;
-	virtual bool CheckCollision(ICollider*) = 0;
+	virtual bool HandleCollision(ICollider*) = 0;
+
+	void StorePosition(Vector2 position);
+
+	void ResetPosition();
 
 	friend class CollisionSystem;
 };

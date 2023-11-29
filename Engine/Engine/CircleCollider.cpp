@@ -21,7 +21,7 @@ void CircleCollider::Destroy()
 
 }
 
-bool CircleCollider::CheckCollision(ICollider* other)
+bool CircleCollider::HandleCollision(ICollider* other)
 {
 	return true;
 }
@@ -55,4 +55,13 @@ void CircleCollider::OnCollisionStay(ICollider* other) {
 // Called when the collider exits a collision
 void CircleCollider::OnCollisionExit(ICollider* other) {
 	// Implement what happens when a collision ends here
+}
+
+bool CircleCollider::IsSolid() const
+{
+	return isSolid;
+}
+void CircleCollider::SetSolid(bool solid)
+{
+	isSolid= solid;
 }
