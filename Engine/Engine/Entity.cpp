@@ -4,14 +4,6 @@
 
 IMPLEMENT_DYNAMIC_CLASS(Entity)
 
-Entity::Entity()
-{
-}
-
-Entity::~Entity()
-{
-}
-
 void Entity::Initialize()
 {
 	CreateComponent("Transform");
@@ -23,7 +15,7 @@ void Entity::Initialize()
 
 void Entity::Load(json::JSON&)
 {
-
+	// Function to be added
 }
 
 void Entity::Update()
@@ -108,11 +100,11 @@ Component* Entity::CreateComponent(std::string componentClassName)
 	return component; // is return needed?
 }
 
-bool Entity::RemoveComponent(std::string componentClassName)
+bool Entity::RemoveComponent(Component* _component)
 {
-	for (auto component : components) // use typeclass?
+	for (auto component : components)
 	{
-		if (component->GetClassName() == componentClassName)
+		if (component == _component)
 		{
 			componentsToRemove.push_back(component);
 			return true;

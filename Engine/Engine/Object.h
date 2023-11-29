@@ -24,7 +24,7 @@ protected:
 	virtual void Destroy() {};
 
 public:
-	virtual void Load(json::JSON&) {};
+	virtual void Load(json::JSON&);
 
 	inline bool IsActive() { return isActive; }
 	inline std::string& GetName() { return name; }

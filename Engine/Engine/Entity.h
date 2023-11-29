@@ -33,10 +33,9 @@ protected:
 public:
 	bool HasComponent(std::string componentName);
 	Component* const GetComponent(const std::string componentName);
-	void AddComponents(const std::vector<std::string>& _component_list);
-	void AddComponent(Component* _component);
+	//void AddComponents(const std::vector<std::string>& _component_list);
+	//void AddComponent(Component* _component);
 	Component* CreateComponent(std::string componentName);
-	bool RemoveComponent(std::string componentName);
 	bool RemoveComponent(Component* _component);
 
 	friend class Scene;
