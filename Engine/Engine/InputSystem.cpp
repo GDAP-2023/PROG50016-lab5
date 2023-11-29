@@ -56,6 +56,13 @@ void InputSystem::update()
 				mouseButtonStates[event.button.button] = false;
 				triggerMouseEvent(event.button.button, false);
 			}
+			if (event.type == SDL_CONTROLLERDEVICEADDED) {
+				int joystickIndex = event.cdevice.which;
+				SDL_GameController* gamepad = SDL_GameControllerOpen(joystickIndex);
+				// Assign an ID to this gamepad, like the index or a unique identifier
+				gamepadId = joystickIndex;
+
+			}
 		case SDL_CONTROLLERBUTTONDOWN:
 			handleGamepadButton(event.cbutton.which, static_cast<SDL_GameControllerButton>(event.cbutton.button), true);
 			break;
@@ -121,6 +128,12 @@ void InputSystem::triggerMouseEvent(Uint8 button, bool pressed) {
 			keyReleaseHandlers[key] = handler;
 		}
 	}
+	void InputSystem::handleGamepadConnection(int joystickIndex) {
+		SDL_GameController* gamepad = SDL_GameControllerOpen(joystickIndex);
+		if (gamepad) {
+			InputSystem::gamepadMap[joystickIndex] = gamepad;
+		}
+	}
 
 	void InputSystem::registerMouseEventHandler(Uint8 button, bool onPress, std::function<void()> handler) {
 		if (onPress) {
@@ -184,12 +197,21 @@ void InputSystem::triggerMouseEvent(Uint8 button, bool pressed) {
 		// For example:
 		if (axis == SDL_CONTROLLER_AXIS_LEFTX || axis == SDL_CONTROLLER_AXIS_LEFTY) {
 			// Handle left analog stick movement
+	
+			
+
+
 		}
 		else if (axis == SDL_CONTROLLER_AXIS_RIGHTX || axis == SDL_CONTROLLER_AXIS_RIGHTY) {
+
 			// Handle right analog stick movement
+
+
 		}
 
 		// You can also call specific callbacks or notify observers if your design uses them
+
+
 	}
 
 	Sint16 InputSystem::getGamepadAxisState(SDL_JoystickID joystickID, SDL_GameControllerAxis axis) const {
@@ -198,11 +220,15 @@ void InputSystem::triggerMouseEvent(Uint8 button, bool pressed) {
         auto axisIt = joystickIt->second.find(axis);
         if (axisIt != joystickIt->second.end()) {
             return axisIt->second;
+
         }
+
     }
+
     return 0; // Default state if not found
 }
 	void InputSystem::registerQuitEventHandler(std::function<void()> handler) {
 		quitEventHandler = handler;
+
 	}
 

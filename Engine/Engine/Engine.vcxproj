@@ -162,6 +162,7 @@
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="InputSystem.cpp" />
     <ClCompile Include="FontSprite.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="Renderable.cpp" />
     <ClCompile Include="json.cpp" />
     <ClCompile Include="mersenne.cpp" />
@@ -179,6 +180,7 @@
     <ClInclude Include="Entity.h" />
     <ClInclude Include="InputSystem.h" />
     <ClInclude Include="FontSprite.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="Renderable.h" />
     <ClInclude Include="json.hpp" />
     <ClInclude Include="Object.h" />

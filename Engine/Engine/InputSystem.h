@@ -43,6 +43,7 @@ public:
 	void registerQuitEventHandler(std::function<void()> handler);
 
 	void registerKeyEventHandler(SDL_Keycode key, bool onPress, std::function<void()> handler);
+	void handleGamepadConnection(int joystickIndex);
 	void registerMouseEventHandler(Uint8 button, bool onPress, std::function<void()> handler);
 
 	void initializeGamepads();
@@ -55,10 +56,14 @@ public:
 
 
 
+
 private:
 	bool keyStates[256];
 	bool mouseButtonStates[5];
+	int gamepadId;
 	InputSystem(const InputSystem&) = delete;
+
+
 
 	InputSystem operator = (const InputSystem&) = delete;
 	static InputSystem* instance;
@@ -69,6 +74,10 @@ private:
 	std::map<SDL_JoystickID, std::map<SDL_GameControllerButton, bool>> gamepadButtonStates;
 	std::map<SDL_JoystickID, std::map<SDL_GameControllerButton, std::function<void(bool)>>> gamepadButtonEventHandlers;
 	std::map<SDL_JoystickID, std::map<SDL_GameControllerAxis, Sint16>> gamepadAxisStates;
+	std::map<int, SDL_GameController*> gamepadMap;
+	std::map<SDL_JoystickID, std::map<SDL_GameControllerAxis, std::function<void(Sint16)>>> gamepadAxisEventHandlers;
+
+	
 
 	std::function<void()> quitEventHandler;
 
