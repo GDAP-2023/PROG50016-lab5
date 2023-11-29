@@ -46,9 +46,24 @@ void InputSystem::update()
 			}
 			break;
 		case SDL_MOUSEBUTTONDOWN:
+			if (!mouseButtonStates[event.button.button]) { // Only if the button was previously up
+				mouseButtonStates[event.button.button] = true;
+				triggerMouseEvent(event.button.button, true);
+			}
+			break;
 		case SDL_MOUSEBUTTONUP:
-			mouseButtonStates[event.button.button] = (event.type == SDL_MOUSEBUTTONDOWN);
-			triggerMouseEvent(event.button.button, event.type == SDL_MOUSEBUTTONDOWN);
+			if (mouseButtonStates[event.button.button]) { // Only if the button was previously down
+				mouseButtonStates[event.button.button] = false;
+				triggerMouseEvent(event.button.button, false);
+			}
+		case SDL_CONTROLLERBUTTONDOWN:
+			handleGamepadButton(event.cbutton.which, static_cast<SDL_GameControllerButton>(event.cbutton.button), true);
+			break;
+		case SDL_CONTROLLERBUTTONUP:
+			handleGamepadButton(event.cbutton.which, static_cast<SDL_GameControllerButton>(event.cbutton.button), false);
+			break;
+		case SDL_CONTROLLERAXISMOTION:
+			handleGamepadAxis(event.caxis.which, static_cast<SDL_GameControllerAxis>(event.caxis.axis), event.caxis.value);
 			break;
 		case SDL_QUIT:
 
@@ -116,6 +131,77 @@ void InputSystem::triggerMouseEvent(Uint8 button, bool pressed) {
 		}
 	}
 
+	void InputSystem::initializeGamepads() {
+		int numJoysticks = SDL_NumJoysticks();
+		for (int i = 0; i < numJoysticks; ++i) {
+			if (SDL_IsGameController(i)) {
+				SDL_GameController* controller = SDL_GameControllerOpen(i);
+				if (controller) {
+					// Store the controller in a container if needed
+				}
+				else {
+					SDL_Log("Could not open gamecontroller %i: %s", i, SDL_GetError());
+				}
+			}
+		}
+	}
+	void InputSystem::handleGamepadButton(SDL_JoystickID joystickID, SDL_GameControllerButton button, bool pressed) {
+		// You might want to keep track of the state of each button for each gamepad
+		gamepadButtonStates[joystickID][button] = pressed;
+
+		// Trigger gamepad button event callbacks if any
+		if (gamepadButtonEventHandlers.find(joystickID) != gamepadButtonEventHandlers.end() &&
+			gamepadButtonEventHandlers[joystickID].find(button) != gamepadButtonEventHandlers[joystickID].end()) {
+			gamepadButtonEventHandlers[joystickID][button](pressed);
+		}
+
+		// Other game logic related to gamepad button press/release...
+	}
+
+	void InputSystem::registerGamepadButtonEventHandler(SDL_JoystickID joystickID, SDL_GameControllerButton button, std::function<void(bool)> handler)
+	{
+
+		gamepadButtonEventHandlers[joystickID][button] = handler;
+	}
+
+	bool InputSystem::isGamepadButtonPressed(SDL_JoystickID joystickID, SDL_GameControllerButton button) const {
+		auto joystickIt = gamepadButtonStates.find(joystickID);
+		if (joystickIt != gamepadButtonStates.end()) {
+			auto buttonIt = joystickIt->second.find(button);
+			if (buttonIt != joystickIt->second.end()) {
+				return buttonIt->second;
+			}
+		}
+		return false; // Default to not pressed if not found
+	}
+
+	void InputSystem::handleGamepadAxis(SDL_JoystickID joystickID, SDL_GameControllerAxis axis, Sint16 value) {
+		// Update the state of the axis
+		gamepadAxisStates[joystickID][axis] = value;
+
+		// Perform any actions based on the axis movement.
+		// This might involve updating game logic, character movement, camera control, etc.
+		// For example:
+		if (axis == SDL_CONTROLLER_AXIS_LEFTX || axis == SDL_CONTROLLER_AXIS_LEFTY) {
+			// Handle left analog stick movement
+		}
+		else if (axis == SDL_CONTROLLER_AXIS_RIGHTX || axis == SDL_CONTROLLER_AXIS_RIGHTY) {
+			// Handle right analog stick movement
+		}
+
+		// You can also call specific callbacks or notify observers if your design uses them
+	}
+
+	Sint16 InputSystem::getGamepadAxisState(SDL_JoystickID joystickID, SDL_GameControllerAxis axis) const {
+    auto joystickIt = gamepadAxisStates.find(joystickID);
+    if (joystickIt != gamepadAxisStates.end()) {
+        auto axisIt = joystickIt->second.find(axis);
+        if (axisIt != joystickIt->second.end()) {
+            return axisIt->second;
+        }
+    }
+    return 0; // Default state if not found
+}
 	void InputSystem::registerQuitEventHandler(std::function<void()> handler) {
 		quitEventHandler = handler;
 	}
