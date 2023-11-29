@@ -43,18 +43,34 @@ ColliderType CircleCollider::GetType() const
 
 
 // Called when the collider enters a collision
-void CircleCollider::OnCollisionEnter(ICollider* other) {
-	// Implement what happens when a collision starts here
+std::list<Entity*> CircleCollider::OnCollisionEnter(ICollider* other) {
+	std::list<Entity*> result;
+	for (auto collisionPairs : CollisionSystem::Instance().enterCollisions)
+	{
+		if (((Component*)collisionPairs.first)->GetId() == ((Component*)other)->GetId() && ((Component*)collisionPairs.second)->GetId() == GetId())
+		{
+			int otherId = ((Component*)other)->GetId();
+			Entity* toAdd = SceneManager::Get().FindEntityById(otherId);;
+			result.push_back(toAdd);
+		}
+		else if (((Component*)collisionPairs.second)->GetId() == ((Component*)other)->GetId() && ((Component*)collisionPairs.first)->GetId() == GetId())
+		{
+		
+		}
+	}
+	return result;
 }
 
 // Called when the collider stays in collision
-void CircleCollider::OnCollisionStay(ICollider* other) {
-	// Implement what happens when a collision persists here
+std::list<Entity*> CircleCollider::OnCollisionStay(ICollider* other) {
+	std::list<Entity*> result;
+	return result;
 }
 
 // Called when the collider exits a collision
-void CircleCollider::OnCollisionExit(ICollider* other) {
-	// Implement what happens when a collision ends here
+std::list<Entity*> CircleCollider::OnCollisionExit(ICollider* other) {
+	std::list<Entity*> result;
+	return result;
 }
 
 bool CircleCollider::IsSolid() const

@@ -55,6 +55,10 @@ private:
 	bool BoxBoxCollision(ICollider*, ICollider*);
 	bool CircleBoxCollision(ICollider*, ICollider*);
 
+	std::list<std::pair<ICollider*, ICollider*>> enterCollisions;
+	std::list<std::pair<ICollider*, ICollider*>> stayCollisions;
+	std::list<std::pair<ICollider*, ICollider*>> exitCollisions;
+
 
 private:
 	static CollisionSystem* instance;
@@ -64,6 +68,8 @@ private:
 
 	friend class Engine;
 	friend class ICollider;
+	friend class BoxCollider;
+	friend class CircleCollider;
 
 private:
 	inline explicit CollisionSystem() = default;

@@ -42,18 +42,21 @@ ColliderType BoxCollider::GetType() const
 }
 
 // Called when the collider enters a collision
-void BoxCollider::OnCollisionEnter(ICollider* other) {
-	// Implement what happens when a collision starts here
+std::list<Entity*> BoxCollider::OnCollisionEnter(ICollider* other) {
+	std::list<Entity*> result;
+	return result;
 }
 
 // Called when the collider stays in collision
-void BoxCollider::OnCollisionStay(ICollider* other) {
-	// Implement what happens when a collision persists here
+std::list<Entity*> BoxCollider::OnCollisionStay(ICollider* other) {
+	std::list<Entity*> result;
+	return result;
 }
 
 // Called when the collider exits a collision
-void BoxCollider::OnCollisionExit(ICollider* other) {
-	// Implement what happens when a collision ends here
+std::list<Entity*> BoxCollider::OnCollisionExit(ICollider* other) {
+	std::list<Entity*> result;
+	return result;
 }
 
 

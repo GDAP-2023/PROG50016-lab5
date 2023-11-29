@@ -37,9 +37,9 @@ public:
 
 
 
-	void OnCollisionEnter(ICollider* other);
-	void OnCollisionStay(ICollider* other);
-	void OnCollisionExit(ICollider* other);
+	std::list<Entity*> OnCollisionEnter(ICollider* other);
+	std::list<Entity*> OnCollisionStay(ICollider* other);
+	std::list<Entity*> OnCollisionExit(ICollider* other);
 
 
 };

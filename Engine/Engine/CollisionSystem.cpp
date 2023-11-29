@@ -21,6 +21,10 @@ void CollisionSystem::Update()
 
 	std::set<std::pair<ICollider*, ICollider*>> collisionsToRemove;
 
+	//flush exit and stay lists
+	enterCollisions.clear();
+	exitCollisions.clear();
+
 	// Handle new and ongoing collisions
 	for (const auto& collisionPair : currentFrameCollisions)
 	{
@@ -35,12 +39,14 @@ void CollisionSystem::Update()
 				// New collision
 				collisionPair.first->OnCollisionEnter(collisionPair.second);
 				collisionPair.second->OnCollisionEnter(collisionPair.first);
+				enterCollisions.push_back(collisionPair);
 			}
 			else 
 			{
 				// Ongoing collision
 				collisionPair.first->OnCollisionStay(collisionPair.second);
 				collisionPair.second->OnCollisionStay(collisionPair.first);
+				stayCollisions.push_back(collisionPair);
 			}
 		}
 	}
@@ -53,6 +59,10 @@ void CollisionSystem::Update()
 			collisionsToRemove.insert(oldCollision);
 			oldCollision.first->OnCollisionExit(oldCollision.second);
 			oldCollision.second->OnCollisionExit(oldCollision.first);
+			exitCollisions.push_back(oldCollision);
+			//flush this pair from the stay list
+			bool inList = std::find(stayCollisions.begin(), stayCollisions.end(), oldCollision) != stayCollisions.end();
+			if (inList) { stayCollisions.remove(oldCollision); }
 		}
 	}
 

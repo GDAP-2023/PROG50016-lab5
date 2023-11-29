@@ -46,17 +46,15 @@ protected:
 
 public:
 
-	std::string id;
-
 	virtual ColliderType GetType() const = 0;
 	virtual float GetBroadPhaseRadius() const = 0;
 
 
 	virtual Vector2 GetPosition() const = 0;
 
-	virtual void OnCollisionEnter(ICollider*) = 0;
-	virtual void OnCollisionStay(ICollider*) = 0;
-	virtual void OnCollisionExit(ICollider*) = 0;
+	virtual std::list<Entity*> OnCollisionEnter(ICollider*) = 0;
+	virtual std::list<Entity*> OnCollisionStay(ICollider*) = 0;
+	virtual std::list<Entity*> OnCollisionExit(ICollider*) = 0;
 	virtual bool HandleCollision(ICollider*) = 0;
 
 	void StorePosition(Vector2 position);
