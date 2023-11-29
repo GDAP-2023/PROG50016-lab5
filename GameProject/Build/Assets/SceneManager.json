@@ -1,0 +1,12 @@
+{
+    "ActiveSceneGUID": "1a9e5171-c7ab-47d4-9af4-d490d1494201",
+    "LoadedScenes": [
+        { "SceneGUID": "1a9e5171-c7ab-47d4-9af4-d490d1494201" },
+        { "SceneGUID": "45f479c9-f110-43c5-be35-9fbbc5d7d694" }
+    ],
+    "GUIDtoSceneMap": {
+        "1a9e5171-c7ab-47d4-9af4-d490d1494201": "Scenes/Scene01.json",
+        "45f479c9-f110-43c5-be35-9fbbc5d7d694": "Scenes/Scene02.json",
+        "fe0ca67d-8cb3-46f8-a3a2-99e61e7afcd2": "Scenes/Scene03.json"
+    }
+}
