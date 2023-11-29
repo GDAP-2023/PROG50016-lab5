@@ -1,11 +1,11 @@
 #pragma once
 
-#ifndef _MATH_H_
-#define _MATH_H_
+#ifndef _ENGINE_MATH_H_
+#define _ENGINE_MATH_H_
 
 #include <SDL_rect.h>
 
-typedef union Vec2
+union Vec2
 {
     struct {
         float x;
@@ -14,7 +14,7 @@ typedef union Vec2
     SDL_FPoint data;
 
     Vec2();
-    Vec2(float value);
+    explicit Vec2(float value);
     Vec2(float _x, float _y);
     static Vec2 Zero;
     static Vec2 UnitX;
@@ -54,7 +54,7 @@ typedef union Vec2
 };
 
 // Exercise for the viewer :)
-typedef union IVec2
+union IVec2
 {
     struct {
         int x;
