@@ -17,7 +17,7 @@ private:
 	STRCODE uid = 0;
 	std::string name = "";
 
-
+	std::list<Entity*> entitiesToBeAdded;
 	std::list<Entity*> entities;
 	std::list<Entity*> entitiesToDestroy;
 
@@ -25,8 +25,8 @@ protected:
 	void Initialize();
 	void Load(json::JSON&);
 
+	void PreUpdate();
 	void Update();
-	void Render();
 	void PostUpdate();
 
 	void Destroy();

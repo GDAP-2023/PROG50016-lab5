@@ -109,21 +109,9 @@ void SceneManager::Update()
 	{
 		if (scene->isEnabled)
 		{
+			scene->PreUpdate();
 			scene->Update();
-		}
-	}
-}
-
-/// <summary>
-/// Render all the enabled scenes.
-/// </summary>
-void SceneManager::Render()
-{
-	for (Scene* scene : loadedScenes)
-	{
-		if (scene->isEnabled)
-		{
-			scene->Render();
+			scene->PostUpdate();
 		}
 	}
 }
@@ -136,6 +124,7 @@ void SceneManager::PostUpdate()
 	for (Scene* scene : scenesToBeUnloaded)
 	{
 		scene->Destroy();
+		delete scene;
 		loadedScenes.remove(scene);
 	}
 	scenesToBeUnloaded.clear();

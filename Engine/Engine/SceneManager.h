@@ -38,7 +38,6 @@ protected:
 
 	void PreUpdate();
 	void Update();
-	void Render();
 	void PostUpdate();
 
 	void Destroy();

@@ -46,7 +46,6 @@ void Engine::GameLoop()
 
 		// --------------------- Update Phase ---------------------
 		SceneManager::Get().Update();
-
 		RenderSystem::Instance().Update();
 
 		// --------------------- Post-update Phase ---------------------

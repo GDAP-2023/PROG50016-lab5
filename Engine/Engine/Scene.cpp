@@ -69,14 +69,26 @@ void Scene::Load(json::JSON& sceneJSON)
 	}
 }
 
-void Scene::Update()
+void Scene::PreUpdate()
 {
-	// TODO: Write this after Entity class is complete
+	for (Entity* entity : entitiesToBeAdded)
+	{
+		entities.push_back(entity);
+	}
+	entitiesToBeAdded.clear();
 }
 
-void Scene::Render()
+void Scene::Update()
 {
-	// TODO: Write this after Entity class is complete
+	for (Entity* entity : entities)
+	{
+		if (entity->IsActive())
+		{
+			entity->PreUpdate();
+			entity->Update();
+			entity->PostUpdate();
+		}
+	}
 }
 
 void Scene::PostUpdate()
@@ -104,7 +116,7 @@ Entity* Scene::CreateEntity()
 {
 	Entity* entity = new Entity();
 	// The scene that creates an entity has its ownership
-	entities.push_back(entity);
+	entitiesToBeAdded.push_back(entity);
 	return entity;
 }
 
@@ -118,11 +130,10 @@ Entity* Scene::FindEntity(STRCODE entityId)
 {
 	for (Entity* entity : entities)
 	{
-		// TODO: Write this after Entity class is complete
-		/*if (entity->GetUID() == entityId)
+		if (entity->GetUid() == entityId)
 		{
 			return entity;
-		}*/
+		}
 	}
 	return nullptr;
 }
@@ -132,7 +143,10 @@ std::list<Entity*> Scene::FindEntityByName(std::string entityName)
 	std::list<Entity*> foundEntities;
 	for (Entity* entity : entities)
 	{
-		// TODO: Write this after Entity class is complete
+		if (entity->GetName() == entityName)
+		{
+			foundEntities.push_back(entity);
+		}
 	}
 	return foundEntities;
 }
@@ -153,18 +167,18 @@ std::list<Entity*> Scene::FindEntityWithComponent(std::string componentName)
 bool Scene::RemoveEntity(std::string entityGuid)
 {
 	STRCODE entityId = GetHashCode(entityGuid.c_str());
-	return FindEntity(entityId);
+	return RemoveEntity(entityId);
 }
 
 bool Scene::RemoveEntity(STRCODE entityId)
 {
 	for (Entity* entity : entities)
 	{
-		// TODO: Write this after Entity class is complete
-		/*if (entity->GetUID() == entityId)
+		if (entity->GetUid() == entityId)
 		{
-			return entity;
-		}*/
+			entitiesToDestroy.push_back(entity);
+			return true;
+		}
 	}
 	return false;
 }
