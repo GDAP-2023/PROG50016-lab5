@@ -12,7 +12,6 @@ class CircleCollider : public ICollider, public Component
 private:
 	float m_radius;
 
-
 public:
 	CircleCollider();
 protected:

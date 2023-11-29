@@ -3,6 +3,10 @@
 
 BoxCollider::BoxCollider():m_rect({0,0,0,0})
 {
+	int myID = GetId();
+	Entity* thisEntity = SceneManager::Get().FindEntityById(myID);
+	//transform = thisEntity->GetComponent("Transform");
+
 	CollisionSystem::Instance().AddCollider(this);
 }
 

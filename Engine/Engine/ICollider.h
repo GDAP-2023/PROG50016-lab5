@@ -6,6 +6,8 @@
 #include "EngineCore.h"
 #include "SDL.h"
 #include "CollisionSystem.h"
+#include "Entity.h"
+#include "SceneManager.h"
 
 enum class ColliderType {
 	Box,
@@ -22,6 +24,7 @@ protected:
 private:
 	float GetRadius();
 	SDL_Rect GetBounds();
+	Component* transform;
 
 protected:
 

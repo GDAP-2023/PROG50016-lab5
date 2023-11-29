@@ -3,6 +3,10 @@
 
 CircleCollider::CircleCollider(): m_radius(0.0f)
 {
+	int myID = GetId();
+	Entity* thisEntity = SceneManager::Get().FindEntityById(myID);
+	//transform = thisEntity->GetComponent("Transform"); //don't forget to (cast) to Transform once implemented
+
 	CollisionSystem::Instance().AddCollider(this);
 }
 

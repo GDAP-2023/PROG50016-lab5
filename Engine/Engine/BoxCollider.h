@@ -13,6 +13,7 @@ class BoxCollider: public ICollider,public Component
 private:
 	SDL_Rect m_rect;
 
+	Component transform;
 
 public:
 	BoxCollider();
