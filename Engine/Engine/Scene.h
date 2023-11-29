@@ -1,14 +1,22 @@
+// @file: Scene.h
+//
+// @brief: Header file for the Scene class. All entities are part of a Scene.
+//
+// @author: Divyanshu N Singh (DNS)
+// @date: 2023-11-29
+
 #pragma once
 #ifndef _SCENE_H_
 
 class Entity;
 
-class Scene
+class Scene final
 {
 private:
 	std::string guid = "";
 	STRCODE uid = 0;
 	std::string name = "";
+
 
 	std::list<Entity*> entities;
 	std::list<Entity*> entitiesToDestroy;
@@ -32,13 +40,15 @@ public:
 	~Scene();
 
 	Entity* CreateEntity();
-	Entity* FindEntityById(int entityGUID);
+	Entity* FindEntity(std::string entityGuid);
+	Entity* FindEntity(STRCODE entityId);
 	std::list<Entity*> FindEntityByName();  // entities can have same name
 	std::list<Entity*> FindEntityWithComponent(std::string componentClassName);
-	bool RemoveEntity(int entityGUID);
+	bool RemoveEntity(std::string entityGuid);
+	bool RemoveEntity(STRCODE entityId);
 
 	// Getters
-	std::string GetGUID();
+	std::string& GetGUID();
 	STRCODE GetUID();
 	std::string& GetName();
 
