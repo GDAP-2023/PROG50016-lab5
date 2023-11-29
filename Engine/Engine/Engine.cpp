@@ -2,6 +2,7 @@
 #include "Engine.h"
 #include "EngineTime.h"
 #include "RenderSystem.h"
+#include "SceneManager.h"
 #include "Entity.h"
 
 #include <thread>
@@ -16,7 +17,12 @@ void Engine::Initialize()
 {
 	Engine_Register();
 
+	// Load the managers
+	SceneManager::Get().Load();
+
+	// Initialize the managers
 	RenderSystem::Instance().Initialize();
+	SceneManager::Get().Initialize();
 }
 
 void Engine::Destroy()
@@ -35,7 +41,16 @@ void Engine::GameLoop()
 	{
 		Time::Instance().Update();
 
+		// --------------------- Pre-update Phase ---------------------
+		SceneManager::Get().PreUpdate();
+
+		// --------------------- Update Phase ---------------------
+		SceneManager::Get().Update();
+
 		RenderSystem::Instance().Update();
+
+		// --------------------- Post-update Phase ---------------------
+		SceneManager::Get().PostUpdate();
 
 		if (Time::Instance().TotalTime() > 5.0f)
 		{

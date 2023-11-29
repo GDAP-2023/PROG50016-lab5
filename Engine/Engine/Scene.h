@@ -10,7 +10,7 @@
 
 class Entity;
 
-class Scene final
+class Scene
 {
 private:
 	std::string guid = "";

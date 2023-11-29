@@ -11,10 +11,9 @@
 class Scene;
 class Entity;
 
-class SceneManager final
+class SceneManager
 {
 private:
-	friend class Engine;
 	DECLARE_SINGLETON(SceneManager);
 
 	const std::string DATA_FILE = "../Assets/SceneManager.json";
@@ -73,6 +72,8 @@ public:
 
 	bool RemoveEntity(std::string entityGuid);
 	bool RemoveEntity(STRCODE entityId);
+
+	friend class Engine;
 };
 
 #endif // !_SCENE_MANAGER_H_

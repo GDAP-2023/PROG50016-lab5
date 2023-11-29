@@ -69,6 +69,37 @@ void Scene::Load(json::JSON& sceneJSON)
 	}
 }
 
+void Scene::Update()
+{
+	// TODO: Write this after Entity class is complete
+}
+
+void Scene::Render()
+{
+	// TODO: Write this after Entity class is complete
+}
+
+void Scene::PostUpdate()
+{
+	for (Entity* entity : entitiesToDestroy)
+	{
+		entity->Destroy();
+		delete entity;
+		entities.remove(entity);
+	}
+	entitiesToDestroy.clear();
+}
+
+void Scene::Destroy()
+{
+	for (Entity* entity : entities)
+	{
+		entity->Destroy();
+		delete entity;
+	}
+	entities.clear();
+}
+
 Entity* Scene::CreateEntity()
 {
 	Entity* entity = new Entity();
@@ -129,6 +160,7 @@ bool Scene::RemoveEntity(STRCODE entityId)
 {
 	for (Entity* entity : entities)
 	{
+		// TODO: Write this after Entity class is complete
 		/*if (entity->GetUID() == entityId)
 		{
 			return entity;

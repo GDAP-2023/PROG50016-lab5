@@ -66,6 +66,7 @@ void SceneManager::Load()
 			}
 		}
 	}
+	LOG("Loaded SceneManager: " << scenesToBeLoaded.size() << " scenes loaded from JSON.");
 }
 
 /// <summary>
@@ -145,6 +146,7 @@ void SceneManager::Destroy()
 	for (Scene* scene : loadedScenes)
 	{
 		scene->Destroy();
+		delete scene;
 	}
 	loadedScenes.clear();
 }
