@@ -8,8 +8,8 @@
 #pragma once
 #ifndef _SCENE_MANAGER_H_
 
-#include "Scene.h"
-#include "Entity.h"
+class Scene;
+class Entity;
 
 class SceneManager final
 {
@@ -61,12 +61,18 @@ public:
 
 	// ------------------------- Entity-related member functions -------------------------
 	Entity* CreateEntityInActiveScene();
-	Entity* CreateEntity(int sceneGUID);
-	Entity* FindEntityById(int entityGUID);
-	std::list<Entity*> FindEntityByName();  // entities can have same name
-	std::list<Entity*> FindEntityWithComponentInActiveScene(std::string componentClassName);
-	std::list<Entity*> FindEntityWithComponent(int sceneGUID, std::string componentClassName);
-	bool RemoveEntityFromActiveScene(int entityGUID);
+	Entity* CreateEntity(std::string sceneGuid);
+	Entity* CreateEntity(STRCODE sceneId);
+
+	// Entity look-up always happens in the active scene
+	Entity* FindEntity(std::string entityGuid);
+	Entity* FindEntity(STRCODE entityId);
+	// Entities in a scene can have same name
+	std::list<Entity*> FindEntityByName(std::string entityName);
+	std::list<Entity*> FindEntityWithComponent(std::string componentClassName);
+
+	bool RemoveEntity(std::string entityGuid);
+	bool RemoveEntity(STRCODE entityId);
 };
 
 #endif // !_SCENE_MANAGER_H_

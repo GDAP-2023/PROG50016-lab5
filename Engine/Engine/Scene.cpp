@@ -96,7 +96,7 @@ Entity* Scene::FindEntity(STRCODE entityId)
 	return nullptr;
 }
 
-std::list<Entity*> Scene::FindEntityByName()
+std::list<Entity*> Scene::FindEntityByName(std::string entityName)
 {
 	std::list<Entity*> foundEntities;
 	for (Entity* entity : entities)

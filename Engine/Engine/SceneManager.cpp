@@ -7,6 +7,7 @@
 
 #include "EngineCore.h"
 #include "SceneManager.h"
+#include "Scene.h"
 
 void SceneManager::Load()
 {
@@ -148,6 +149,8 @@ void SceneManager::Destroy()
 	loadedScenes.clear();
 }
 
+// ------------------------- Scene-related member functions -------------------------
+
 Scene* SceneManager::CreateScene()
 {
 	// This scene might or might not have a JSON file. Can not add it to stringUIDToFile
@@ -260,4 +263,59 @@ bool SceneManager::UnloadScene(STRCODE sceneId)
 		}
 	}
 	return false;
+}
+
+// ------------------------- Entity-related member functions -------------------------
+
+Entity* SceneManager::CreateEntityInActiveScene()
+{
+	return activeScene->CreateEntity();
+}
+
+Entity* SceneManager::CreateEntity(std::string sceneGuid)
+{
+	STRCODE sceneId = GetHashCode(sceneGuid.c_str());
+	return CreateEntity(sceneId);
+}
+
+Entity* SceneManager::CreateEntity(STRCODE sceneId)
+{
+	for (Scene* scene : loadedScenes)
+	{
+		if (scene->GetUID() == sceneId)
+		{
+			return scene->CreateEntity();
+		}
+	}
+	return nullptr;
+}
+
+Entity* SceneManager::FindEntity(std::string entityGuid)
+{
+	return activeScene->FindEntity(entityGuid);
+}
+
+Entity* SceneManager::FindEntity(STRCODE entityId)
+{
+	return activeScene->FindEntity(entityId);
+}
+
+std::list<Entity*> SceneManager::FindEntityByName(std::string entityName)
+{
+	return activeScene->FindEntityByName(entityName);
+}
+
+std::list<Entity*> SceneManager::FindEntityWithComponent(std::string componentClassName)
+{
+	return activeScene->FindEntityWithComponent(componentClassName);
+}
+
+bool SceneManager::RemoveEntity(std::string entityGuid)
+{
+	return activeScene->RemoveEntity(entityGuid);
+}
+
+bool SceneManager::RemoveEntity(STRCODE entityId)
+{
+	return activeScene->RemoveEntity(entityId);
 }

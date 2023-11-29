@@ -42,7 +42,7 @@ public:
 	Entity* CreateEntity();
 	Entity* FindEntity(std::string entityGuid);
 	Entity* FindEntity(STRCODE entityId);
-	std::list<Entity*> FindEntityByName();  // entities can have same name
+	std::list<Entity*> FindEntityByName(std::string entityName);  // entities can have same name
 	std::list<Entity*> FindEntityWithComponent(std::string componentClassName);
 	bool RemoveEntity(std::string entityGuid);
 	bool RemoveEntity(STRCODE entityId);
