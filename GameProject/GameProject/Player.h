@@ -2,6 +2,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include "GameCore.h"
 #include "InputSystem.h"
 #include <functional>
 

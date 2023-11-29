@@ -1,4 +1,4 @@
-#include "EngineCore.h"
+#include "GameCore.h"
 #include "Player.h"
 Player::Player(float x, float y, float speed)
 	: posX(x), posY(y), speed(speed), health(100), score(0) {
