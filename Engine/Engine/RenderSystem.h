@@ -13,12 +13,14 @@ class RenderSystem
 {
 	friend class Engine;
 
-	std::string _name = "Game";
+	std::string _name = "DEFAULT NAME";
 
 	unsigned int _width = 1280;
 	unsigned int _height = 720;
 
 	bool _fullScreen = false;
+
+	SDL_Color _backgroundColor = { 0,0,0,255 };
 
 	std::list<Renderable*> _renderables;
 
@@ -27,9 +29,9 @@ class RenderSystem
 	SDL_Window* _window = nullptr;
 	SDL_Renderer* _renderer = nullptr;
 
-	inline explicit RenderSystem();
+	RenderSystem();
 
-	inline ~RenderSystem();
+	~RenderSystem();
 
 	inline explicit RenderSystem(RenderSystem const&) = delete;
 	inline RenderSystem& operator=(RenderSystem const&) = delete;
@@ -55,6 +57,10 @@ public:
 	void AddRenderable(Renderable* renderable);
 
 	void RemoveRenderable(Renderable* renderable);
+
+	void WindowBackgroundColor(int r, int g, int b, int a);
+
+	void WindowSize(int width, int height);
 };
 
 #endif

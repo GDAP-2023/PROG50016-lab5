@@ -15,7 +15,7 @@ Renderable::~Renderable()
 }
 
 /*
-* User enters 4 ints values to form RGB and Alpha. Nothing clamps the values so positive values
+* User enters 4 int values to form RGB and Alpha. Nothing clamps the values so positive values
 * and negative values will loop in their respective directions. 
 */
 void Renderable::SetFilterColor(int r, int g, int b, int a)
