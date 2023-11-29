@@ -22,7 +22,7 @@ typedef union Vec2
     Vec2 operator-() const;
     Vec2& operator+=(const Vec2 &rhs);
     Vec2& operator-=(const Vec2 &rhs);
-    
+
     // Cursed shader-programmer zone starts
     Vec2& operator*=(const Vec2 &rhs);
     Vec2& operator/=(const Vec2 &rhs);
@@ -47,6 +47,10 @@ typedef union Vec2
     void Normalize();
     float Dot(const Vec2 &rhs) const;
     static float Dot(const Vec2 &lhs, const Vec2 &rhs);
+
+    // Only because Roy asked me to :(
+    float Distance(const Vec2 &rhs) const;
+    static float Distance(const Vec2 &lhs, const Vec2 &rhs);
 };
 
 // Exercise for the viewer :)

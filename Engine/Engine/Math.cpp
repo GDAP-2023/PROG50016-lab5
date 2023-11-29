@@ -122,3 +122,11 @@ float Vec2::MagnitudeSquared() const
 {
     return this->x * this->x + this->y * this->y;
 }
+
+float Vec2::Distance(const Vec2 &rhs) const {
+    return (*this - rhs).Magnitude();
+}
+
+float Vec2::Distance(const Vec2 &lhs, const Vec2 &rhs) {
+    return (lhs - rhs).Magnitude();
+}
