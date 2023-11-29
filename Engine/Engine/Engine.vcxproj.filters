@@ -87,8 +87,8 @@
     <ClCompile Include="ICollider.cpp">
       <Filter>Source Files\Systems</Filter>
     </ClCompile>
-    <ClCompile Include="Vector2.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Math.cpp">
+      <Filter>Source Files\Core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -149,7 +149,7 @@
     <ClInclude Include="ICollider.h">
       <Filter>Header Files\Systems</Filter>
     </ClInclude>
-    <ClInclude Include="Vector2.h">
+    <ClInclude Include="Math.h">
       <Filter>Header Files\Core</Filter>
     </ClInclude>
   </ItemGroup>

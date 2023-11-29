@@ -27,7 +27,7 @@ public:
 	virtual void SetSolid(bool solid) = 0;
 
 	bool HandleCollision(ICollider* other);
-	Vector2 GetPosition() const override;
+	Vec2 GetPosition() const override;
 
 
 	ColliderType GetType() const override;

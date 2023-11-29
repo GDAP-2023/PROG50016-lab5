@@ -102,12 +102,12 @@ std::list<std::pair<ICollider*, ICollider*>> CollisionSystem::BroadPhaseDetectio
 			float radius1 = collider1->GetBroadPhaseRadius();
 			float radius2 = collider2->GetBroadPhaseRadius();
 
-			Vector2 position1 = collider1->GetPosition();
-			Vector2 position2 = collider2->GetPosition();
+			Vec2 position1 = collider1->GetPosition();
+			Vec2 position2 = collider2->GetPosition();
 
-			Vector2 positionDiff = position1 - position2;
+			Vec2 positionDiff = position1 - position2;
 			float radiusSum = radius1 + radius2;
-			if(positionDiff.LengthSquared()<= (radiusSum * radiusSum))
+			if(positionDiff.MagnitudeSquared()<= (radiusSum * radiusSum))
 			{
 				potentialCollisions.push_back(std::make_pair(collider1, collider2));
 			}
@@ -116,6 +116,7 @@ std::list<std::pair<ICollider*, ICollider*>> CollisionSystem::BroadPhaseDetectio
 
 	return potentialCollisions;
 }
+
 
 std::set<std::pair<ICollider*, ICollider*>> CollisionSystem::NarrowPhaseDetection(const std::list<std::pair<ICollider*, ICollider*>>& potentialCollisions) {
 	
@@ -163,7 +164,7 @@ std::set<std::pair<ICollider*, ICollider*>> CollisionSystem::NarrowPhaseDetectio
 
 
 // Helper function for calculating distance between two points
-float DistanceSquared(const Vector2& a, const Vector2& b) {
+float DistanceSquared(const Vec2& a, const Vec2& b) {
 	float dx = a.x - b.x;
 	float dy = a.y - b.y;
 	return dx * dx + dy * dy;
@@ -171,7 +172,7 @@ float DistanceSquared(const Vector2& a, const Vector2& b) {
 
 // Helper function for Circle-Circle collision
 bool CollisionSystem::CircleCircleCollision(ICollider* circle1, ICollider* circle2) {
-	Vector2 positionDiff = circle1->GetPosition() - circle2->GetPosition();
+	Vec2 positionDiff = circle1->GetPosition() - circle2->GetPosition();
 	float radiusSum = circle1->GetRadius() + circle2->GetRadius();
 	return positionDiff.LengthSquared() <= (radiusSum * radiusSum);
 }
@@ -190,7 +191,7 @@ bool CollisionSystem::BoxBoxCollision(ICollider* box1, ICollider* box2) {
 // Helper function for Circle-Box collision using AABB (Axis-Aligned Bounding Box)
 bool CollisionSystem::CircleBoxCollision(ICollider* box, ICollider* circle) {
 	auto bounds = box->GetBounds();
-	Vector2 circleCenter = circle->GetPosition();
+	Vec2 circleCenter = circle->GetPosition();
 	float circleRadius = circle->GetRadius();
 
 	//Find the closest point on the AABB to the circle center
@@ -198,7 +199,7 @@ bool CollisionSystem::CircleBoxCollision(ICollider* box, ICollider* circle) {
 	float closestY = std::max(float(bounds.y), std::min(circleCenter.y, float(bounds.y + bounds.h)));
 
 	//Calculate the distance between the circle's center and this closest point
-	Vector2 closestPoint(closestX, closestY);
+	Vec2 closestPoint(closestX, closestY);
 	float distanceSquared = (circleCenter - closestPoint).LengthSquared();
 
 	//If the distance is less than the circle's radius, an intersection occurs

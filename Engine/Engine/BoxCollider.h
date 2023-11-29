@@ -26,7 +26,7 @@ public:
 
 	void SetSize(int width, int height);
 
-	Vector2 GetPosition() const override;
+	Vec2 GetPosition() const override;
 	ColliderType GetType() const override;
 
 	virtual bool IsSolid() const = 0;

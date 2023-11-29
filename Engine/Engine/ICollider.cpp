@@ -12,7 +12,7 @@ ICollider::~ICollider()
 
 }
 
-void ICollider::StorePosition(Vector2 position)
+void ICollider::StorePosition(Vec2 position)
 {
 	previousPosition = position;
 }

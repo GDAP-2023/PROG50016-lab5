@@ -10,7 +10,7 @@
 #include <utility>
 #include "SDL.h"
 #include<set>
-#include "Vector2.h"
+#include "Math.h"
 
 class CollisionSystem
 {

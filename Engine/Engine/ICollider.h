@@ -8,7 +8,7 @@
 #include "CollisionSystem.h"
 #include "Entity.h"
 #include "SceneManager.h"
-#include "Vector2.h"
+#include "Math.h"
 
 enum class ColliderType {
 	Box,
@@ -25,7 +25,7 @@ protected:
 	int y = 0;
 	bool isSolid = false;
 	
-	Vector2 previousPosition;
+	Vec2 previousPosition;
 
 public:
 	virtual bool IsSolid() const = 0 ;
@@ -50,14 +50,14 @@ public:
 	virtual float GetBroadPhaseRadius() const = 0;
 
 
-	virtual Vector2 GetPosition() const = 0;
+	virtual Vec2 GetPosition() const = 0;
 
 	virtual std::list<Entity*> OnCollisionEnter(ICollider*) = 0;
 	virtual std::list<Entity*> OnCollisionStay(ICollider*) = 0;
 	virtual std::list<Entity*> OnCollisionExit(ICollider*) = 0;
 	virtual bool HandleCollision(ICollider*) = 0;
 
-	void StorePosition(Vector2 position);
+	void StorePosition(Vec2 position);
 
 	void ResetPosition();
 
