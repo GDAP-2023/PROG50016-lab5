@@ -14,6 +14,22 @@ void AssetManager::AddAsset(Asset* newAsset)
 	assets.push_back(newAsset);
 }
 
+void AssetManager::LoadTexture()
+{
+}
+
+void AssetManager::LoadSound()
+{
+}
+
+void AssetManager::LoadMusic()
+{
+}
+
+void AssetManager::LoadFont()
+{
+}
+
 void AssetManager::RemoveAsset(Asset* asset)
 {
 	for (Asset* a : assets)
@@ -31,6 +47,11 @@ AssetManager::AssetManager()
 AssetManager::~AssetManager()
 {
 	std::cout << "AssetManager Destructor" << std::endl;
+}
+
+void AssetManager::LoadAsset(int AssetId)
+{
+	//Check the map for loaded assets or do something
 }
 
 void AssetManager::Destroy()

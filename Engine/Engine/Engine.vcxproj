@@ -156,35 +156,47 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AnimatedSprite.cpp" />
+    <ClCompile Include="Asset.cpp" />
+    <ClCompile Include="AssetManager.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="Engine_Register.cpp" />
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="FontAsset.cpp" />
     <ClCompile Include="FontSprite.cpp" />
+    <ClCompile Include="MusicAsset.cpp" />
     <ClCompile Include="Renderable.cpp" />
     <ClCompile Include="json.cpp" />
     <ClCompile Include="mersenne.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="EngineTime.cpp" />
     <ClCompile Include="RenderSystem.cpp" />
+    <ClCompile Include="SoundAsset.cpp" />
     <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="TextureAsset.cpp" />
     <ClCompile Include="TypeClass.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimatedSprite.h" />
+    <ClInclude Include="Asset.h" />
+    <ClInclude Include="AssetManager.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="EngineCore.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="FontAsset.h" />
     <ClInclude Include="FontSprite.h" />
+    <ClInclude Include="MusicAsset.h" />
     <ClInclude Include="Renderable.h" />
     <ClInclude Include="json.hpp" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="EngineTime.h" />
     <ClInclude Include="randomc.h" />
     <ClInclude Include="RenderSystem.h" />
+    <ClInclude Include="SoundAsset.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="StandardTypes.h" />
+    <ClInclude Include="TextureAsset.h" />
     <ClInclude Include="TypeClass.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

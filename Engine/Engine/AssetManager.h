@@ -25,6 +25,16 @@ public:
 
 	void AddAsset(Asset* newAsset);
 
+	void LoadAsset(int AssetId);
+
+	void LoadTexture();
+
+	void LoadSound();
+
+	void LoadMusic();
+
+	void LoadFont();
+
 	void RemoveAsset(Asset* asset);
 
 private:
@@ -37,6 +47,7 @@ private:
 	~AssetManager();
 	inline explicit AssetManager(AssetManager const&) = delete;
 	inline AssetManager& operator=(AssetManager const&) = delete;
+	
 };
 
 #endif // !_AM_H_

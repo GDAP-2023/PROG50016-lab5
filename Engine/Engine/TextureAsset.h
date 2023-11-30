@@ -5,12 +5,18 @@
 
 #include "Asset.h"
 
+class SDL_Texture;
+
 class TextureAsset :
     public Asset
 {
+private:
+
+    SDL_Texture* _texture;
+
 public: 
     
-    TextureAsset() {};
+    TextureAsset(SDL_Texture* t) : _texture(t) {};
 
     ~TextureAsset() {};
 };

@@ -5,12 +5,16 @@
 
 #include "Asset.h"
 
+class Mix_Chunk;
+
 class SoundAsset :
     public Asset
 {
 public:
 
-    SoundAsset() {};
+    Mix_Chunk* _soundAsset;
+
+    SoundAsset(Mix_Chunk* s) : _soundAsset(s) {};
 
     ~SoundAsset() {};
 };
