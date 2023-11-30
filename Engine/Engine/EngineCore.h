@@ -22,6 +22,8 @@
 #pragma once
 
 #define NOMINMAX
+
+#pragma comment(lib, "rpcrt4.lib")
 #include <windows.h>
 
 #include <iostream>
