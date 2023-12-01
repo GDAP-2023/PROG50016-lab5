@@ -2,11 +2,12 @@
 #include "Player.h"
 
 #include <EngineTime.h>
+#include <Entity.cpp>
 
 
 
 void Player::Update(const InputSystem& inputSystem) {
-	// Transform& player = entity->transform;
+	 Transform& player = ownerEntity->GetTransform();
 	Vec2 dir = Vec2::Zero;
 	InputSystem& input = InputSystem::Instance();
 
