@@ -49,6 +49,10 @@ protected:
 
 	void Render() override;
 
+	void Save(json::JSON&);
+
+	void Load(json::JSON&) override;
+
 public:
 
 	/*

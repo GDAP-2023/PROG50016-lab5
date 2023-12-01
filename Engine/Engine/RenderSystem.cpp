@@ -85,6 +85,8 @@ void RenderSystem::Destroy()
 {
 	SDL_DestroyWindow(_window);
 	SDL_DestroyRenderer(_renderer);
+
+	delete _instance;
 }
 
 void RenderSystem::Update()

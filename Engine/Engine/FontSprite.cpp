@@ -44,6 +44,36 @@ void FontSprite::Render()
 	//SDL_RenderCopy(&RenderSystem::Instance().GetRenderer(), _output, NULL, &_fontRect);
 }
 
+void FontSprite::Save(json::JSON& document)
+{
+	document["Text"] = _text;
+
+	json::JSON subObject = json::JSON::Object();
+	subObject["R"] = _fontColor.r;
+	subObject["G"] = _fontColor.g;
+	subObject["B"] = _fontColor.b;
+	subObject["A"] = _fontColor.a;
+
+	document["FontColor"] = subObject;
+
+	//FILL IN TO RETRIEVE FONT WHEN ASSETMANAGER IS FINISHED
+}
+
+void FontSprite::Load(json::JSON& document)
+{
+	_text = document["Text"].ToString();
+
+	json::JSON subObject = document["FontColor"];
+	_fontColor.r = subObject["R"].ToInt();
+	_fontColor.g = subObject["G"].ToInt();
+	_fontColor.b = subObject["B"].ToInt();
+	_fontColor.a = subObject["A"].ToInt();
+
+	//FILL IN TO RETRIEVE FONT WHEN ASSETMANAGER IS FINISHED
+
+	RegenerateOutput();
+}
+
 /*
 * @SetText
 *
