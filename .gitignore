@@ -8,3 +8,5 @@ GameProject/Build/bin/*
 # User-specific files
 */*/*.vcxproj.user
 */*/*.vcxproj.filters
+
+docs/
