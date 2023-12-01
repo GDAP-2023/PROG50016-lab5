@@ -8,21 +8,34 @@
 #pragma once
 #ifndef _SCENE_MANAGER_H_
 
-#include "Scene.h"
-#include "Entity.h"
+class Scene;
+class Entity;
 
-class SceneManager final
+/**
+ * @class SceneManager
+ *
+ * Scene Manager class provides an API to manage scenes and their entities.
+ */
+class SceneManager
 {
 private:
 	DECLARE_SINGLETON(SceneManager);
 
 	const std::string DATA_FILE = "../Assets/SceneManager.json";
 
+	STRCODE activeSceneId = 0;
 	Scene* activeScene = nullptr;
+
+	// Scene to be set as active (happens in pre-update)
+	Scene* toBeSetAsActive = nullptr;
 
 	std::list<Scene*> scenesToBeLoaded;
 	std::list<Scene*> loadedScenes;
 	std::list<Scene*> scenesToBeUnloaded;
+
+	// Keep track of file location for each Scene available
+	// (i.e. a scene which either has a JSON or got created by user during runtime)
+	std::map <STRCODE, std::string> stringUIDToFile;
 
 protected:
 	void Load();
@@ -30,34 +43,37 @@ protected:
 
 	void PreUpdate();
 	void Update();
-	void Render();
 	void PostUpdate();
 
 	void Destroy();
 
 public:
+	// ------------------------- Scene-related member functions -------------------------
 	Scene* GetActiveScene();
-	void SetActiveScene(UUID sceneGUID);
+	STRCODE GetActiveSceneId();
+	bool SetActiveScene(std::string sceneGuid);
+	bool SetActiveScene(STRCODE sceneId);
 
-	// Scene-related member functions
 	Scene* CreateScene();
 	
 	Scene* LoadScene(json::JSON&);
-	Scene* FindSceneById(int sceneGUID);
-	Scene* FindSceneByName();  // No duplicate scenes
-	bool RemoveScene(int sceneGUID);
+	Scene* FindScene(std::string sceneGuid);
+	Scene* FindScene(STRCODE sceneId);
+	bool UnloadScene(std::string sceneGuid);
+	bool UnloadScene(STRCODE sceneId);
 
-	// Entity-related member functions
-	Entity* CreateEntityInActiveScene();
-	Entity* CreateEntity(int sceneGUID);
-	Entity* FindEntityById(int entityGUID);
-	std::list<Entity*> FindEntityByName();  // entities can have same name
-	std::list<Entity*> FindEntityWithComponentInActiveScene(std::string componentClassName);
-	std::list<Entity*> FindEntityWithComponent(int sceneGUID, std::string componentClassName);
-	bool RemoveEntityFromActiveScene(int entityGUID);
+	// ------------------------- Entity-related member functions -------------------------
+	Entity* CreateEntity();
 
-	// Component-related member functions
-	// none
+	// Entity look-up always happens in the active scene
+	Entity* FindEntity(std::string entityGuid);
+	Entity* FindEntity(STRCODE entityId);
+	// Entities in a scene can have same name
+	std::list<Entity*> FindEntityByName(std::string entityName);
+	std::list<Entity*> FindEntityWithComponent(std::string componentClassName);
+
+	bool RemoveEntity(std::string entityGuid);
+	bool RemoveEntity(STRCODE entityId);
 
 	friend class Engine;
 };
