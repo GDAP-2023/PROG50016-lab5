@@ -14,22 +14,6 @@ void AssetManager::AddAsset(Asset* newAsset)
 	assets.push_back(newAsset);
 }
 
-void AssetManager::LoadTexture()
-{
-}
-
-void AssetManager::LoadSound()
-{
-}
-
-void AssetManager::LoadMusic()
-{
-}
-
-void AssetManager::LoadFont()
-{
-}
-
 void AssetManager::RemoveAsset(Asset* asset)
 {
 	for (Asset* a : assets)

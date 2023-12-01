@@ -156,7 +156,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AnimatedSprite.cpp" />
-    <ClCompile Include="Asset.cpp" />
     <ClCompile Include="AssetManager.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Engine.cpp" />
@@ -166,6 +165,7 @@
     <ClCompile Include="FontSprite.cpp" />
     <ClCompile Include="InputSystem.cpp" />
     <ClCompile Include="EngineMath.cpp" />
+    <ClCompile Include="MusicAsset.cpp" />
     <ClCompile Include="Renderable.cpp" />
     <ClCompile Include="json.cpp" />
     <ClCompile Include="mersenne.cpp" />
@@ -191,6 +191,7 @@
     <ClInclude Include="FontSprite.h" />
     <ClInclude Include="InputSystem.h" />
     <ClInclude Include="EngineMath.h" />
+    <ClInclude Include="MusicAsset.h" />
     <ClInclude Include="Renderable.h" />
     <ClInclude Include="json.hpp" />
     <ClInclude Include="Object.h" />

@@ -1,23 +1,20 @@
 #pragma once
 
-#ifndef _MA_H_
-#define _MA_H_
+#ifndef _MUSIC_ASSET_H_
+#define _MUSIC_ASSET_H_
 
 #include "Asset.h"
+#include "SDL_mixer.h"
 
-class Mix_Music;
-
-class MusicAsset :
-    public Asset
-{
+class MusicAsset : public Asset {
 private:
-    
-    Mix_Music* _musicAsset;
+
+	Mix_Music* _musicAsset;
 
 public:
-    MusicAsset(Mix_Music* m) : _musicAsset(m) {};
+	MusicAsset(Mix_Music* m) : _musicAsset(m) {};
 
-    ~MusicAsset() {};
+	~MusicAsset() {};
 };
 
-#endif // !_MA_H_
+#endif // !_MUSIC_ASSET_H_

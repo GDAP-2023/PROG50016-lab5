@@ -1,24 +1,21 @@
 #pragma once
 
-#ifndef  _TA_H_
-#define _TA_H_
+#ifndef  _TEXTURE_ASSET_H_
+#define _TEXTURE_ASSET_H_
 
 #include "Asset.h"
+#include "SDL_image.h"
 
-class SDL_Texture;
-
-class TextureAsset :
-    public Asset
-{
+class TextureAsset final : public Asset {
 private:
 
-    SDL_Texture* _texture;
+	SDL_Texture* texture;
 
-public: 
-    
-    TextureAsset(SDL_Texture* t) : _texture(t) {};
+public:
 
-    ~TextureAsset() {};
+	TextureAsset(SDL_Texture* t) : texture(t) {}
+
+	~TextureAsset() {}
 };
 
-#endif // ! _TA_H_
+#endif // !_TEXTURE_ASSET_H_

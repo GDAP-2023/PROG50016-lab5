@@ -1,19 +1,15 @@
 #pragma once
-#ifndef _AM_H_
-#define _AM_H_
+#ifndef _ASSET_MANAGER_H_
+#define _ASSET_MANAGER_H_
 
 #include <list>
+#include "Asset.h"
 
-class Asset;
-
-class AssetManager
-{
+class AssetManager {
 public:
 
-	inline static AssetManager& Instance()
-	{
-		if (instance == nullptr)
-		{
+	static AssetManager& Instance() {
+		if (instance == nullptr) {
 			instance = new AssetManager();
 		}
 		return *instance;
@@ -27,14 +23,6 @@ public:
 
 	void LoadAsset(int AssetId);
 
-	void LoadTexture();
-
-	void LoadSound();
-
-	void LoadMusic();
-
-	void LoadFont();
-
 	void RemoveAsset(Asset* asset);
 
 private:
@@ -47,7 +35,7 @@ private:
 	~AssetManager();
 	inline explicit AssetManager(AssetManager const&) = delete;
 	inline AssetManager& operator=(AssetManager const&) = delete;
-	
+
 };
 
-#endif // !_AM_H_
+#endif // !_ASSET_MANAGER_H_
