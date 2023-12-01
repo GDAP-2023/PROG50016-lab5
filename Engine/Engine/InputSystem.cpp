@@ -25,7 +25,7 @@ void InputSystem::Initialize()
 	}
 }
 
-void InputSystem::update()
+void InputSystem::Update()
 {
 
 	// Update the state of the input system every frame
@@ -240,9 +240,12 @@ void InputSystem::triggerMouseEvent(Uint8 button, bool pressed) {
 			// Default quit behavior if no handler is set
 			// For example, you might set a flag to indicate that the game should exit
 		}
+
+
 	}
 	void InputSystem::setupQuitHandler(Engine& engine) {
 		InputSystem::Instance().registerQuitEventHandler([&engine]() {
 			engine.isRunning = false;
 			});
+
 	}
