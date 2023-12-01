@@ -6,7 +6,8 @@ IMPLEMENT_DYNAMIC_CLASS(Entity)
 
 void Entity::Initialize()
 {
-	CreateComponent("Transform");
+	transform = (Transform*)CreateComponent("Transform");
+
 	for (auto component : components)
 	{
 		component->Initialize();
@@ -30,9 +31,9 @@ void Entity::Load(json::JSON& _entityJSON)
 
 	if (entityData.hasKey("Transform"))
 	{
-		//json::JSON transformJSON = entityData["Transform"];
-		//transform = CreateComponent("Transform");
-		//transform->Load(transformJSON);
+		json::JSON transformJSON = entityData["Transform"];
+		transform = (Transform*)CreateComponent("Transform");
+		transform->Load(transformJSON);
 	}
 
 	// Load the components
@@ -60,7 +61,6 @@ void Entity::PreUpdate()
 {
 	for (auto component : componentsToAdd)
 	{
-		
 		components.push_back(component);
 		component->Initialize();
 	}
@@ -98,11 +98,11 @@ bool Entity::HasComponent(std::string componentClassName)
 	return false;
 }
 
-void AddComponents(const std::vector<std::string>& _component_list)
+void Entity::AddComponents(const std::vector<std::string>& _component_list)
 {
 	for (std::string component : _component_list)
 	{
-		//CreateComponent(component);
+		CreateComponent(component);
 	}
 }
 

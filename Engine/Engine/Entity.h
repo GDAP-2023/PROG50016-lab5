@@ -19,7 +19,7 @@ class Entity final : public Object
 	DECLARE_DYNAMIC_DERIVED_CLASS(Entity, Object)
 
 private:
-	Transform transform;
+	Transform* transform = nullptr;
 
 	std::list<Component*> components;
 	std::list<Component*> componentsToAdd;
@@ -89,14 +89,7 @@ public:
 	*
 	* @return the transform from the Entity
 	*/
-	Transform& GetTransform() { return transform; }
-
-	/**
-	* @brief Set the Transform of the Entity
-	*
-	* @param _transform Transform information to set
-	*/
-	void SetTransform(Transform _transform) { transform = _transform; }
+	const Transform* GetTransform() { return transform; }
 
 	friend class Scene;
 };
