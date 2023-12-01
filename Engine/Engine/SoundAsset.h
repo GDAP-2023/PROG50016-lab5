@@ -6,15 +6,16 @@
 #include "Asset.h"
 #include "SDL_mixer.h"
 
-class SoundAsset :
-    public Asset
+class SoundAsset : public Asset
 {
-public:
-    Mix_Chunk* _soundAsset;
+    Mix_Chunk* sound = nullptr;
 
-    SoundAsset(Mix_Chunk* s) : _soundAsset(s) {};
-
-    ~SoundAsset() {};
+	DECLARE_DYNAMIC_DERIVED_CLASS(SoundAsset, Asset)
+    SoundAsset();
+    ~SoundAsset() override;
+    void Initialize() override;
+    void Destroy() override;
+    void Load(json::JSON&) override;
 };
 
 #endif // !_SOUND_ASSET_H_

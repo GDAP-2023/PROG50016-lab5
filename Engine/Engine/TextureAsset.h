@@ -7,15 +7,14 @@
 #include "SDL_image.h"
 
 class TextureAsset final : public Asset {
-private:
+    SDL_Texture* texture = nullptr;
 
-	SDL_Texture* texture;
-
-public:
-
-	TextureAsset(SDL_Texture* t) : texture(t) {}
-
-	~TextureAsset() {}
+	DECLARE_DYNAMIC_DERIVED_CLASS(TextureAsset, Asset)
+    TextureAsset();
+    ~TextureAsset() override;
+    void Initialize() override;
+    void Destroy() override;
+    void Load(json::JSON&) override;
 };
 
 #endif // !_TEXTURE_ASSET_H_

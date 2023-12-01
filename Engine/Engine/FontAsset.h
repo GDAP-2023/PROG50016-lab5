@@ -1,20 +1,21 @@
 #pragma once
-#ifndef _FA_H_
-#define _FA_H_
+#ifndef _FONT_ASSET_H_
+#define _FONT_ASSET_H_
 
 #include "Asset.h"
+#include "SDL_ttf.h"
 
-class TTF_Font;
 
-class FontAsset :
-    public Asset
+class FontAsset : public Asset
 {
-    TTF_Font* _font;
+    TTF_Font* font = nullptr;
 
-public:
-    FontAsset(TTF_Font* f) : _font(f) {};
-
-    ~FontAsset() {};
+	DECLARE_DYNAMIC_DERIVED_CLASS(FontAsset, Asset)
+    FontAsset();
+    ~FontAsset() override;
+    void Initialize() override;
+    void Destroy() override;
+    void Load(json::JSON&) override;
 };
 
-#endif // !_FA_H_
+#endif // !_FONT_ASSET_H_
