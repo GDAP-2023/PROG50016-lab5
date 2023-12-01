@@ -21,6 +21,16 @@ Vec2 Vec2::operator-() const {
 	return { -this->x, -this->y };
 }
 
+bool Vec2::operator==(const Vec2& rhs) const
+{
+	return std::abs(this->x - rhs.x) <= SDL_FLT_EPSILON && std::abs(this->y - rhs.y) <= SDL_FLT_EPSILON;
+}
+
+bool Vec2::operator!=(const Vec2& rhs) const
+{
+	return !(*this == rhs);
+}
+
 Vec2& Vec2::operator+=(const Vec2& rhs) {
 	this->x += rhs.x;
 	this->y += rhs.y;

@@ -23,6 +23,10 @@ union Vec2
     Vec2& operator+=(const Vec2 &rhs);
     Vec2& operator-=(const Vec2 &rhs);
 
+    
+    bool operator==(const Vec2 &rhs) const;
+    bool operator!=(const Vec2 &rhs) const;
+
     // Cursed shader-programmer zone starts
     Vec2& operator*=(const Vec2 &rhs);
     Vec2& operator/=(const Vec2 &rhs);
