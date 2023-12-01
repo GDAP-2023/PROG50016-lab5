@@ -20,13 +20,4 @@ public:
     void Translate(const Vec2& delta);
     void Rotate(float delta);
     void Scale(const Vec2& delta);
-
-    //getting and setting transform
-    Vec2 GetPosition() const;
-    float GetRotation() const;
-    Vec2 GetScale() const;
-
-    void SetPosition(const Vec2& newPosition);
-    void SetRotation(float newRotation);
-    void SetScale(const Vec2& newScale);
 };

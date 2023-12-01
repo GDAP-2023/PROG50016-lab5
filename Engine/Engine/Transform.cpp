@@ -22,27 +22,3 @@ void Transform::Rotate(float delta) {
 void Transform::Scale(const Vec2& delta) {
     scale *= delta;
 }
-
-Vec2 Transform::GetPosition() const { // getters for access
-    return position;
-}
-
-float Transform::GetRotation() const {
-    return rotation;
-}
-
-Vec2 Transform::GetScale() const {
-    return scale;
-}
-
-void Transform::SetPosition(const Vec2& newPosition) { //setters for new values
-    position = newPosition;
-}
-
-void Transform::SetRotation(float newRotation) {
-    rotation = newRotation;
-}
-
-void Transform::SetScale(const Vec2& newScale) {
-    scale = newScale;
-}
