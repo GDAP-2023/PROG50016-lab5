@@ -180,6 +180,7 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="Transform.cpp" />
     <ClCompile Include="TextureAsset.cpp" />
     <ClCompile Include="TypeClass.cpp" />
   </ItemGroup>
@@ -207,6 +208,7 @@
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="StandardTypes.h" />
+    <ClInclude Include="Transform.h" />
     <ClInclude Include="TextureAsset.h" />
     <ClInclude Include="TypeClass.h" />
   </ItemGroup>

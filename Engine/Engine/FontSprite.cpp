@@ -22,6 +22,12 @@ void FontSprite::Initialize()
 	RegenerateOutput();
 }
 
+void FontSprite::Update()
+{
+
+}
+
+
 void FontSprite::Destroy()
 {
 	SDL_DestroyTexture(_output);
