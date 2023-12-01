@@ -11,6 +11,11 @@
 class Scene;
 class Entity;
 
+/**
+ * @class SceneManager
+ *
+ * Scene Manager class provides an API to manage scenes and their entities.
+ */
 class SceneManager
 {
 private:
@@ -58,9 +63,7 @@ public:
 	bool UnloadScene(STRCODE sceneId);
 
 	// ------------------------- Entity-related member functions -------------------------
-	Entity* CreateEntityInActiveScene();
-	Entity* CreateEntity(std::string sceneGuid);
-	Entity* CreateEntity(STRCODE sceneId);
+	Entity* CreateEntity();
 
 	// Entity look-up always happens in the active scene
 	Entity* FindEntity(std::string entityGuid);

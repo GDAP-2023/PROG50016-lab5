@@ -9,6 +9,9 @@
 #include "SceneManager.h"
 #include "Scene.h"
 
+/**
+ * @brief Load Scene Manager saved data from SceneManager.json file
+ */
 void SceneManager::Load()
 {
 	std::ifstream inputStream(DATA_FILE);
@@ -69,9 +72,9 @@ void SceneManager::Load()
 	LOG("Loaded SceneManager: " << scenesToBeLoaded.size() << " scenes loaded from JSON.");
 }
 
-/// <summary>
-/// Initialize all the loaded scenes.
-/// </summary>
+/**
+ * @brief Initialize all the scenes.
+ */
 void SceneManager::Initialize()
 {
 	for (Scene* scene : loadedScenes)
@@ -80,9 +83,9 @@ void SceneManager::Initialize()
 	}
 }
 
-/// <summary>
-/// Load the scenes to-be-loaded.
-/// </summary>
+/**
+ * @brief Load the to-be-loaded scenes.
+ */
 void SceneManager::PreUpdate()
 {
 	for (Scene* scene : scenesToBeLoaded)
@@ -100,9 +103,9 @@ void SceneManager::PreUpdate()
 	}
 }
 
-/// <summary>
-/// Update all the enabled scenes.
-/// </summary>
+/**
+ * @brief Update all the enabled scenes.
+ */
 void SceneManager::Update()
 {
 	for (Scene* scene : loadedScenes)
@@ -116,9 +119,9 @@ void SceneManager::Update()
 	}
 }
 
-/// <summary>
-/// Unload the scenes to-be-unloaded.
-/// </summary>
+/**
+ * @brief Unload the to-be-unloaded scenes.
+ */
 void SceneManager::PostUpdate()
 {
 	for (Scene* scene : scenesToBeUnloaded)
@@ -130,28 +133,53 @@ void SceneManager::PostUpdate()
 	scenesToBeUnloaded.clear();
 }
 
+/**
+ * @brief Destory all the scenes.
+ */
 void SceneManager::Destroy()
 {
+	if (scenesToBeLoaded.size() != 0)
+		loadedScenes.merge(scenesToBeLoaded);
+	if (scenesToBeUnloaded.size() != 0)
+		loadedScenes.merge(scenesToBeUnloaded);
+	
 	for (Scene* scene : loadedScenes)
 	{
 		scene->Destroy();
 		delete scene;
 	}
+	scenesToBeUnloaded.clear();
 	loadedScenes.clear();
+	scenesToBeLoaded.clear();
 }
 
 // ------------------------- Scene-related member functions -------------------------
 
+/**
+ * @brief Create a new scene. Scene Manager automatically keeps track of this scene.
+ * 
+ * @return Pointer to the created scene.
+ */
 Scene* SceneManager::CreateScene()
 {
 	// This scene might or might not have a JSON file. Can not add it to stringUIDToFile
 	Scene* scene = new Scene();
+
+	// Created scenes automatically get added
+	scenesToBeLoaded.push_back(scene);
+	
 	return scene;
 }
 
+/**
+ * @brief Load a scene using JSON object. Scene Manager automatically keeps track of this scene.
+ * 
+ * @param sceneJSON json object containing scene data.
+ * @return Pointer to the created scene.
+ */
 Scene* SceneManager::LoadScene(json::JSON& sceneJSON)
 {
-	Scene* scene = CreateScene();
+	Scene* scene = new Scene();
 	scene->Load(sceneJSON);
 
 	// Loaded scenes automatically get added
@@ -160,27 +188,44 @@ Scene* SceneManager::LoadScene(json::JSON& sceneJSON)
 	return scene;
 }
 
+/**
+ * @brief Getter function to get the active scene.
+ *
+ * @return Pointer to the active scene.
+ */
 Scene* SceneManager::GetActiveScene()
 {
 	return activeScene;
 }
 
+/**
+ * @brief Getter function to get the active scene.
+ *
+ * @return ID of the active scene.
+ */
 STRCODE SceneManager::GetActiveSceneId()
 {
 	return activeScene->uid;
 }
 
+/**
+ * @brief Setter function to set the active scene using Scene GUID.
+ *
+ * @param sceneGuid GUID of the scene to be set as active.
+ * @return Pointer to the active scene.
+ */
 bool SceneManager::SetActiveScene(std::string sceneGuid)
 {
 	STRCODE sceneId = GetHashCode(sceneGuid.c_str());
 	return SetActiveScene(sceneId);
 }
 
-/// <summary>
-/// Set a scene as active scene. This scene must be loaded first.
-/// </summary>
-/// <param name="sceneId">UID of the Scene</param>
-/// <returns></returns>
+/**
+ * @brief Set a scene as active scene. This scene must be loaded first.
+ *
+ * @param sceneId UID of the scene to be set as active.
+ * @return Pointer to the active scene.
+ */
 bool SceneManager::SetActiveScene(STRCODE sceneId)
 {
 	// Look for the scene in scenesToBeLoaded & loadedScenes
@@ -201,7 +246,7 @@ bool SceneManager::SetActiveScene(STRCODE sceneId)
 								   [sceneId](Scene* sc) {
 										return sc->GetUID() == sceneId;
 									});
-			THROW_RUNTIME_ERROR(it != scenesToBeUnloaded.end(), "Error! Setting a Scene as active which got deleted.");
+			THROW_RUNTIME_ERROR(it != scenesToBeUnloaded.end(), "Error! The scene being set as active does not exist anymore.");
 			toBeSetAsActive = scene;
 			return true;
 		}
@@ -209,17 +254,24 @@ bool SceneManager::SetActiveScene(STRCODE sceneId)
 	return false;
 }
 
+/**
+ * @brief Find a scene among the loaded
+ *
+ * @param sceneGuid GUID of the scene.
+ * @return Pointer to the scene. if not found, returns nullptr.
+ */
 Scene* SceneManager::FindScene(std::string sceneGuid)
 {
 	STRCODE sceneId = GetHashCode(sceneGuid.c_str());
 	return FindScene(sceneId);
 }
 
-/// <summary>
-/// Finds a scene among the loaded scenes
-/// </summary>
-/// <param name="sceneId"></param>
-/// <returns></returns>
+/**
+ * @brief Find a scene among the loaded
+ *
+ * @param sceneId UID of the scene.
+ * @return Pointer to the scene. if not found, returns nullptr.
+ */
 Scene* SceneManager::FindScene(STRCODE sceneId)
 {
 	for (Scene* scene : loadedScenes)
@@ -232,15 +284,27 @@ Scene* SceneManager::FindScene(STRCODE sceneId)
 	return nullptr;
 }
 
+/**
+ * @brief Unload a scene.
+ *
+ * @param sceneGuid GUID of the scene.
+ * @return Boolean represeting if unloading was successful.
+ */
 bool SceneManager::UnloadScene(std::string sceneGuid)
 {
 	STRCODE sceneId = GetHashCode(sceneGuid.c_str());
 	return UnloadScene(sceneId);
 }
 
+/**
+ * @brief Unload a scene.
+ *
+ * @param sceneGuid UID of the scene.
+ * @return Boolean represeting if unloading was successful.
+ */
 bool SceneManager::UnloadScene(STRCODE sceneId)
 {
-	// Ensure that user is not trying to remove active scene
+	// Ensure that user is not trying to remove the active scene
 	Scene* actualActiveScene = (toBeSetAsActive == nullptr) ? activeScene : toBeSetAsActive;
 	if (sceneId == actualActiveScene->GetUID())
 		return false;
@@ -258,54 +322,77 @@ bool SceneManager::UnloadScene(STRCODE sceneId)
 
 // ------------------------- Entity-related member functions -------------------------
 
-Entity* SceneManager::CreateEntityInActiveScene()
+/**
+ * @brief Create a new entity in the active scene.
+ *
+ * @return Pointer to the newly created entity.
+ */
+Entity* SceneManager::CreateEntity()
 {
 	return activeScene->CreateEntity();
 }
 
-Entity* SceneManager::CreateEntity(std::string sceneGuid)
-{
-	STRCODE sceneId = GetHashCode(sceneGuid.c_str());
-	return CreateEntity(sceneId);
-}
-
-Entity* SceneManager::CreateEntity(STRCODE sceneId)
-{
-	for (Scene* scene : loadedScenes)
-	{
-		if (scene->GetUID() == sceneId)
-		{
-			return scene->CreateEntity();
-		}
-	}
-	return nullptr;
-}
-
+/**
+ * @brief Find an entity in the active scene.
+ *
+ * @param entityGuid GUID of the entity
+ * @return Pointer to the found entity. If not found, returns nullptr.
+ */
 Entity* SceneManager::FindEntity(std::string entityGuid)
 {
 	return activeScene->FindEntity(entityGuid);
 }
 
+/**
+ * @brief Find an entity in the active scene.
+ *
+ * @param entityGuid GUID of the entity
+ * @return Pointer to the found entity. If not found, returns nullptr.
+ */
 Entity* SceneManager::FindEntity(STRCODE entityId)
 {
 	return activeScene->FindEntity(entityId);
 }
 
+/**
+ * @brief Find entities in the active scene by name.
+ *
+ * @param entityName Name of the entity
+ * @return List of entity pointers.
+ */
 std::list<Entity*> SceneManager::FindEntityByName(std::string entityName)
 {
 	return activeScene->FindEntityByName(entityName);
 }
 
+/**
+ * @brief Find entities in the active scene which contain a component class.
+ *
+ * @param componentClassName Name of a class which inherits from Component class
+ * @return List of entity pointers.
+ */
 std::list<Entity*> SceneManager::FindEntityWithComponent(std::string componentClassName)
 {
 	return activeScene->FindEntityWithComponent(componentClassName);
 }
 
+/**
+ * @brief Remove an entity from the active scene.
+ *
+ * @param entityGuid GUID of the entity
+ * @return Boolean representing if entity got removed successfully.
+ */
 bool SceneManager::RemoveEntity(std::string entityGuid)
 {
 	return activeScene->RemoveEntity(entityGuid);
 }
 
+/**
+ * @brief Remove an entity from the active scene.
+ *
+ * @param entityId UID of the entity
+ * @return Boolean representing if entity got removed successfully.
+ */
 bool SceneManager::RemoveEntity(STRCODE entityId)
 {
 	return activeScene->RemoveEntity(entityId);
