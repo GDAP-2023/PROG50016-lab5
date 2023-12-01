@@ -7,8 +7,9 @@
 
 class Asset : public Object
 {
+	std::string filepath;
+
 	DECLARE_ABSTRACT_DERIVED_CLASS(Asset, Object)
-public:
 	Asset() = default;
 	~Asset() override = default;
 	void Initialize() override;

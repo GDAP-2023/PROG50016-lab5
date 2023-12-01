@@ -3,17 +3,17 @@
 #define _ASSET_MANAGER_H_
 
 #include <list>
+#include <filesystem>
 #include "Asset.h"
 
 class AssetManager {
-public:
+	DECLARE_SINGLETON(AssetManager)
 
-	static AssetManager& Instance() {
-		if (instance == nullptr) {
-			instance = new AssetManager();
-		}
-		return *instance;
-	}
+	std::string assetDirectory = "../Assets";
+	bool recursiveSearch = true;
+
+	std::list<Asset*> assets;
+public:
 
 	void Destroy();
 
@@ -25,16 +25,7 @@ public:
 
 	void RemoveAsset(Asset* asset);
 
-private:
-
-	std::list<Asset*> assets;
-
-	static AssetManager* instance;
-
-	AssetManager();
-	~AssetManager();
-	inline explicit AssetManager(AssetManager const&) = delete;
-	inline AssetManager& operator=(AssetManager const&) = delete;
+	void Load(const std::string& config_file);
 
 };
 
