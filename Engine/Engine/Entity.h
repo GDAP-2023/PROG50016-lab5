@@ -18,6 +18,7 @@ private:
 	std::list<Component*> componentsToAdd;
 	std::list<Component*> componentsToRemove;
 
+
 protected:
 	Entity() = default;
 	Entity(std::string _guid) : Object(_guid) { }
@@ -31,8 +32,11 @@ protected:
 	void Destroy() override;
 
 public:
+	//
 	bool HasComponent(std::string componentName);
 	Component* const GetComponent(const std::string componentName);
+
+	void AddComponent(Component* component);
 	//void AddComponents(const std::vector<std::string>& _component_list);
 	//void AddComponent(Component* _component);
 	Component* CreateComponent(std::string componentName);

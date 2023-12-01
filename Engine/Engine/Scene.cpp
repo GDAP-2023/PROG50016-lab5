@@ -11,6 +11,7 @@
 
 Scene::Scene()
 {
+
 	UUID _guid;
 	// Create a new GUID
 	CreateUUID(&_guid);
@@ -26,12 +27,17 @@ Scene::Scene(std::string _guid)
 	guid = _guid;
 }
 
+
 Scene::~Scene()
 {
 }
 
 void Scene::Initialize()
 {
+}
+//
+const std::list<Entity*>& Scene::GetEntities() const {
+	return entities;
 }
 
 void Scene::Load(json::JSON& sceneJSON)

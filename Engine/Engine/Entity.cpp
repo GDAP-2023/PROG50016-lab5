@@ -18,6 +18,16 @@ void Entity::Load(json::JSON&)
 	// Function to be added
 }
 
+//
+void Entity::AddComponent(Component* component) {
+	if (component != nullptr) {
+		components.push_back(component);
+
+		// If the entity is already initialized, you might want to initialize the component as well
+		// component->Initialize();
+	}
+}
+
 void Entity::Update()
 {
 	for (auto component : components)

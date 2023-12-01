@@ -43,6 +43,12 @@ protected:
 	void Destroy();
 
 public:
+	//
+
+	static SceneManager& GetInstance() {
+		static SceneManager instance;
+		return instance;
+	}
 	// ------------------------- Scene-related member functions -------------------------
 	Scene* GetActiveScene();
 	STRCODE GetActiveSceneId();

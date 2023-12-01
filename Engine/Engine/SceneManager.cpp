@@ -69,6 +69,13 @@ void SceneManager::Load()
 	LOG("Loaded SceneManager: " << scenesToBeLoaded.size() << " scenes loaded from JSON.");
 }
 
+//====
+SceneManager& SceneManager::GetInstance() {
+	static SceneManager instance;
+	return instance;
+}
+//---
+
 /// <summary>
 /// Initialize all the loaded scenes.
 /// </summary>

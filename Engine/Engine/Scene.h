@@ -32,6 +32,8 @@ protected:
 	void Destroy();
 
 public:
+
+	const std::list<Entity*>& GetEntities() const { return entities; }
 	// Only enabled scenes get updated & rendered
 	bool isEnabled = true;
 
