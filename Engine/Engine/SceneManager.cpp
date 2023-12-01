@@ -255,7 +255,7 @@ bool SceneManager::SetActiveScene(STRCODE sceneId)
 }
 
 /**
- * @brief Find a scene among the loaded
+ * @brief Find a scene among the loaded scenes.
  *
  * @param sceneGuid GUID of the scene.
  * @return Pointer to the scene. if not found, returns nullptr.
@@ -267,7 +267,7 @@ Scene* SceneManager::FindScene(std::string sceneGuid)
 }
 
 /**
- * @brief Find a scene among the loaded
+ * @brief Find a scene among the loaded scenes.
  *
  * @param sceneId UID of the scene.
  * @return Pointer to the scene. if not found, returns nullptr.

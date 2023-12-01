@@ -9,6 +9,9 @@
 #include "Scene.h"
 #include "Entity.h"
 
+/**
+ * @brief Scene constructor generates a random GUID & UID.
+ */
 Scene::Scene()
 {
 	UUID _guid;
@@ -19,6 +22,11 @@ Scene::Scene()
 	uid = GetHashCode(guid.c_str());
 }
 
+/**
+ * @brief Constructor for Scene which generates a random GUID & UID.
+ * 
+ * @param _guid GUID of the scene.
+ */
 Scene::Scene(std::string _guid)
 {
 	// Use the GUID passed to it
@@ -26,14 +34,22 @@ Scene::Scene(std::string _guid)
 	guid = _guid;
 }
 
-Scene::~Scene()
-{
-}
-
+/**
+ * @brief Initialize all the entities of this scene.
+ */
 void Scene::Initialize()
 {
+	for (Entity* entity : entities)
+	{
+		entity->Initialize();
+	}
 }
 
+/**
+ * @brief Load Scene data passed in a JSON.
+ *
+ * @param sceneJSON Scene data JSON.
+ */
 void Scene::Load(json::JSON& sceneJSON)
 {
 	THROW_RUNTIME_ERROR(!sceneJSON.hasKey("AssetManager"), "Scene JSON must contain GUIDs of all the assets it needs.");
@@ -69,6 +85,9 @@ void Scene::Load(json::JSON& sceneJSON)
 	}
 }
 
+/**
+ * @brief Load the to-be-added entities.
+ */
 void Scene::PreUpdate()
 {
 	for (Entity* entity : entitiesToBeAdded)
@@ -78,6 +97,9 @@ void Scene::PreUpdate()
 	entitiesToBeAdded.clear();
 }
 
+/**
+ * @brief Update all the active entities.
+ */
 void Scene::Update()
 {
 	for (Entity* entity : entities)
@@ -91,6 +113,9 @@ void Scene::Update()
 	}
 }
 
+/**
+ * @brief Remove the to-be-destroyed entities.
+ */
 void Scene::PostUpdate()
 {
 	for (Entity* entity : entitiesToDestroy)
@@ -102,6 +127,9 @@ void Scene::PostUpdate()
 	entitiesToDestroy.clear();
 }
 
+/**
+ * @brief Destory all the entities.
+ */
 void Scene::Destroy()
 {
 	for (Entity* entity : entities)
@@ -112,6 +140,11 @@ void Scene::Destroy()
 	entities.clear();
 }
 
+/**
+ * @brief Create a new entity. Scene automatically keeps track of this entity.
+ *
+ * @return Pointer to the created entity.
+ */
 Entity* Scene::CreateEntity()
 {
 	Entity* entity = new Entity();
@@ -120,12 +153,24 @@ Entity* Scene::CreateEntity()
 	return entity;
 }
 
+/**
+ * @brief Find an entity in the scene.
+ *
+ * @param entityGuid GUID of the entity.
+ * @return Pointer to the found entity.
+ */
 Entity* Scene::FindEntity(std::string entityGuid)
 {
 	STRCODE entityId = GetHashCode(entityGuid.c_str());
 	return FindEntity(entityId);
 }
 
+/**
+ * @brief Find an entity in the scene.
+ *
+ * @param entityId UID of the entity.
+ * @return Pointer to the found entity.
+ */
 Entity* Scene::FindEntity(STRCODE entityId)
 {
 	for (Entity* entity : entities)
@@ -138,6 +183,12 @@ Entity* Scene::FindEntity(STRCODE entityId)
 	return nullptr;
 }
 
+/**
+ * @brief Search an entity by name in the scene.
+ *
+ * @param entityName Name of the entity.
+ * @return List of pointers to the matched entities.
+ */
 std::list<Entity*> Scene::FindEntityByName(std::string entityName)
 {
 	std::list<Entity*> foundEntities;
@@ -151,6 +202,12 @@ std::list<Entity*> Scene::FindEntityByName(std::string entityName)
 	return foundEntities;
 }
 
+/**
+ * @brief Lookup entities with a certain component.
+ *
+ * @param componentName Name of a class which inherits from Component.
+ * @return List of pointers to the found entities.
+ */
 std::list<Entity*> Scene::FindEntityWithComponent(std::string componentName)
 {
 	std::list<Entity*> foundEntities;
@@ -164,12 +221,24 @@ std::list<Entity*> Scene::FindEntityWithComponent(std::string componentName)
 	return foundEntities;
 }
 
+/**
+ * @brief Remove an entity from the Scene.
+ *
+ * @param entityGuid GUID of the entity.
+ * @return Boolean representing if the entity got removed successfully.
+ */
 bool Scene::RemoveEntity(std::string entityGuid)
 {
 	STRCODE entityId = GetHashCode(entityGuid.c_str());
 	return RemoveEntity(entityId);
 }
 
+/**
+ * @brief Remove an entity from the Scene.
+ *
+ * @param entityId UID of the entity.
+ * @return Boolean representing if the entity got removed successfully.
+ */
 bool Scene::RemoveEntity(STRCODE entityId)
 {
 	for (Entity* entity : entities)
@@ -185,16 +254,31 @@ bool Scene::RemoveEntity(STRCODE entityId)
 
 // ------------------------- Getters -------------------------
 
+/**
+ * @brief Getter to get the Scene GUID.
+ *
+ * @return Scene's GUID.
+ */
 std::string& Scene::GetGUID()
 {
 	return guid;
 }
 
+/**
+ * @brief Getter to get the Scene UID.
+ *
+ * @return Scene's UID.
+ */
 STRCODE Scene::GetUID()
 {
 	return uid;
 }
 
+/**
+ * @brief Getter to get the Scene Name.
+ *
+ * @return Scene's Name.
+ */
 std::string& Scene::GetName()
 {
 	return name;

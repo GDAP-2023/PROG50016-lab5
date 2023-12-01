@@ -10,6 +10,11 @@
 
 class Entity;
 
+/**
+ * @class Scene
+ *
+ * Scene class contains and manages all the entities within it.
+ */
 class Scene
 {
 private:
@@ -37,7 +42,7 @@ public:
 
 	Scene();
 	Scene(std::string guid);
-	~Scene();
+	~Scene() {};
 
 	Entity* CreateEntity();
 	Entity* FindEntity(std::string entityGuid);
