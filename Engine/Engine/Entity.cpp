@@ -13,9 +13,39 @@ void Entity::Initialize()
 	}
 }
 
-void Entity::Load(json::JSON&)
+void Entity::Load(json::JSON& _entityJSON)
 {
-	// Function to be added
+	json::JSON entityData = _entityJSON["Scene"];
+
+	if (entityData.hasKey("Name"))
+	{
+		name = entityData["Name"].ToString();
+	}
+
+	if (entityData.hasKey("GUID"))
+	{
+		guid = entityData["GUID"].ToString();
+		uid = GetHashCode(guid.c_str());
+	}
+
+	if (entityData.hasKey("Transform"))
+	{
+		json::JSON transformJSON = entityData["Transform"];
+		transform = CreateComponent("Transform");
+		transform->Load(transformJSON);
+	}
+
+	// Load the components
+	if (entityData.hasKey("Components"))
+	{
+		json::JSON componentsJSON = entityData["Components"];
+		for (json::JSON& componentJSON : componentsJSON.ArrayRange())
+		{
+			std::string componentClassName = componentJSON["ClassName"].ToString();
+			Component* component = CreateComponent(componentClassName);
+			component->Load(componentJSON);
+		}
+	}
 }
 
 void Entity::Update()
@@ -32,7 +62,7 @@ void Entity::PreUpdate()
 	{
 		
 		components.push_back(component);
-		component->Initialize(); //?
+		component->Initialize();
 	}
 	componentsToAdd.clear();
 }
@@ -47,25 +77,13 @@ void Entity::PostUpdate()
 	componentsToRemove.clear();
 }
 
-void Entity::Destroy() // destroy other component lists as well?
+void Entity::Destroy() 
 {
 	for (auto component : components)
 	{
 		delete component;
 	}
 	components.clear();
-
-	for (auto component : componentsToAdd)
-	{
-		delete component;
-	}
-	componentsToAdd.clear();
-
-	for (auto component : componentsToRemove)
-	{
-		delete component;
-	}
-	componentsToRemove.clear();
 }
 
 bool Entity::HasComponent(std::string componentClassName)
@@ -95,9 +113,9 @@ Component* const Entity::GetComponent(const std::string componentClassName)
 Component* Entity::CreateComponent(std::string componentClassName)
 {
 	Component* component = (Component*)CreateObject(componentClassName.c_str());
-	//component->owner = this;
+	component->ownerEntity = this;
 	componentsToAdd.push_back(component);
-	return component; // is return needed?
+	return component; 
 }
 
 bool Entity::RemoveComponent(Component* _component)
