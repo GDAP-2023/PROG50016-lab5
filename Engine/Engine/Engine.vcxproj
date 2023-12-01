@@ -164,7 +164,8 @@
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="FontAsset.cpp" />
     <ClCompile Include="FontSprite.cpp" />
-    <ClCompile Include="MusicAsset.cpp" />
+    <ClCompile Include="InputSystem.cpp" />
+    <ClCompile Include="EngineMath.cpp" />
     <ClCompile Include="Renderable.cpp" />
     <ClCompile Include="json.cpp" />
     <ClCompile Include="mersenne.cpp" />
@@ -172,6 +173,8 @@
     <ClCompile Include="EngineTime.cpp" />
     <ClCompile Include="RenderSystem.cpp" />
     <ClCompile Include="SoundAsset.cpp" />
+    <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="TextureAsset.cpp" />
     <ClCompile Include="TypeClass.cpp" />
@@ -186,7 +189,8 @@
     <ClInclude Include="Entity.h" />
     <ClInclude Include="FontAsset.h" />
     <ClInclude Include="FontSprite.h" />
-    <ClInclude Include="MusicAsset.h" />
+    <ClInclude Include="InputSystem.h" />
+    <ClInclude Include="EngineMath.h" />
     <ClInclude Include="Renderable.h" />
     <ClInclude Include="json.hpp" />
     <ClInclude Include="Object.h" />
@@ -194,10 +198,15 @@
     <ClInclude Include="randomc.h" />
     <ClInclude Include="RenderSystem.h" />
     <ClInclude Include="SoundAsset.h" />
+    <ClInclude Include="Scene.h" />
+    <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="StandardTypes.h" />
     <ClInclude Include="TextureAsset.h" />
     <ClInclude Include="TypeClass.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="green_slime.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,22 +1,28 @@
 #pragma once
 
-#ifndef _Renderable_H_
-#define _Renderable_H_
+#ifndef _RENDERABLE_H_
+#define _RENDERABLE_H_
 
 #include "Component.h"
+#include "SDL.h"
 
 class Renderable : public Component
 {
+	friend class RenderSystem;
+
 	DECLARE_ABSTRACT_DERIVED_CLASS(Renderable, Component);
 
-protected:
-	Renderable();
-	~Renderable();
+	void SetFilterColor(int r, int g, int b, int a);
 
-private:
 	virtual void Render() = 0;
 
-	friend class RenderSystem;
+protected:
+
+	SDL_Color _filterColor = { 255, 255, 255 };
+
+	Renderable();
+
+	~Renderable();
 };
 
 #endif

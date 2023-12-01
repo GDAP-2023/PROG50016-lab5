@@ -22,6 +22,8 @@
 #pragma once
 
 #define NOMINMAX
+
+#pragma comment(lib, "rpcrt4.lib")
 #include <windows.h>
 
 #include <iostream>
@@ -44,3 +46,4 @@
 #include "StandardTypes.h"
 
 #include "TypeClass.h"
+#include "EngineMath.h"
