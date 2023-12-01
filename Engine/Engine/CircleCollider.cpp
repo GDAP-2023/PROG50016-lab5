@@ -1,11 +1,24 @@
 #include "EngineCore.h"
 #include "CircleCollider.h"
 
-CircleCollider::CircleCollider(): m_radius(0.0f)
+CircleCollider::CircleCollider():
 {
 	int myID = GetId();
 	Entity* thisEntity = SceneManager::Get().FindEntityById(myID);
-	//transform = thisEntity->GetComponent("Transform"); //don't forget to (cast) to Transform once implemented
+	transform = (Transform*)thisEntity->GetComponent("Transform"); //don't forget to (cast) to Transform once implemented
+	//grab rect
+
+
+	//set radius
+	if (thisEntity->HasComponent("Sprite"))
+	{
+		m_rect = thisEntity->((Sprite)GetComponent("Sprite")).sourceRect;
+	}
+	else if (thisEntity->HasComponent("AnimatedSprite"))
+	{
+		m_rect = thisEntity->((AnimatedSprite)GetComponent("AnimatedSprite")).sourceRect;
+	}
+	m_radius = Vec2(m_rect.w, m_rect.h).Magnitude();
 
 	CollisionSystem::Instance().AddCollider(this);
 }

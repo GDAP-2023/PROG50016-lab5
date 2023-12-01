@@ -20,7 +20,7 @@ class BoxCollider : public ICollider,public Component
 private:
 	SDL_Rect m_rect;
 	bool isSolid = false;
-	Component transform;
+	Transform* transform;
 
 public:
 	/**

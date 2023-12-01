@@ -5,7 +5,16 @@ BoxCollider::BoxCollider():m_rect({0,0,0,0})
 {
 	int myID = GetId();
 	Entity* thisEntity = SceneManager::Get().FindEntityById(myID);
-	//transform = thisEntity->GetComponent("Transform");
+	transform = (Transform*)thisEntity->GetComponent("Transform");
+
+	if (thisEntity->HasComponent("Sprite"))
+	{
+		m_rect = thisEntity->((Sprite)GetComponent("Sprite")).sourceRect;
+	}
+	else if (thisEntity->HasComponent("AnimatedSprite"))
+	{
+		m_rect = thisEntity->((AnimatedSprite)GetComponent("AnimatedSprite")).sourceRect;
+	}
 
 	CollisionSystem::Instance().AddCollider(this);
 }
@@ -34,7 +43,7 @@ Vec2 BoxCollider::GetPosition() const
 
 void BoxCollider::SetSize(int width,int height)
 {
-	m_rect= { x, y,width,height };
+	m_rect= { transform.x, transform.y, width, height };
 }
 
 

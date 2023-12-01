@@ -8,6 +8,7 @@
 //#include "CollisionSystem.h"
 #include "Entity.h"
 #include "SceneManager.h"
+#include "Transform.h"
 #include "Math.h"
 enum class ColliderType {
 	Box,
@@ -31,8 +32,6 @@ protected:
 
 protected: 
 	int size = 0;
-	int x = 0;
-	int y = 0;
 	bool isSolid = false;
 	
 	Vec2 previousPosition;

@@ -17,8 +17,9 @@ class CircleCollider : public ICollider,public Component
 {
 private:
 	float m_radius;
-	//bool isSolid = false;
-	//Transform transform;
+	SDL_Rect m_rect;
+	bool isSolid = false;
+	Transform* transform;
 public:
 	/**
  * @brief CircleCollider Constructor. Gets transform but not radius
