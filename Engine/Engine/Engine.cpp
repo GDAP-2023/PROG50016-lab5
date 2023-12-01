@@ -4,6 +4,7 @@
 #include "RenderSystem.h"
 #include "SceneManager.h"
 #include "Entity.h"
+#include "InputSystem.h"
 
 #include <thread>
 
@@ -23,6 +24,7 @@ void Engine::Initialize()
 	// Initialize the managers
 	RenderSystem::Instance().Initialize();
 	SceneManager::Get().Initialize();
+	InputSystem::Instance().setupQuitHandler(*this);
 }
 
 void Engine::Destroy()
@@ -37,7 +39,7 @@ void Engine::Destroy()
 
 void Engine::GameLoop()
 {
-	while (true)
+	while (isRunning)
 	{
 		Time::Instance().Update();
 
@@ -51,9 +53,17 @@ void Engine::GameLoop()
 		// --------------------- Post-update Phase ---------------------
 		SceneManager::Get().PostUpdate();
 
-		if (Time::Instance().TotalTime() > 5.0f)
+	/*	if (Time::Instance().TotalTime() > 5.0f)
 		{
 			break;
+		}*/
+
+		SDL_Event event;
+		while (SDL_PollEvent(&event)) {
+			if (event.type == SDL_QUIT) {
+				InputSystem::Instance().handleQuitEvent();
+			}
 		}
+
 	}
 }

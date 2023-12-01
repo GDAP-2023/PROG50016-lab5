@@ -1,6 +1,9 @@
 #include "GameCore.h"
 #include "Player.h"
 
+#include <EngineTime.h>
+
+
 
 void Player::Update(const InputSystem& inputSystem) {
 	// Transform& player = entity->transform;
@@ -30,4 +33,5 @@ void Player::Update(const InputSystem& inputSystem) {
 	}
 
 	// player.pos += dir * speed * Time::Instance().DeltaTime();;
+
 }

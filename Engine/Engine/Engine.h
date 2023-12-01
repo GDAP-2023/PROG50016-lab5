@@ -21,10 +21,11 @@ public:
 	void Initialize();
 	void Destroy();
 	void GameLoop();
+	bool isRunning = true;
 
 private:
 	static Engine* instance;
-
+	
 private:
 	inline explicit Engine() = default;
 	inline ~Engine() = default;
