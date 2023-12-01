@@ -9,7 +9,12 @@
 #include "Entity.h"
 #include "SceneManager.h"
 #include "Math.h"
-
+/**
+ * @class ICollider
+ *
+ * The ICollider class is an abstract class used by CollisionSystem, BoxCollider, and CircleCollider in order to store and call colliders regardless of type
+ * Since it is an abstract class, its functions should never be called and instead should be implemented by its child classes BoxCollider and CircleCollider
+ */
 enum class ColliderType {
 	Box,
 	Circle,

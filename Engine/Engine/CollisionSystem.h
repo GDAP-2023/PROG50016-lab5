@@ -11,7 +11,13 @@
 #include "SDL.h"
 #include<set>
 #include "Math.h"
-
+/**
+ * @class CollisionSystem
+ *
+ * The CollisionSystem class is a singleton used by Engine that handles all of the colliders that exist.
+ * An Instance has been made to call its functions. To use it, use CollisionSystem::Instance().SomeFunction()
+ * To check for collisions, see the BoxCollider or CircleCollider classes. Game Code should NOT have to ever use the CollisionSystem class directly
+ */
 class CollisionSystem
 {
 public:

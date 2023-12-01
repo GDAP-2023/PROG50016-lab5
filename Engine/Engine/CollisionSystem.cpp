@@ -1,7 +1,6 @@
 #include "EngineCore.h"
 #include "CollisionSystem.h"
 
-
 CollisionSystem* CollisionSystem::instance = nullptr;
 
 void CollisionSystem::Initialize()
@@ -37,6 +36,7 @@ void CollisionSystem::Update()
 			if (ongoingCollisions.find(collisionPair) == ongoingCollisions.end()) 
 			{
 				// New collision
+				//not sure if these next two lines are code with our new implementation of OnEnter/Stay/Exit
 				collisionPair.first->OnCollisionEnter(collisionPair.second);
 				collisionPair.second->OnCollisionEnter(collisionPair.first);
 				enterCollisions.push_back(collisionPair);
@@ -174,7 +174,7 @@ float DistanceSquared(const Vec2& a, const Vec2& b) {
 bool CollisionSystem::CircleCircleCollision(ICollider* circle1, ICollider* circle2) {
 	Vec2 positionDiff = circle1->GetPosition() - circle2->GetPosition();
 	float radiusSum = circle1->GetRadius() + circle2->GetRadius();
-	return positionDiff.LengthSquared() <= (radiusSum * radiusSum);
+	return positionDiff.MagnitudeSquared() <= (radiusSum * radiusSum);
 }
 
 // Helper function for Box-Box collision using AABB (Axis-Aligned Bounding Box)
@@ -200,7 +200,7 @@ bool CollisionSystem::CircleBoxCollision(ICollider* box, ICollider* circle) {
 
 	//Calculate the distance between the circle's center and this closest point
 	Vec2 closestPoint(closestX, closestY);
-	float distanceSquared = (circleCenter - closestPoint).LengthSquared();
+	float distanceSquared = (circleCenter - closestPoint).MagnitudeSquared();
 
 	//If the distance is less than the circle's radius, an intersection occurs
 	return distanceSquared < (circleRadius * circleRadius);
@@ -213,6 +213,7 @@ void CollisionSystem::ResolveCollision(ICollider* col1, ICollider* col2)
 	// Both colliders are solid, revert to previous positions
 	col1->ResetPosition();
 	col2->ResetPosition();
+	//reset position not implemented, causing errors when we call it here
 }
 
 //void CollisionSystem::ResolveCollision(ICollider* col1, ICollider* col2)
