@@ -33,3 +33,6 @@ Entity* Component::GetOwner() const
     return ownerEntity;
 }
 
+void Component::Update() {
+
+}

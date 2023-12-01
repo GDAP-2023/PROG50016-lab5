@@ -19,6 +19,7 @@ public:
     virtual ~Component() override;
 
     virtual void Initialize() override;
+    //change to pure virtual function
     virtual void Update() = 0;
     virtual void Load(json::JSON& node) override;
     virtual void Render() {}; // Are some components going to need to render?
