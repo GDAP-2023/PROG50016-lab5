@@ -2,6 +2,8 @@
 
 #include "ICollider.h"
 
+IMPLEMENT_ABSTRACT_CLASS(ICollider);
+
 ICollider::ICollider()
 {
 

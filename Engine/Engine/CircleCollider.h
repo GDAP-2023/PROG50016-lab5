@@ -13,8 +13,10 @@
  * It is a circle centred on the entity with a radius of m_radius
  * To check for collisions, use the OnCollisionEnter, OnCollisionStay, or OnCollisionExit functions and consult their implementation
  */
-class CircleCollider : public ICollider,public Component
+class CircleCollider : public ICollider, public Component
 {
+	DECLARE_DYNAMIC_DERIVED_CLASS(CircleCollider, ICollider, Component);
+
 private:
 	float m_radius;
 	SDL_Rect m_rect;

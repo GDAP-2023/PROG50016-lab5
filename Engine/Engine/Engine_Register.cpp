@@ -5,6 +5,9 @@
 #include "Renderable.h"
 #include "FontSprite.h"
 #include "AnimatedSprite.h"
+#include "CircleCollider.h"
+#include "BoxCollider.h"
+#include "ICollider.h"
 
 void Engine_Register()
 {
@@ -13,4 +16,7 @@ void Engine_Register()
 	REGISTER_TYPECLASS(Renderable);
 	REGISTER_TYPECLASS(FontSprite);
 	REGISTER_TYPECLASS(AnimatedSprite);
+	REGISTER_TYPECLASS(CircleCollider);
+	REGISTER_TYPECLASS(BoxCollider);
+	REGISTER_TYPECLASS(ICollider);
 }

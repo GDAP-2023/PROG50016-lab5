@@ -25,6 +25,9 @@ enum class ColliderType {
  */
 class ICollider
 {
+
+	DECLARE_ABSTRACT_BASE_CLASS(ICollider);
+
 protected:
 
 	ICollider();
