@@ -16,7 +16,7 @@ class Sprite : public Renderable
 	DECLARE_DYNAMIC_DERIVED_CLASS(Sprite, Renderable);
 
 protected:
-	SDL_Texture* texture;
+	SDL_Texture* texture = nullptr;
 	SDL_Rect sourceRect = { 0,0,0,0 };
 	SDL_Rect targetRect = { 0,0,0,0 };
 
@@ -70,6 +70,14 @@ public:
 	 * @param _texture A pointer to an SDL texture for this class to render
 	 */
 	void SetNewTexture(SDL_Texture* _texture);
+
+
+	/**
+	 * @brief Loads the component and texture information from JSON
+	 *
+	 * @param document The json containing component information
+	 */
+	void Load(json::JSON& document) override;
 	
 };
 
