@@ -15,10 +15,12 @@ class Sprite : public Renderable
 {
 	DECLARE_DYNAMIC_DERIVED_CLASS(Sprite, Renderable);
 
+public:
+	SDL_Rect targetRect = { 0,0,0,0 };
+
 protected:
 	SDL_Texture* texture = nullptr;
 	SDL_Rect sourceRect = { 0,0,0,0 };
-	SDL_Rect targetRect = { 0,0,0,0 };
 
 	/**
 	 * @brief Initializes any variables as needed
