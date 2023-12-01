@@ -1,7 +1,8 @@
 /**
 * @class Entity
 *
-* Detailed description, including the purpose and usage of the class.
+* The Entity class is the base class for all the objects in the game. 
+* It contains a list of Components and a Transform.
 */
 #pragma once
 
@@ -9,6 +10,7 @@
 #define _ENTITY_H_
 
 #include "Object.h"
+#include "Transform.h"
 
 class Component;
 
@@ -39,51 +41,62 @@ public:
 	/**
 	 * @brief Check if the Entity has a Component with the given name
 	 *
-	 * @param componentName Description of the first parameter.
-	 * @return Description of the return value.
+	 * @param componentName Name of the Component
+	 * @return true if the Entity has the Component, false if not
 	 */
 	bool HasComponent(std::string componentName);
 
 	/**
 	 * @brief Add a list of Components by their names to the Entity
 	 *
-	 * @param _component_list Description of the first parameter.
-	 * @return Description of the return value.
+	 * @param _component_list List of Components names
 	 */
 	void AddComponents(const std::vector<std::string>& _component_list);
 
 	/**
 	 * @brief Get a Component from Entity with the given name
 	 *
-	 * @param componentName Description of the first parameter.
-	 * @return Description of the return value.
+	 * @param componentName Name of the Component
+	 * @return Component* if the Entity has the Component, nullptr if not
 	 */
 	Component* const GetComponent(const std::string componentName);
 
 	/**
 	 * @brief Create a single Component by its name
 	 *
-	 * @param componentName Description of the first parameter.
-	 * @return Description of the return value.
+	 * @param componentName Name of the Component
+	 * @return Component* if the Component is successfully created, nullptr if not
 	 */
 	Component* CreateComponent(std::string componentName);
 
 	/**
 	* @brief Remove a Component from the Entity
 	*
-	* @param _component Description of the first parameter.
-	* @return Description of the return value.
+	* @param _component Component to remove
+	* @return true if the Component is successfully removed, false if not
 	*/
 	bool RemoveComponent(Component* _component);
 
 	/**
 	* @brief Get all the Components of the Entity
 	*
-	* @return Description of the return value.
+	* @return a list of Components from the Entity
 	*/
 	std::list<Component*> GetComponents() const { return components; }
 
-	Transform* GetTransform() const { return transform; }
+	/**
+	* @brief Get the Transform of the Entity
+	*
+	* @return the transform from the Entity
+	*/
+	Transform& GetTransform() { return transform; }
+
+	/**
+	* @brief Set the Transform of the Entity
+	*
+	* @param _transform Transform information to set
+	*/
+	void SetTransform(Transform _transform) { transform = _transform; }
 
 	friend class Scene;
 };
