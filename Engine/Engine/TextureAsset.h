@@ -15,6 +15,11 @@ class TextureAsset final : public Asset {
     void Initialize() override;
     void Destroy() override;
     void Load(json::JSON&) override;
+
+    SDL_Texture* GetTexture() const
+    {
+	    return texture;
+    }
 };
 
 #endif // !_TEXTURE_ASSET_H_
