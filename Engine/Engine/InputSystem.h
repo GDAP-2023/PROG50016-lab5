@@ -24,7 +24,7 @@ public:
 	InputSystem();
 	~InputSystem();
 	void Initialize();
-	void update();
+	void Update();
 
 	void triggerKeyEvent(SDL_Keycode key, bool pressed);
 
@@ -44,7 +44,7 @@ public:
 
 	void handleQuitEvent();
 
-	void setupQuitHandler(Engine& engine);
+
 
 	void registerKeyEventHandler(SDL_Keycode key, bool onPress, std::function<void()> handler);
 	void handleGamepadConnection(int joystickIndex);

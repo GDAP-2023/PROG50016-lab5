@@ -24,7 +24,7 @@ void Engine::Initialize()
 	// Initialize the managers
 	RenderSystem::Instance().Initialize();
 	SceneManager::Get().Initialize();
-	InputSystem::Instance().setupQuitHandler(*this);
+	InputSystem::Instance().registerQuitEventHandler([this] {isRunning = false; });
 }
 
 void Engine::Destroy()
@@ -53,17 +53,14 @@ void Engine::GameLoop()
 		// --------------------- Post-update Phase ---------------------
 		SceneManager::Get().PostUpdate();
 
-	/*	if (Time::Instance().TotalTime() > 5.0f)
-		{
-			break;
-		}*/
+		/*	if (Time::Instance().TotalTime() > 5.0f)
+			{
+				break;
+			}*/
 
-		SDL_Event event;
-		while (SDL_PollEvent(&event)) {
-			if (event.type == SDL_QUIT) {
-				InputSystem::Instance().handleQuitEvent();
-			}
-		}
+
+			// --------------------- Input Phase ---------------------
+		InputSystem::Instance().Update();
 
 	}
 }
