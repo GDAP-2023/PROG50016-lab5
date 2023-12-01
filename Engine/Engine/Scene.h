@@ -1,23 +1,37 @@
+// @file: Scene.h
+//
+// @brief: Header file for the Scene class. All entities are part of a Scene.
+//
+// @author: Divyanshu N Singh (DNS)
+// @date: 2023-11-29
+
 #pragma once
 #ifndef _SCENE_H_
 
 class Entity;
 
+/**
+ * @class Scene
+ *
+ * Scene class contains and manages all the entities within it.
+ */
 class Scene
 {
 private:
-	std::list<Entity*> entities;
+	std::string guid = "";
+	STRCODE uid = 0;
 	std::string name = "";
-	int guid = 0;
 
+	std::list<Entity*> entitiesToBeAdded;
+	std::list<Entity*> entities;
 	std::list<Entity*> entitiesToDestroy;
 
 protected:
 	void Initialize();
 	void Load(json::JSON&);
 
+	void PreUpdate();
 	void Update();
-	void Render();
 	void PostUpdate();
 
 	void Destroy();
@@ -26,14 +40,22 @@ public:
 	// Only enabled scenes get updated & rendered
 	bool isEnabled = true;
 
-	Entity* CreateEntity();
-	Entity* FindEntityById(int entityGUID);
-	std::list<Entity*> FindEntityByName();  // entities can have same name
-	std::list<Entity*> FindEntityWithComponent(std::string componentClassName);
-	bool RemoveEntity(int entityGUID);
+	Scene();
+	Scene(std::string guid);
+	~Scene() {};
 
+	Entity* CreateEntity();
+	Entity* FindEntity(std::string entityGuid);
+	Entity* FindEntity(STRCODE entityId);
+	std::list<Entity*> FindEntityByName(std::string entityName);  // entities can have same name
+	std::list<Entity*> FindEntityWithComponent(std::string componentClassName);
+	bool RemoveEntity(std::string entityGuid);
+	bool RemoveEntity(STRCODE entityId);
+
+	// Getters
+	std::string& GetGUID();
+	STRCODE GetUID();
 	std::string& GetName();
-	int GetGUID();
 
 	friend class SceneManager;
 };
