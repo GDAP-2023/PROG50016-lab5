@@ -24,13 +24,13 @@ protected:
 	void Render() override;
 
 public:
+	Sprite();
+	~Sprite();
+
 	void SetSourceRect(SDL_Rect _rect);
 
 	void SetNewTexture(SDL_Texture* _texture);
-
-public:
-	Sprite();
-	~Sprite();
+	
 };
 
 #endif

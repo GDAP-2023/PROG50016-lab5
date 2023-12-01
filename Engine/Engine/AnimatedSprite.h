@@ -16,12 +16,14 @@ public:
 
 	int totalFrames = 0;
 	int defaultFrameNumber = 0;
-	float animationDelay = 0.1f;
+
+	float frameDelay = 0.1f;
+	float frameCounter = 0;
 
 private:
 	int currentFrame = 0;
 	bool running = true;
-	bool loop = false;
+	bool loop = true;
 
 	void Initialize();
 
@@ -31,7 +33,7 @@ private:
 
 	void Render() override;
 
-protected:
+public:
 	AnimatedSprite();
 	~AnimatedSprite();
 

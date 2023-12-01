@@ -18,7 +18,7 @@ class Renderable : public Component
 
 protected:
 
-	SDL_Color _filterColor = { 0,0,0 };
+	SDL_Color _filterColor = { 255, 255, 255 };
 
 	Renderable();
 

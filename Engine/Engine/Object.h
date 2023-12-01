@@ -11,7 +11,7 @@ private:
 	bool isActive = false;
 
 	std::string name = "";
-	std::string guid = 0;
+	std::string guid = "";
 	STRCODE uid = -1;
 
 protected:
