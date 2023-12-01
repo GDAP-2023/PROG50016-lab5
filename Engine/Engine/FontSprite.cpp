@@ -61,13 +61,19 @@ void FontSprite::Save(json::JSON& document)
 
 void FontSprite::Load(json::JSON& document)
 {
-	_text = document["Text"].ToString();
+	if (document.hasKey("Text"))
+	{
+		_text = document["Text"].ToString();
+	}
 
-	json::JSON subObject = document["FontColor"];
-	_fontColor.r = subObject["R"].ToInt();
-	_fontColor.g = subObject["G"].ToInt();
-	_fontColor.b = subObject["B"].ToInt();
-	_fontColor.a = subObject["A"].ToInt();
+	if (document.hasKey("FontColor"))
+	{
+		json::JSON subObject = document["FontColor"];
+		_fontColor.r = subObject["R"].ToInt();
+		_fontColor.g = subObject["G"].ToInt();
+		_fontColor.b = subObject["B"].ToInt();
+		_fontColor.a = subObject["A"].ToInt();
+	}
 
 	//FILL IN TO RETRIEVE FONT WHEN ASSETMANAGER IS FINISHED
 
