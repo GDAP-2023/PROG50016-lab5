@@ -27,7 +27,7 @@ class ICollider
 protected:
 
 	ICollider();
-	~ICollider();
+	virtual ~ICollider();
 
 protected: 
 	int size = 0;
