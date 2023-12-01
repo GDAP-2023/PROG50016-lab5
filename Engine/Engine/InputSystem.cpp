@@ -214,19 +214,19 @@ void InputSystem::triggerMouseEvent(Uint8 button, bool pressed) {
 
 	}
 
-	Sint16 InputSystem::getGamepadAxisState(SDL_JoystickID joystickID, SDL_GameControllerAxis axis) const {
-    auto joystickIt = gamepadAxisStates.find(joystickID);
-    if (joystickIt != gamepadAxisStates.end()) {
-        auto axisIt = joystickIt->second.find(axis);
-        if (axisIt != joystickIt->second.end()) {
-            return axisIt->second;
+	float InputSystem::getGamepadAxisState(SDL_JoystickID joystickID, SDL_GameControllerAxis axis) const {
+		auto joystickIt = gamepadAxisStates.find(joystickID);
+		if (joystickIt != gamepadAxisStates.end()) {
+			auto axisIt = joystickIt->second.find(axis);
+			if (axisIt != joystickIt->second.end()) {
+				// Normalize the value to be between -1.0 and 1.0
+				return axisIt->second / 32767.0f;
+			}
+		}
 
-        }
-
-    }
-
-    return 0; // Default state if not found
-}
+		// Return 0.0 or an appropriate default value if the axis state is not found
+		return 0.0f;
+	}
 	void InputSystem::registerQuitEventHandler(std::function<void()> handler) {
 		quitEventHandler = handler;
 

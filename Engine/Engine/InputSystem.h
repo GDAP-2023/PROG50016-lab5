@@ -38,7 +38,7 @@ public:
 
 	void handleGamepadAxis(SDL_JoystickID joystickID, SDL_GameControllerAxis axis, Sint16 value);
 
-	Sint16 getGamepadAxisState(SDL_JoystickID joystickID, SDL_GameControllerAxis axis) const;
+	float getGamepadAxisState(SDL_JoystickID joystickID, SDL_GameControllerAxis axis) const;
 
 	void registerQuitEventHandler(std::function<void()> handler);
 
