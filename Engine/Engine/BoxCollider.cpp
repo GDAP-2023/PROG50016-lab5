@@ -40,7 +40,7 @@ void BoxCollider::SetSize(int width,int height)
 
 float BoxCollider::GetBroadPhaseRadius() const
 {
-	return std::sqrt(m_rect.w*m_rect.w + m_rect.h*m_rect.h);
+	return Vec2(m_rect.w, m_rect.h).Magnitude();
 }
 
 ColliderType BoxCollider::GetType() const

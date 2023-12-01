@@ -5,16 +5,10 @@
 
 #include "EngineCore.h"
 #include "SDL.h"
-#include "CollisionSystem.h"
+//#include "CollisionSystem.h"
 #include "Entity.h"
 #include "SceneManager.h"
 #include "Math.h"
-/**
- * @class ICollider
- *
- * The ICollider class is an abstract class used by CollisionSystem, BoxCollider, and CircleCollider in order to store and call colliders regardless of type
- * Since it is an abstract class, its functions should never be called and instead should be implemented by its child classes BoxCollider and CircleCollider
- */
 enum class ColliderType {
 	Box,
 	Circle,
@@ -22,8 +16,19 @@ enum class ColliderType {
 };
 
 
+/**
+ * @class ICollider
+ *
+ * The ICollider class is an abstract class used by CollisionSystem, BoxCollider, and CircleCollider in order to store and call colliders regardless of type
+ * Since it is an abstract class, its functions should never be called and instead should be implemented by its child classes BoxCollider and CircleCollider
+ */
 class ICollider
 {
+protected:
+
+	ICollider();
+	~ICollider();
+
 protected: 
 	int size = 0;
 	int x = 0;
@@ -41,10 +46,6 @@ private:
 	SDL_Rect GetBounds();
 	Component* transform;
 
-protected:
-
-	ICollider();
-	~ICollider();
 
 protected:
 	virtual void Destroy() = 0;

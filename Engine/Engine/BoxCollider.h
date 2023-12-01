@@ -5,7 +5,7 @@
 
 #include"EngineCore.h"
 #include"ICollider.h"
-#include"Component.h"O
+#include"Component.h"
 #include"CollisionSystem.h"
 #include"SDL.h"
 /**
@@ -15,7 +15,7 @@
  * It uses the entity's SDL_Rect as its position and bounds
  * To check for collisions, use the OnCollisionEnter, OnCollisionStay, or OnCollisionExit functions and consult their implementation
  */
-class BoxCollider: public ICollider,public Component
+class BoxCollider : public ICollider,public Component
 {
 private:
 	SDL_Rect m_rect;
