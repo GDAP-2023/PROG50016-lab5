@@ -15,9 +15,7 @@ void CollisionSystem::Destroy()
 
 void CollisionSystem::Update()
 {
-	//what i do here is i get a list of all potential collisions, then i narrow it down to a list of actual collisions
 	auto potentialCollisions = BroadPhaseDetection();
-	//this is the list of actual collisions
 	auto currentFrameCollisions = NarrowPhaseDetection(potentialCollisions);
 
 	std::set<std::pair<ICollider*, ICollider*>> collisionsToRemove;
@@ -29,7 +27,6 @@ void CollisionSystem::Update()
 	// Handle new and ongoing collisions
 	for (const auto& collisionPair : currentFrameCollisions)
 	{
-        // Resolve collision if both colliders are solid
 		if (collisionPair.first->IsSolid() && collisionPair.second->IsSolid())
 		{
 			ResolveCollision(collisionPair.first, collisionPair.second);
@@ -39,7 +36,6 @@ void CollisionSystem::Update()
 			if (ongoingCollisions.find(collisionPair) == ongoingCollisions.end()) 
 			{
 				// New collision
-				//not sure if these next two lines are code with our new implementation of OnEnter/Stay/Exit
 				collisionPair.first->OnCollisionEnter(collisionPair.second);
 				collisionPair.second->OnCollisionEnter(collisionPair.first);
 				enterCollisions.push_back(collisionPair);
@@ -57,12 +53,9 @@ void CollisionSystem::Update()
 	// Determine which collisions have ended
 	for (const auto& oldCollision : ongoingCollisions) 
 	{
-		// If the collision is not in the current frame's collision list, it has ended
 		if (currentFrameCollisions.find(oldCollision) == currentFrameCollisions.end()) 
 		{
-            //add to the list of collisions to remove
 			collisionsToRemove.insert(oldCollision);
-			
 			oldCollision.first->OnCollisionExit(oldCollision.second);
 			oldCollision.second->OnCollisionExit(oldCollision.first);
 			exitCollisions.push_back(oldCollision);
@@ -82,7 +75,7 @@ void CollisionSystem::Update()
 	ongoingCollisions = std::move(currentFrameCollisions);
 
 }
-// add and remove colliders from the list
+
 void CollisionSystem::AddCollider(ICollider* collider)
 {
 	colliders.push_back(collider);
@@ -93,7 +86,7 @@ void CollisionSystem::RemoveCollider(ICollider* collider)
 	colliders.remove(collider);
 }
 
-//Broad phase detection
+// it takes all the colliders and checks if they are close enough to collide
 std::list<std::pair<ICollider*, ICollider*>> CollisionSystem::BroadPhaseDetection()
 {
 
@@ -114,6 +107,7 @@ std::list<std::pair<ICollider*, ICollider*>> CollisionSystem::BroadPhaseDetectio
 
 			Vec2 positionDiff = position1 - position2;
 			float radiusSum = radius1 + radius2;
+			// Check if the distance between the two colliders is less than the sum of their radii
 			if(positionDiff.MagnitudeSquared()<= (radiusSum * radiusSum))
 			{
 				potentialCollisions.push_back(std::make_pair(collider1, collider2));
@@ -124,7 +118,7 @@ std::list<std::pair<ICollider*, ICollider*>> CollisionSystem::BroadPhaseDetectio
 	return potentialCollisions;
 }
 
-
+// it takes all the colliders that are close enough to collide and checks if they actually collide
 std::set<std::pair<ICollider*, ICollider*>> CollisionSystem::NarrowPhaseDetection(const std::list<std::pair<ICollider*, ICollider*>>& potentialCollisions) {
 	
 	std::set<std::pair<ICollider*, ICollider*>> currentFrameCollisions;
@@ -178,14 +172,18 @@ float DistanceSquared(const Vec2& a, const Vec2& b) {
 }
 
 // Helper function for Circle-Circle collision
-bool CollisionSystem::CircleCircleCollision(ICollider* circle1, ICollider* circle2) {
+bool CollisionSystem::CircleCircleCollision(ICollider* col1, ICollider* col2) {
+	CircleCollider* circle1 = (CircleCollider*)col1;
+	CircleCollider* circle2 = (CircleCollider*)col2;
 	Vec2 positionDiff = circle1->GetPosition() - circle2->GetPosition();
 	float radiusSum = circle1->GetRadius() + circle2->GetRadius();
 	return positionDiff.MagnitudeSquared() <= (radiusSum * radiusSum);
 }
 
 // Helper function for Box-Box collision using AABB (Axis-Aligned Bounding Box)
-bool CollisionSystem::BoxBoxCollision(ICollider* box1, ICollider* box2) {
+bool CollisionSystem::BoxBoxCollision(ICollider* col1, ICollider* col2) {
+	BoxCollider* box1 = (BoxCollider*)col1;
+	BoxCollider* box2 = (BoxCollider*)col2;
 	auto bounds1 = box1->GetBounds();
 	auto bounds2 = box2->GetBounds();
 
@@ -196,7 +194,9 @@ bool CollisionSystem::BoxBoxCollision(ICollider* box1, ICollider* box2) {
 
 
 // Helper function for Circle-Box collision using AABB (Axis-Aligned Bounding Box)
-bool CollisionSystem::CircleBoxCollision(ICollider* box, ICollider* circle) {
+bool CollisionSystem::CircleBoxCollision(ICollider* col1, ICollider* col2) {
+	BoxCollider* box = (BoxCollider*)col1;
+	CircleCollider* circle = (CircleCollider*)col2;
 	auto bounds = box->GetBounds();
 	Vec2 circleCenter = circle->GetPosition();
 	float circleRadius = circle->GetRadius();
@@ -214,7 +214,7 @@ bool CollisionSystem::CircleBoxCollision(ICollider* box, ICollider* circle) {
 }
 
 
-
+//stop the colliders from moving
 void CollisionSystem::ResolveCollision(ICollider* col1, ICollider* col2)
 {
 	// Both colliders are solid, revert to previous positions
