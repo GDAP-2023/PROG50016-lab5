@@ -29,7 +29,7 @@ void Sprite::Update() {
         size.x,
         size.y
     };
-    LOG(targetRect.x << ", " << targetRect.y << ", " << targetRect.w << ", " << targetRect.h);
+    // LOG(targetRect.x << ", " << targetRect.y << ", " << targetRect.w << ", " << targetRect.h);
 
     flip = static_cast<SDL_RendererFlip>((transform.scale.x < 0) | ((transform.scale.y < 0) << 1));
 }

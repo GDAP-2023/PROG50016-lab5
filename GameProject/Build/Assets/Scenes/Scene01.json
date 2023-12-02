@@ -30,7 +30,7 @@
                         }
                     },
                     {
-                        "ClassName": "AnimatedSprite",
+                        "ClassName": "Sprite",
                         "ClassData": {
                             "Texture": "awooga"
                         }
