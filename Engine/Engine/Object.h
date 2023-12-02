@@ -8,7 +8,7 @@ class Object
     DECLARE_ABSTRACT_BASE_CLASS(Object)
 
 protected:
-    bool isActive = false;
+    bool isActive = true;
 
     std::string name;
     std::string guid;
