@@ -7,7 +7,7 @@
 
 #include "EngineCore.h"
 #include "FontSprite.h"
-#include "SDL_ttf.h";
+#include "SDL_ttf.h"
 #include "RenderSystem.h"
 #include "Entity.h"
 #include "FontAsset.h"
@@ -37,20 +37,20 @@ void FontSprite::Initialize()
 
 void FontSprite::Update()
 {
-	Transform t = ownerEntity->GetTransform();
+	const Transform* t = ownerEntity->GetTransform();
 
 	_fontRect = {
-		(int)ownerEntity->GetTransform().position.x,
-		(int)ownerEntity->GetTransform().position.y,
-			(int)(outputSizing.x * ownerEntity->GetTransform().scale.x), 
-			(int)(outputSizing.y * ownerEntity->GetTransform().scale.y)
+		(int)t->position.x,
+		(int)t->position.y,
+			(int)(outputSizing.x * t->scale.x),
+			(int)(outputSizing.y * t->scale.y)
 	};
 
 	flip = SDL_FLIP_NONE;
-	if (t.scale.x < 0) {
+	if (t->scale.x < 0) {
 		flip = SDL_FLIP_HORIZONTAL;
 	}
-	if (t.scale.y < 0) {
+	if (t->scale.y < 0) {
 		flip = (SDL_RendererFlip)(flip | SDL_FLIP_VERTICAL);
 	}
 }
@@ -62,18 +62,18 @@ void FontSprite::Destroy()
 
 void FontSprite::Render()
 {
-	if (_output == NULL)
+	if (_output != NULL)
 	{
 		SDL_QueryTexture(_output, NULL, NULL, &outputSizing.x, &outputSizing.y);
 
-		_fontRect = { (int)ownerEntity->GetTransform().position.x, (int)ownerEntity->GetTransform().position.y,
-			(int)(outputSizing.x * ownerEntity->GetTransform().scale.x), (int)(outputSizing.y * ownerEntity->GetTransform().scale.y) };
+		_fontRect = { (int)ownerEntity->GetTransform()->position.x, (int)ownerEntity->GetTransform()->position.y,
+			(int)(outputSizing.x * ownerEntity->GetTransform()->scale.x), (int)(outputSizing.y * ownerEntity->GetTransform()->scale.y) };
 
 		SDL_RenderCopyEx(
 			&RenderSystem::Instance().GetRenderer(), 
 			_output, NULL, 
 			&_fontRect,
-			ownerEntity->GetTransform().rotation,
+			ownerEntity->GetTransform()->rotation,
 			NULL,
 			flip
 		);
@@ -162,7 +162,7 @@ void FontSprite::SetFontColor(int r, int g, int b, int a)
 */
 void FontSprite::RegenerateOutput()
 {
-	if (_font == NULL)
+	if (_font != NULL)
 	{
 		SDL_Surface* textSurface = TTF_RenderText_Solid((*_font).GetFont(), _text.c_str(), _fontColor);
 		_output = SDL_CreateTextureFromSurface(&RenderSystem::Instance().GetRenderer(), textSurface);

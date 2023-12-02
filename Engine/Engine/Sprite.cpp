@@ -25,20 +25,20 @@ void Sprite::Destroy() {
 }
 
 void Sprite::Update() {
-	Transform t = ownerEntity->GetTransform();
-	size.x = std::abs(sourceRect.w * t.scale.x);
-	size.y = std::abs(sourceRect.h * t.scale.y);
+	const Transform* t = ownerEntity->GetTransform();
+	size.x = std::abs(sourceRect.w * t->scale.x);
+	size.y = std::abs(sourceRect.h * t->scale.y);
 	targetRect = {
-		(int)(t.position.x - size.x * .5f),
-		(int)(t.position.y - size.y * .5f),
+		(int)(t->position.x - size.x * .5f),
+		(int)(t->position.y - size.y * .5f),
 		size.x,
 		size.y
 	};
 	flip = SDL_FLIP_NONE;
-	if (t.scale.x < 0) {
+	if (t->scale.x < 0) {
 		flip = SDL_FLIP_HORIZONTAL;
 	}
-	if (t.scale.y < 0) {
+	if (t->scale.y < 0) {
 		flip = (SDL_RendererFlip)(flip | SDL_FLIP_VERTICAL);
 	}
 }
@@ -66,18 +66,18 @@ void Sprite::SetNewTexture(SDL_Texture* _texture) {
 	texture = _texture;
 	SDL_QueryTexture(texture, NULL, NULL, &size.x, &size.y);
 	
-	Transform t = ownerEntity->GetTransform();
+	const Transform* t = ownerEntity->GetTransform();
 	sourceRect = { 0, 0, size.x, size.y };
 	targetRect = { 
-		(int)(t.position.x - size.x * .5f),
-		(int)(t.position.y - size.y * .5f),
-		(int)(size.x * std::abs(t.scale.x)), (int)(size.y * std::abs(t.scale.y))
+		(int)(t->position.x - size.x * .5f),
+		(int)(t->position.y - size.y * .5f),
+		(int)(size.x * std::abs(t->scale.x)), (int)(size.y * std::abs(t->scale.y))
 	};
 	flip = SDL_FLIP_NONE;
-	if (t.scale.x < 0) {
+	if (t->scale.x < 0) {
 		flip = SDL_FLIP_HORIZONTAL;
 	}
-	if (t.scale.y < 0) {
+	if (t->scale.y < 0) {
 		flip = (SDL_RendererFlip)(flip | SDL_FLIP_VERTICAL);
 	}
 }
@@ -90,7 +90,7 @@ void Sprite::Render()
 		texture,
 		&sourceRect,
 		&targetRect,
-		ownerEntity->GetTransform().rotation,
+		ownerEntity->GetTransform()->rotation,
 		NULL,
 		flip
 	);
