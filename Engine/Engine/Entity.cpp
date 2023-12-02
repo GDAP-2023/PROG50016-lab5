@@ -23,7 +23,7 @@ void Entity::Load(json::JSON& node)
 	if (node.hasKey("Transform"))
 	{
 		json::JSON transform_json = node["Transform"];
-		transform.Load(transform_json["ClassData"]);
+		transform.Load(transform_json);
 	}
 
 	// Load the components
