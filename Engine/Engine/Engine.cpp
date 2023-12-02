@@ -12,8 +12,6 @@
 #include "AudioSystem.h"
 #include "Component.h"
 
-Engine* Engine::instance = nullptr;
-
 extern void Engine_Register();
 
 void Engine::Initialize()
@@ -28,7 +26,6 @@ void Engine::Initialize()
 	AssetManager::Get().Initialize();
 	RenderSystem::Get().Initialize();
 	AudioSystem::Get().Initialize();
-
 	SceneManager::Get().Initialize();
 
 	InputSystem::Get().registerQuitEventHandler([this] {isRunning = false; });
@@ -36,12 +33,10 @@ void Engine::Initialize()
 
 void Engine::Destroy()
 {
-	Time::Instance().Destroy();
 	AssetManager::Get().Destroy();
 	AudioSystem::Get().Destroy();
 	RenderSystem::Get().Destroy();
-	delete instance;
-	instance = nullptr;
+	Time::Instance().Destroy();
 }
 
 void Engine::GameLoop()
@@ -60,20 +55,8 @@ void Engine::GameLoop()
 		// --------------------- Post-update Phase ---------------------
 		SceneManager::Get().PostUpdate();
 
-
-		/*	if (Time::Instance().TotalTime() > 5.0f)
-			{
-				break;
-			}*/
-
-
-			// --------------------- Input Phase ---------------------
+		// --------------------- Input Phase ---------------------
 		InputSystem::Get().Update();
-
-	/*	if (Time::Instance().TotalTime() > 5.0f)
-		{
-			break;
-		}*/
 
 		SDL_Event event;
 		while (SDL_PollEvent(&event)) {
@@ -81,7 +64,5 @@ void Engine::GameLoop()
 				InputSystem::Get().handleQuitEvent();
 			}
 		}
-
-
 	}
 }

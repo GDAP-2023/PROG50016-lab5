@@ -18,7 +18,7 @@ class Renderable : public Component
 {
 	friend class RenderSystem;
 
-	DECLARE_ABSTRACT_DERIVED_CLASS(Renderable, Component);
+	DECLARE_ABSTRACT_DERIVED_CLASS(Renderable, Component)
 
 private:
 

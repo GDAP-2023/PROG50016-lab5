@@ -20,7 +20,6 @@ void Entity::Load(json::JSON& entityData)
 	if (entityData.hasKey("Name"))
 	{
 		name = entityData["Name"].ToString();
-		//std::cout << "Entity Name: " << name << std::endl;
 	}
 
 	if (entityData.hasKey("GUID"))
@@ -29,25 +28,24 @@ void Entity::Load(json::JSON& entityData)
 		uid = GetHashCode(guid.c_str());
 	}
 
+	// Load the transform (necessary component of any entity)
+	// Not throwing runtime error because if there is no transform, we assign a default one during initialize
+	if (entityData.hasKey("Transform"))
+	{
+		transform = (Transform*) CreateComponent("Transform");
+		transform->Load(entityData["Transform"]);
+		LOG("Loaded up transform in entity " << name)
+	}
+
 	// Load the components
 	if (entityData.hasKey("Components"))
 	{
-		json::JSON componentsJSON = entityData["Components"];
-
-		if (componentsJSON.hasKey("Transform"))
-		{
-			json::JSON transformJSON = entityData["Transform"];
-			transform = (Transform*)CreateComponent("Transform");
-			//std::cout << "Transform Component Created" << std::endl;
-			transform->Load(transformJSON["ClassData"]);
-		}
-
-		for (json::JSON& componentJSON : componentsJSON.ArrayRange())
+		for (json::JSON& componentJSON : entityData["Components"].ArrayRange())
 		{
 			std::string componentClassName = componentJSON["ClassName"].ToString();
 			Component* component = CreateComponent(componentClassName);
 			component->Load(componentJSON["ClassData"]);
-			//std::cout<< "Component Created: " << componentClassName << std::endl;
+			LOG("Loaded up component " << componentClassName << " in entity " << name)
 		}
 	}
 }
@@ -65,7 +63,6 @@ void Entity::PreUpdate()
 	for (auto component : componentsToAdd)
 	{
 		components.push_back(component);
-		component->Initialize();
 	}
 	componentsToAdd.clear();
 }
@@ -86,6 +83,7 @@ void Entity::Destroy()
 	{
 		delete component;
 	}
+	delete transform;
 	components.clear();
 }
 

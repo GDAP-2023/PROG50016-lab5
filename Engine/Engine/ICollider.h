@@ -24,28 +24,35 @@ enum class ColliderType {
  */
 class ICollider : public Component
 {
-	DECLARE_ABSTRACT_DERIVED_CLASS(ICollider, Component);
+	DECLARE_ABSTRACT_DERIVED_CLASS(ICollider, Component)
 
 protected:
+	int size = 0;
+	bool isSolid = false;
+	SDL_Rect m_rect;
+	
+	Vec2 previousPosition;
 
 	ICollider();
 	virtual ~ICollider();
 
-protected: 
-	int size = 0;
-	bool isSolid = false;
-	
-	Vec2 previousPosition;
-
 public:
-	virtual bool IsSolid() const = 0 ;
-	virtual void SetSolid(bool solid) = 0 ;
+	/**
+* @brief Checks the bool isSolid to tell if this Entity should be treated as a solid object
+*
+* @return returns the boolean isSolid to tell if this Entity should be treated as solid
+*/
+	bool IsSolid() const;
 
-private:
-	Component* transform;
-
+	/**
+* @brief Sets the bool isSolid which tells if this Entity should be treated as a solid object
+*
+* @param solid True if the object should be solid, False if the object should not
+*/
+	void SetSolid(const bool solid);
 
 protected:
+	void Initialize() override;
 	virtual void Destroy() = 0;
 
 public:

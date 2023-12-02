@@ -60,7 +60,7 @@ void AssetManager::LoadSceneAsset(std::string guid) {
 	return LoadSceneAsset(id);
 }
 
-void AssetManager::LoadSceneAsset(unsigned id) {
+void AssetManager::LoadSceneAsset(STRCODE id) {
 	if (assets.find(id) == assets.end()) {
 		LOG("Could not find Asset with id: " << id);
 		return;

@@ -5,27 +5,8 @@
 
 IMPLEMENT_DYNAMIC_CLASS(BoxCollider);
 
-BoxCollider::BoxCollider():m_rect({0,0,0,0})
+BoxCollider::BoxCollider()
 {
-	int myID = GetUid();
-	Entity* thisEntity = SceneManager::Get().FindEntity(myID);
-	transform = (Transform*)thisEntity->GetComponent("Transform");
-
-	if (thisEntity->HasComponent("Sprite"))
-	{
-		m_rect = ((Sprite*)thisEntity->GetComponent("Sprite"))->targetRect;
-	}
-	else if (thisEntity->HasComponent("AnimatedSprite"))
-	{
-		m_rect = ((AnimatedSprite*)thisEntity->GetComponent("AnimatedSprite"))->targetRect;
-	}
-
-	CollisionSystem::Instance().AddCollider(this);
-}
-
-BoxCollider::~BoxCollider()
-{
-	CollisionSystem::Instance().RemoveCollider(this);
 }
 
 void BoxCollider::Update()
@@ -44,14 +25,14 @@ bool BoxCollider::HandleCollision(ICollider* other)
 
 Vec2 BoxCollider::GetPosition() const
 {
-	//return Vec2(transform.x, transform.y);
+	//return Vec2(ownerEntity->GetTransform().x, ownerEntity->GetTransform().y);
 	Vec2 tempVec = Vec2(0, 0);
 	return tempVec;
 }
 
 void BoxCollider::SetSize(int width,int height)
 {
-	m_rect= { (int) transform->position.x, (int) transform->position.y, width, height };
+	m_rect= { (int) ownerEntity->GetTransform()->position.x, (int)ownerEntity->GetTransform()->position.y, width, height };
 }
 
 
@@ -135,15 +116,4 @@ std::list<Entity*> BoxCollider::OnCollisionExit(ICollider* other) {
 		}
 	}
 	return result;
-}
-
-
-
-bool BoxCollider::IsSolid() const
-{
-	return isSolid;
-}
-void BoxCollider::SetSolid(bool solid)
-{
-	isSolid = solid;
 }

@@ -5,35 +5,22 @@
 
 IMPLEMENT_DYNAMIC_CLASS(CircleCollider);
 
-CircleCollider::CircleCollider():m_rect({ 0,0,0,0 })
-{
-	int myID = GetUid();
-	Entity* thisEntity = SceneManager::Get().FindEntity(myID);
-	transform = (Transform*)thisEntity->GetComponent("Transform"); //don't forget to (cast) to Transform once implemented
-	//grab rect
-
-
-	//set radius
-	if (thisEntity->HasComponent("Sprite"))
-	{
-		m_rect = ((Sprite*)thisEntity->GetComponent("Sprite"))->targetRect;
-	}
-	else if (thisEntity->HasComponent("AnimatedSprite"))
-	{
-		m_rect = ((AnimatedSprite*)thisEntity->GetComponent("AnimatedSprite"))->targetRect;
-	}
-	m_radius = Vec2(m_rect.w, m_rect.h).Magnitude();
-
-	CollisionSystem::Instance().AddCollider(this);
-}
-
-void CircleCollider::Update()
+CircleCollider::CircleCollider()
 {
 }
 
 CircleCollider::~CircleCollider()
 {
-	CollisionSystem::Instance().RemoveCollider(this);
+}
+
+void CircleCollider::Initialize()
+{
+	ICollider::Initialize();
+	m_radius = Vec2(m_rect.w, m_rect.h).Magnitude();
+}
+
+void CircleCollider::Update()
+{
 }
 
 void CircleCollider::Destroy()
@@ -48,7 +35,7 @@ bool CircleCollider::HandleCollision(ICollider* other)
 
 Vec2 CircleCollider::GetPosition() const
 {
-	//return Vec2(transform.x, transform.y);
+	//return Vec2(ownerEntity->GetTransform().x, ownerEntity->GetTransform().y);
 	Vec2 tempVec = Vec2(0, 0);
 	return tempVec;
 }
@@ -144,13 +131,4 @@ std::list<Entity*> CircleCollider::OnCollisionExit(ICollider* other) {
 		}
 	}
 	return result;
-}
-
-bool CircleCollider::IsSolid() const
-{
-	return isSolid;
-}
-void CircleCollider::SetSolid(bool solid)
-{
-	isSolid= solid;
 }

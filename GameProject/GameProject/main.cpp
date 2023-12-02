@@ -6,9 +6,9 @@ int main()
 {
 	Game_Register();
 
-	Engine::Instance().Initialize();
-	Engine::Instance().GameLoop();
-	Engine::Instance().Destroy();
+	Engine::Get().Initialize();
+	Engine::Get().GameLoop();
+	Engine::Get().Destroy();
 
 	return 0;
 }
