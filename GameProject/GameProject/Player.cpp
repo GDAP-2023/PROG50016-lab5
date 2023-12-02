@@ -7,7 +7,7 @@
 
 
 void Player::Update(const InputSystem& inputSystem) {
-	 Transform& player = ownerEntity->GetTransform();
+	Vec2 player_pos = ownerEntity->GetTransform()->position;
 	Vec2 dir = Vec2::Zero;
 	InputSystem& input = InputSystem::Instance();
 
@@ -33,6 +33,6 @@ void Player::Update(const InputSystem& inputSystem) {
 		dir.Normalize();
 	}
 
-	// player.pos += dir * speed * Time::Instance().DeltaTime();;
+	ownerEntity->SetPosition(player_pos + dir * speed * Time::Instance().DeltaTime());
 
 }

@@ -2,6 +2,8 @@
 #include "Component.h"
 #include "Entity.h"
 
+#define NDEBUG_COMPONENT
+
 IMPLEMENT_ABSTRACT_CLASS(Component)
 
 //functionality needs to be added
@@ -20,7 +22,10 @@ void Component::Initialize()
 
 void Component::Load(json::JSON& node)
 {
-    //needs to be added
+    Object::Load(node);
+#ifdef DEBUG_COMPONENT
+    LOG(node.dump())
+#endif
 }
 
 void Component::SetOwner(Entity* owner)
