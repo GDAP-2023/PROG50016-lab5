@@ -38,6 +38,9 @@ protected:
 	void Destroy() override;
 
 public:
+
+	void SetPosition(const Vec2& newPosition);
+
 	/**
 	 * @brief Check if the Entity has a Component with the given name
 	 *

@@ -2,12 +2,12 @@
 #include "Player.h"
 
 #include <EngineTime.h>
-#include <Entity.cpp>
+#include "Entity.h"
 
 
 
 void Player::Update(const InputSystem& inputSystem) {
-	 Transform& player = ownerEntity->GetTransform();
+	const Transform* player = ownerEntity->GetTransform();
 	Vec2 dir = Vec2::Zero;
 	InputSystem& input = InputSystem::Instance();
 
@@ -33,6 +33,6 @@ void Player::Update(const InputSystem& inputSystem) {
 		dir.Normalize();
 	}
 
-	// player.pos += dir * speed * Time::Instance().DeltaTime();;
-
+	Vec2 newPosition = player->position + dir * speed * Time::Instance().DeltaTime();
+	ownerEntity->SetPosition(newPosition);
 }

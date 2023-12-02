@@ -141,3 +141,13 @@ bool Entity::RemoveComponent(Component* _component)
 	}
 	return false;
 }
+
+void Entity::SetPosition(const Vec2& newPosition) {
+	if (transform) {
+		// Create a delta based on the new position and current position
+		Vec2 delta = newPosition - transform->position;
+		// Since Transform is non-const here, you can use Translate
+		transform->Translate(delta);
+	}
+}
+

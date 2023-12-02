@@ -41,3 +41,5 @@ void Transform::Rotate(float delta) {
 void Transform::Scale(const Vec2& delta) {
 	scale *= delta;
 }
+
+
