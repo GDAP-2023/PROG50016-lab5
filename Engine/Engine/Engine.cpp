@@ -9,6 +9,7 @@
 #include <thread>
 
 #include "AssetManager.h"
+#include "AudioSystem.h"
 #include "Component.h"
 
 Engine* Engine::instance = nullptr;
@@ -26,6 +27,8 @@ void Engine::Initialize()
 	// Initialize the managers
 	AssetManager::Get().Initialize();
 	RenderSystem::Instance().Initialize();
+	AudioSystem::Get().Initialize();
+
 	SceneManager::Get().Initialize();
 
 	InputSystem::Instance().registerQuitEventHandler([this] {isRunning = false; });
@@ -38,6 +41,8 @@ void Engine::Destroy()
 {
 	Time::Instance().Destroy();
 	AssetManager::Get().Destroy();
+	AudioSystem::Get().Destroy();
+	RenderSystem::Instance().Destroy();
 	delete instance;
 	instance = nullptr;
 }

@@ -162,6 +162,7 @@
     <ClCompile Include="AnimatedSprite.cpp" />
     <ClCompile Include="Asset.cpp" />
     <ClCompile Include="AssetManager.cpp" />
+    <ClCompile Include="AudioSystem.cpp" />
     <ClCompile Include="BoxCollider.cpp" />
     <ClCompile Include="CircleCollider.cpp" />
     <ClCompile Include="CollisionSystem.cpp" />
@@ -193,6 +194,7 @@
     <ClInclude Include="AnimatedSprite.h" />
     <ClInclude Include="Asset.h" />
     <ClInclude Include="AssetManager.h" />
+    <ClInclude Include="AudioSystem.h" />
     <ClInclude Include="BoxCollider.h" />
     <ClInclude Include="CircleCollider.h" />
     <ClInclude Include="CollisionSystem.h" />

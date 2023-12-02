@@ -18,6 +18,7 @@ class FontAsset final : public Asset
     void Destroy() override;
     void Load(json::JSON&) override;
     TTF_Font* GetFont() const;
+    void SetFontSize(int size) const;
 };
 
 #endif // !_FONT_ASSET_H_
