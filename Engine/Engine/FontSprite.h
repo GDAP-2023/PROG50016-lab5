@@ -3,6 +3,8 @@
 #define _FONT_SPRITE_
 
 /*
+* #Worked on by Matthew Beaudoin
+* 
 * @FontSprite
 *
 * Allows the user to display text onto the SDL Window. They can control the text content,

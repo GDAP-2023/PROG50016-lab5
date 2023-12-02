@@ -1,4 +1,6 @@
 /*
+* #Worked on by Matthew Beaudoin
+* 
 * @Renderable
 *
 * Abstract class that any component that needs to be renderered to the RenderSystems

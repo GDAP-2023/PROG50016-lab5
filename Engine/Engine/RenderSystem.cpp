@@ -1,4 +1,6 @@
 /*
+* #Worked on by Matthew Beaudoin
+* 
 * @RenderSystem
 *
 * Controls the SDL window along with its properties. Also responsible for
