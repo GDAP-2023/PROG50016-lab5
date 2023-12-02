@@ -3,38 +3,43 @@
 #define _ASSET_MANAGER_H_
 
 #include <list>
+#include <filesystem>
 #include "Asset.h"
 
-class AssetManager {
-public:
+struct AssetMapEntry
+{
+	Asset* asset;
+	unsigned int ref_count;
+};
 
-	static AssetManager& Instance() {
-		if (instance == nullptr) {
-			instance = new AssetManager();
-		}
-		return *instance;
-	}
+class AssetManager {
+	DECLARE_SINGLETON(AssetManager)
+
+	std::string assetDirectory = "../Assets";
+	bool recursiveSearch = true;
+
+	std::map<STRCODE, AssetMapEntry> assets;
+public:
 
 	void Destroy();
 
+	void HandleAssetEntry(const std::filesystem::directory_entry& entry);
 	void Initialize();
 
-	void AddAsset(Asset* newAsset);
+	void AddAsset(Asset* asset);
 
-	void LoadAsset(int AssetId);
+	void LoadSceneAsset(std::string guid);
+	void LoadSceneAsset(STRCODE id);
+	void UnloadSceneAsset(std::string guid);
+	void UnloadSceneAsset(STRCODE id);
 
-	void RemoveAsset(Asset* asset);
+	Asset* GetAsset(std::string guid);
+	Asset* GetAsset(STRCODE id);
+	
+	void RemoveAsset(std::string guid);
+	void RemoveAsset(STRCODE id);
 
-private:
-
-	std::list<Asset*> assets;
-
-	static AssetManager* instance;
-
-	AssetManager();
-	~AssetManager();
-	inline explicit AssetManager(AssetManager const&) = delete;
-	inline AssetManager& operator=(AssetManager const&) = delete;
+	void Load(const std::string& config_file);
 
 };
 

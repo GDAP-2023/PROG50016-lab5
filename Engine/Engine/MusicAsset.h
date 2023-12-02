@@ -6,12 +6,12 @@
 #include "Asset.h"
 #include "SDL_mixer.h"
 
-class MusicAsset : public Asset {
+class MusicAsset final : public Asset {
 	Mix_Music* music;
 
 	DECLARE_DYNAMIC_DERIVED_CLASS(MusicAsset, Asset)
-	MusicAsset();
-    ~MusicAsset() override;
+	MusicAsset() = default;
+    ~MusicAsset() override = default;
     void Initialize() override;
     void Destroy() override;
     void Load(json::JSON&) override;

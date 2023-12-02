@@ -16,5 +16,5 @@ Object::~Object() = default;
 
 void Object::Load(json::JSON& json_component)
 {
-	// Function to be added
+	//
 }

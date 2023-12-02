@@ -8,6 +8,7 @@
 
 #include <thread>
 
+#include "AssetManager.h"
 #include "Component.h"
 
 Engine* Engine::instance = nullptr;
@@ -19,9 +20,11 @@ void Engine::Initialize()
 	Engine_Register();
 
 	// Load the managers
+	AssetManager::Get().Load("../Assets/AssetManager.json");
 	SceneManager::Get().Load();
 
 	// Initialize the managers
+	AssetManager::Get().Initialize();
 	RenderSystem::Instance().Initialize();
 	SceneManager::Get().Initialize();
 
@@ -34,11 +37,9 @@ void Engine::Initialize()
 void Engine::Destroy()
 {
 	Time::Instance().Destroy();
-
-	if (instance == nullptr)
-	{
-		delete instance;
-	}
+	AssetManager::Get().Destroy();
+	delete instance;
+	instance = nullptr;
 }
 
 void Engine::GameLoop()

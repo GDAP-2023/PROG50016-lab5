@@ -2,6 +2,8 @@
 #include "RenderSystem.h"
 #include "Sprite.h"
 
+#include "AssetManager.h"
+
 IMPLEMENT_DYNAMIC_CLASS(Sprite);
 
 Sprite::Sprite() {
@@ -19,7 +21,20 @@ void Sprite::Destroy() {
 }
 
 void Sprite::Update() {
+}
 
+void Sprite::Load(json::JSON& document) {
+	// Checks for width in RenderSettings
+	if (document.hasKey("ClassData"))
+	{
+		json::JSON classData = document["width"];
+
+		if (classData.hasKey("Texture")) {
+			std::string guid = classData["Texture"].ToString();
+			// Retrieve texture from asset manager by path
+			// SetNewTexture()
+		}
+	}
 }
 
 void Sprite::SetSourceRect(SDL_Rect _rect) {
