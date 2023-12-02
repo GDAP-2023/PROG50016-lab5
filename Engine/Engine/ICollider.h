@@ -42,8 +42,6 @@ public:
 	virtual void SetSolid(bool solid) = 0 ;
 
 private:
-	float GetRadius();
-	SDL_Rect GetBounds();
 	Component* transform;
 
 

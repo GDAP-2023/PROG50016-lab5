@@ -171,14 +171,18 @@ float DistanceSquared(const Vec2& a, const Vec2& b) {
 }
 
 // Helper function for Circle-Circle collision
-bool CollisionSystem::CircleCircleCollision(ICollider* circle1, ICollider* circle2) {
+bool CollisionSystem::CircleCircleCollision(ICollider* col1, ICollider* col2) {
+	CircleCollider* circle1 = (CircleCollider*)col1;
+	CircleCollider* circle2 = (CircleCollider*)col2;
 	Vec2 positionDiff = circle1->GetPosition() - circle2->GetPosition();
 	float radiusSum = circle1->GetRadius() + circle2->GetRadius();
 	return positionDiff.MagnitudeSquared() <= (radiusSum * radiusSum);
 }
 
 // Helper function for Box-Box collision using AABB (Axis-Aligned Bounding Box)
-bool CollisionSystem::BoxBoxCollision(ICollider* box1, ICollider* box2) {
+bool CollisionSystem::BoxBoxCollision(ICollider* col1, ICollider* col2) {
+	BoxCollider* box1 = (BoxCollider*)col1;
+	BoxCollider* box2 = (BoxCollider*)col2;
 	auto bounds1 = box1->GetBounds();
 	auto bounds2 = box2->GetBounds();
 
@@ -189,7 +193,9 @@ bool CollisionSystem::BoxBoxCollision(ICollider* box1, ICollider* box2) {
 
 
 // Helper function for Circle-Box collision using AABB (Axis-Aligned Bounding Box)
-bool CollisionSystem::CircleBoxCollision(ICollider* box, ICollider* circle) {
+bool CollisionSystem::CircleBoxCollision(ICollider* col1, ICollider* col2) {
+	BoxCollider* box = (BoxCollider*)col1;
+	CircleCollider* circle = (CircleCollider*)col2;
 	auto bounds = box->GetBounds();
 	Vec2 circleCenter = circle->GetPosition();
 	float circleRadius = circle->GetRadius();

@@ -44,6 +44,7 @@ public:
  *
  * @return returns the float radius of the collider
  */
+	float GetRadius();
 	float GetBroadPhaseRadius() const;
 
 	/**

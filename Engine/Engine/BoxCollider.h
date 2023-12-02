@@ -51,6 +51,8 @@ public:
 */
 	Vec2 GetPosition() const override;
 
+	SDL_Rect GetBounds() { return m_rect; }
+
 	/**
 * @brief Used to tell if this collider is a Circle or Box collider
 *

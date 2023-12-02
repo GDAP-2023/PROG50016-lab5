@@ -59,6 +59,11 @@ void CircleCollider::SetRadius(float radius)
 	m_radius = radius;
 }
 
+float CircleCollider::GetRadius()
+{
+	return m_radius;
+}
+
 float CircleCollider::GetBroadPhaseRadius() const
 {
 	return m_radius;
