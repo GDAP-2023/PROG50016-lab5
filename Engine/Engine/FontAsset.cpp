@@ -29,3 +29,13 @@ TTF_Font* FontAsset::GetFont() const
 {
 	return font;
 };
+
+void FontAsset::SetFontSize(int size) const
+{
+	if (font == nullptr)
+	{
+		LOG("ERROR: Font not set");
+		return;
+	}
+	TTF_SetFontSize(font, size);
+};
