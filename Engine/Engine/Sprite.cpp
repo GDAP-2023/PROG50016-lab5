@@ -51,7 +51,6 @@ void Sprite::SetNewTexture(SDL_Texture* _texture) {
 	SDL_QueryTexture(texture, NULL, NULL, &size.x, &size.y);
 	
 	Transform t = ownerEntity->GetTransform();
-	int scale[2] = { 1, 1 };
 	sourceRect = { 0, 0, size.x, size.y };
 	targetRect = { 
 		(int)(t.position.x - size.x * .5f),

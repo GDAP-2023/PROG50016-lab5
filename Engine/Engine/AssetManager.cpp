@@ -61,7 +61,7 @@ void AssetManager::LoadSceneAsset(std::string guid) {
 }
 
 void AssetManager::LoadSceneAsset(unsigned id) {
-	if (assets.find(id) != assets.end()) {
+	if (assets.find(id) == assets.end()) {
 		LOG("Could not find Asset with id: " << id)
 			return;
 	}
@@ -75,7 +75,7 @@ void AssetManager::UnloadSceneAsset(std::string guid) {
 }
 
 void AssetManager::UnloadSceneAsset(STRCODE id) {
-	if (assets.find(id) != assets.end()) {
+	if (assets.find(id) == assets.end()) {
 		LOG("Could not find Asset with id: " << id)
 			return;
 	}
