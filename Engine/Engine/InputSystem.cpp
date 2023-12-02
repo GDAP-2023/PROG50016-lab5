@@ -42,7 +42,7 @@ void InputSystem::Initialize()
 	// Initialize the state of the input system
 // Initialize keyStates and mouseButtonStates
 // Initialize keyEventHandlers and mouseEventHandlers
-	for (int i = 0; i < 256; i++) {
+	for (int i = 0; i < 512; i++) {
 		keyStates[i] = false;
 	}
 	for (int i = 0; i < 5; i++) {
@@ -183,6 +183,11 @@ bool InputSystem::areKeysPressed(const std::vector<SDL_Keycode>& keys) const
  */
 
 bool InputSystem::isKeyPressed(SDL_Keycode key) const {
+	if (key >= 512 || key < 0)
+	{
+		LOG("Unhandled Input (key out of range): " << key);
+		return false;
+	}
 	return keyStates[key];
 }
 
