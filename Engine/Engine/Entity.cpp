@@ -105,9 +105,9 @@ Component* Entity::GetComponent(const std::string& componentName) const
 	{
 #define DEBUG_ENTITY_GET_COMPONENT
 #ifdef DEBUG_ENTITY_GET_COMPONENT
-		LOG(componentName << ", " << component->GetClassName())
+		LOG(componentName << ", " << component->GetDerivedClassName())
 #endif
-		if (component->GetClassName() == componentName)
+		if (component->GetDerivedClassName() == componentName)
 		{
 			return component;
 		}

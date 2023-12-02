@@ -24,12 +24,6 @@
                 },
                 "Components": [
                     {
-                        "ClassName": "Player",
-                        "ClassData": {
-                            "Speed": 42.0
-                        }
-                    },
-                    {
                         "ClassName": "Sprite",
                         "ClassData": {
                             "Texture": "awooga"
@@ -38,6 +32,12 @@
                     {
                         "ClassName": "BoxCollider",
                         "ClassData": {}
+                    },
+                    {
+                        "ClassName": "Player",
+                        "ClassData": {
+                            "Speed": 42.0
+                        }
                     }
                 ] 
             },
