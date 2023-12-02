@@ -12,40 +12,42 @@
         ]
     },
     "Scene": {
-        "Name": "First Scene",
+        "Name": "Level01",
         "GUID": "1a9e5171-c7ab-47d4-9af4-d490d1494201",
         "IsEnabled": true,
         "Entities": [
             {
-                "Name": "Camera",
-                "GUID": "812",
+                "Name": "Player",
+                "GUID": "1209aa72-5c34-4cfb-a881-3c6e6eadae69",
                 "Components": [
                     {
-                        "ClassName": "Transform",
+                        "ClassName": "AnimatedSprite",
                         "ClassData": {
-                            "Position": [0.5, 2.3, 5.7],
-                            "Rotation": 30.65,
-                            "Scale": [1, 2]
                         }
+                    },
+                    {
+                        "ClassName": "BoxCollider",
+                        "ClassData": {
+                        }
+                    },
+                    {
+                        "ClassName": "Player",
+                        "ClassData": {}
                     }
                 ]
             },
             {
-                "Name": "Player",
-                "GUID": "813",
+                "Name": "Target",
+                "GUID": "8bdd7b16-fb0b-4e76-af3e-0760e8d22dfd",
                 "Components": [
-                    {
-                        "ClassName": "Transform",
-                        "ClassData": {
-                            "Position": [0, 0, 0],
-                            "Rotation": 180,
-                            "Scale": [1.5, 1.5]
-                        }
-                    },
                     {
                         "ClassName": "Sprite",
                         "ClassData": {
-
+                        }
+                    },
+                    {
+                        "ClassName": "BoxCollider",
+                        "ClassData": {
                         }
                     }
                 ]

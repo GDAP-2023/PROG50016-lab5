@@ -3,7 +3,6 @@
 
 #include "EngineCore.h"
 #include "Engine.h"
-#include "Zombie.h"
-#include "Ghoul.h"
+#include "Player.h"
 
 #endif // !_GAME_CORE_H_

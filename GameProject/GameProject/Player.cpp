@@ -4,9 +4,11 @@
 #include <EngineTime.h>
 #include <Entity.cpp>
 
+IMPLEMENT_DYNAMIC_CLASS(Player)
 
+void Player::Initialize() { }
 
-void Player::Update(const InputSystem& inputSystem) {
+void Player::Update() {
 	Vec2 player_pos = ownerEntity->GetTransform()->position;
 	Vec2 dir = Vec2::Zero;
 	InputSystem& input = InputSystem::Instance();
@@ -34,5 +36,6 @@ void Player::Update(const InputSystem& inputSystem) {
 	}
 
 	ownerEntity->SetPosition(player_pos + dir * speed * Time::Instance().DeltaTime());
-
 }
+
+
