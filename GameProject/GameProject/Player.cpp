@@ -1,13 +1,15 @@
 #include "GameCore.h"
 #include "Player.h"
 
-#define DEBUG_PLAYER
+#define NDEBUG_PLAYER
 
 IMPLEMENT_DYNAMIC_CLASS(Player)
 
 void Player::Initialize()
 {
     Component::Initialize();
+    collider = (BoxCollider*)ownerEntity->GetComponent("BoxCollider");
+    LOG("meow")
 }
 
 void Player::Update() {
@@ -37,6 +39,11 @@ void Player::Update() {
 #ifdef DEBUG_PLAYER
         LOG("Input: " << dir.x << ", " << dir.y);
 #endif
+    }
+
+    if (collider != nullptr)
+    {
+        LOG(collider->GetBroadPhaseRadius());
     }
 
     ownerEntity->GetTransform().position += dir * (speed * Time::Instance().DeltaTime());
