@@ -22,10 +22,11 @@ void Engine::Initialize()
 
 	// Load the managers
 	AssetManager::Get().Load("../Assets/AssetManager.json");
+	AssetManager::Get().Initialize();
+
 	SceneManager::Get().Load();
 
 	// Initialize the managers
-	AssetManager::Get().Initialize();
 	RenderSystem::Instance().Initialize();
 	AudioSystem::Get().Initialize();
 
