@@ -21,13 +21,16 @@ class Entity final : public Object
 private:
 	Transform* transform = nullptr;
 
-	std::list<Component*> components;
-	std::list<Component*> componentsToAdd;
-	std::list<Component*> componentsToRemove;
+	// Need to store the components as Object*, else TypeClass fails
+	// Reason: When we create a component using TypeClass, we get Object*. 
+	//         Force casting it to Component* causes GetDerivedClassName() to return "Component".
+	std::list<Object*> components;
+	std::list<Object*> componentsToAdd;
+	std::list<Object*> componentsToRemove;
 
 protected:
-	Entity() = default;
-	Entity(std::string _guid) : Object(_guid) { }
+	Entity();
+	Entity(std::string _guid);
 	~Entity() = default;
 
 	void Initialize() override;
@@ -79,13 +82,6 @@ public:
 	* @return true if the Component is successfully removed, false if not
 	*/
 	bool RemoveComponent(Component* _component);
-
-	/**
-	* @brief Get all the Components of the Entity
-	*
-	* @return a list of Components from the Entity
-	*/
-	std::list<Component*> GetComponents() const { return components; }
 
 	/**
 	* @brief Get the Transform of the Entity

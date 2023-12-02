@@ -5,13 +5,25 @@
 
 IMPLEMENT_DYNAMIC_CLASS(Entity)
 
+Entity::Entity()
+{
+	// Assign a default value to ensure we always have a transform
+	transform = (Transform*)CreateComponent("Transform");
+}
+
+Entity::Entity(std::string _guid) : Object(_guid)
+{
+	// Assign a default value to ensure we always have a transform
+	transform = (Transform*)CreateComponent("Transform");
+}
+
 void Entity::Initialize()
 {
-	transform = (Transform*)CreateComponent("Transform");
-
-	for (auto component : components)
+	// Initialize happens before first PreUpdate. So it must be called on componentsToAdd
+	LOG(componentsToAdd.size() << " components will be added to this entity.")
+	for (Object* component : componentsToAdd)
 	{
-		component->Initialize();
+		((Component*) component)->Initialize();
 	}
 }
 
@@ -52,15 +64,15 @@ void Entity::Load(json::JSON& entityData)
 
 void Entity::Update()
 {
-	for (auto component : components)
+	for (Object* component : components)
 	{
-		component->Update();
+		((Component*)component)->Update();
 	}
 }
 
 void Entity::PreUpdate()
 {
-	for (auto component : componentsToAdd)
+	for (Object* component : componentsToAdd)
 	{
 		components.push_back(component);
 	}
@@ -69,19 +81,19 @@ void Entity::PreUpdate()
 
 void Entity::PostUpdate()
 {
-	for (auto component : componentsToRemove)
+	for (Object* component : componentsToRemove)
 	{
 		components.remove(component);
-		delete component;
+		delete (Component*)component;
 	}
 	componentsToRemove.clear();
 }
 
 void Entity::Destroy()
 {
-	for (auto component : components)
+	for (Object* component : components)
 	{
-		delete component;
+		delete (Component*)component;
 	}
 	delete transform;
 	components.clear();
@@ -89,9 +101,17 @@ void Entity::Destroy()
 
 bool Entity::HasComponent(std::string componentClassName)
 {
-	for (auto component : components)
+	for (Object* component : components)
 	{
-		if (component->GetClassName() == componentClassName)
+		if (component->GetDerivedClassName() == componentClassName)
+		{
+			return true;
+		}
+	}
+	// In case this runs before PreUpdate, check in componentsToAdd
+	for (Object* component : componentsToAdd)
+	{
+		if (component->GetDerivedClassName() == componentClassName)
 		{
 			return true;
 		}
@@ -109,11 +129,19 @@ void Entity::AddComponents(const std::vector<std::string>& _component_list)
 
 Component* const Entity::GetComponent(const std::string componentClassName)
 {
-	for (auto component : components)
+	for (Object* component : components)
 	{
-		if (component->GetClassName() == componentClassName)
+		if (component->GetDerivedClassName() == componentClassName)
 		{
-			return component;
+			return (Component*)component;
+		}
+	}
+	// If this ran before preUpdate, component would be in componentsToAdd
+	for (Object* component : componentsToAdd)
+	{
+		if (component->GetDerivedClassName() == componentClassName)
+		{
+			return (Component*)component;
 		}
 	}
 	return nullptr;
@@ -121,17 +149,25 @@ Component* const Entity::GetComponent(const std::string componentClassName)
 
 Component* Entity::CreateComponent(std::string componentClassName)
 {
-	Component* component = (Component*)CreateObject(componentClassName.c_str());
-	component->ownerEntity = this;
+	// Prevent creation of duplicate components
+	if (HasComponent(componentClassName))
+	{
+		return GetComponent(componentClassName);
+	}
+
+	// DO NOT typecast to Component* here. Object slicing destroys derived class-specific information
+	Object* component = CreateObject(componentClassName.c_str());
+	((Component*)component)->ownerEntity = this;
+	LOG("Created " << componentClassName << " component.")
 	componentsToAdd.push_back(component);
-	return component;
+	return (Component*)component;
 }
 
 bool Entity::RemoveComponent(Component* _component)
 {
-	for (auto component : components)
+	for (Object* component : components)
 	{
-		if (component == _component)
+		if (component->GetUid() == _component->GetUid())
 		{
 			componentsToRemove.push_back(component);
 			return true;

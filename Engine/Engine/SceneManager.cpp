@@ -77,7 +77,8 @@ void SceneManager::Load()
  */
 void SceneManager::Initialize()
 {
-	for (Scene* scene : loadedScenes)
+	// Initialize happens before first PreUpdate. So it must be called on scenesToBeLoaded
+	for (Scene* scene : scenesToBeLoaded)
 	{
 		scene->Initialize();
 	}

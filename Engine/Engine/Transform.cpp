@@ -1,7 +1,7 @@
 #include "EngineCore.h"
 #include "Transform.h"
 
-IMPLEMENT_DYNAMIC_CLASS(Transform);
+IMPLEMENT_DYNAMIC_CLASS(Transform)
 
 Transform::Transform() : position(Vec2::Zero), rotation(0.0f), scale(Vec2(1.0f, 1.0f)) {} //constructor & initialize pos to 0, rotation to 0, scale to 1
 

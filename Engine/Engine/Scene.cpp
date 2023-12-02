@@ -40,7 +40,8 @@ Scene::Scene(std::string _guid)
  */
 void Scene::Initialize()
 {
-	for (Entity* entity : entities)
+	// Initialize happens before first PreUpdate. So it must be called on entitiesToBeAdded
+	for (Entity* entity : entitiesToBeAdded)
 	{
 		entity->Initialize();
 	}
