@@ -22,6 +22,7 @@ void Engine::Initialize()
 
 	// Load the managers
 	AssetManager::Get().Load("../Assets/AssetManager.json");
+	AudioSystem::Get().Load("../Assets/AudioSystem.json");
 	SceneManager::Get().Load();
 
 	// Initialize the managers
