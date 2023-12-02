@@ -39,14 +39,14 @@ void Sprite::Load(json::JSON& node) {
         return;
     }
 
-    if (json::JSON classData = node["ClassData"]; classData.hasKey("Texture")) {
-        std::string tex_asset_guid = classData["Texture"].ToString();
-        SetTextureAsset(static_cast<TextureAsset*>(AssetManager::Get().GetAsset(tex_asset_guid)));
+    if (json::JSON class_data = node["ClassData"]; class_data.hasKey("Texture")) {
+        const std::string tex_asset_guid = class_data["Texture"].ToString();
+        SetTextureAsset(dynamic_cast<TextureAsset*>(AssetManager::Get().GetAsset(tex_asset_guid)));
     }
 }
 
-void Sprite::SetSourceRect(SDL_Rect _rect) {
-    sourceRect = _rect;
+void Sprite::SetSourceRect(const SDL_Rect rect) {
+    sourceRect = rect;
 }
 
 void Sprite::SetTextureAsset(TextureAsset* texAsset) {

@@ -64,9 +64,9 @@ public:
 	/**
 	 * @brief Setter for the texture area to render
 	 *
-	 * @param _rect A rect of four values describing the area of the texture to render
+	 * @param rect A rect of four values describing the area of the texture to render
 	 */
-	void SetSourceRect(SDL_Rect _rect);
+	void SetSourceRect(SDL_Rect rect);
 
 	/**
 	 * @brief Initializes the Sprite class
