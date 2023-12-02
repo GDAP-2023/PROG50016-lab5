@@ -20,7 +20,7 @@
                 "Transform": {
                     "Position": [0.0, 0.0],
                     "Rotation": 0,
-                    "Scale": [1, 1]
+                    "Scale": [1.0, 1.0]
                 },
                 "Components": [
                     {
@@ -47,7 +47,7 @@
                 "Transform": {
                     "Position": [50.0, 10.0],
                     "Rotation": 0,
-                    "Scale": [1, 1]
+                    "Scale": [1.0, 1.0]
                 },
                 "Components": [
                     {
