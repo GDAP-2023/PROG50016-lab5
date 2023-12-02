@@ -1,25 +1,26 @@
 #include "EngineCore.h"
 #include "Entity.h"
 #include "Component.h"
+#include "Transform.h"
 
 IMPLEMENT_DYNAMIC_CLASS(Entity)
 
 void Entity::Initialize()
 {
-	CreateComponent("Transform");
+	transform = (Transform*)CreateComponent("Transform");
+
 	for (auto component : components)
 	{
 		component->Initialize();
 	}
 }
 
-void Entity::Load(json::JSON& _entityJSON)
+void Entity::Load(json::JSON& entityData)
 {
-	json::JSON entityData = _entityJSON["Scene"];
-
 	if (entityData.hasKey("Name"))
 	{
 		name = entityData["Name"].ToString();
+		//std::cout << "Entity Name: " << name << std::endl;
 	}
 
 	if (entityData.hasKey("GUID"))
@@ -28,22 +29,25 @@ void Entity::Load(json::JSON& _entityJSON)
 		uid = GetHashCode(guid.c_str());
 	}
 
-	if (entityData.hasKey("Transform"))
-	{
-		//json::JSON transformJSON = entityData["Transform"];
-		//transform = CreateComponent("Transform");
-		//transform->Load(transformJSON);
-	}
-
 	// Load the components
 	if (entityData.hasKey("Components"))
 	{
 		json::JSON componentsJSON = entityData["Components"];
+
+		if (componentsJSON.hasKey("Transform"))
+		{
+			json::JSON transformJSON = entityData["Transform"];
+			transform = (Transform*)CreateComponent("Transform");
+			//std::cout << "Transform Component Created" << std::endl;
+			transform->Load(transformJSON["ClassData"]);
+		}
+
 		for (json::JSON& componentJSON : componentsJSON.ArrayRange())
 		{
 			std::string componentClassName = componentJSON["ClassName"].ToString();
 			Component* component = CreateComponent(componentClassName);
-			component->Load(componentJSON);
+			component->Load(componentJSON["ClassData"]);
+			//std::cout<< "Component Created: " << componentClassName << std::endl;
 		}
 	}
 }
@@ -60,7 +64,6 @@ void Entity::PreUpdate()
 {
 	for (auto component : componentsToAdd)
 	{
-		
 		components.push_back(component);
 		component->Initialize();
 	}
@@ -77,7 +80,7 @@ void Entity::PostUpdate()
 	componentsToRemove.clear();
 }
 
-void Entity::Destroy() 
+void Entity::Destroy()
 {
 	for (auto component : components)
 	{
@@ -98,11 +101,11 @@ bool Entity::HasComponent(std::string componentClassName)
 	return false;
 }
 
-void AddComponents(const std::vector<std::string>& _component_list)
+void Entity::AddComponents(const std::vector<std::string>& _component_list)
 {
 	for (std::string component : _component_list)
 	{
-		//CreateComponent(component);
+		CreateComponent(component);
 	}
 }
 
@@ -110,7 +113,7 @@ Component* const Entity::GetComponent(const std::string componentClassName)
 {
 	for (auto component : components)
 	{
-		if (component->GetClassName() == componentClassName) 
+		if (component->GetClassName() == componentClassName)
 		{
 			return component;
 		}
@@ -123,7 +126,7 @@ Component* Entity::CreateComponent(std::string componentClassName)
 	Component* component = (Component*)CreateObject(componentClassName.c_str());
 	component->ownerEntity = this;
 	componentsToAdd.push_back(component);
-	return component; 
+	return component;
 }
 
 bool Entity::RemoveComponent(Component* _component)
@@ -137,4 +140,10 @@ bool Entity::RemoveComponent(Component* _component)
 		}
 	}
 	return false;
+}
+
+void Entity::SetPosition(const Vec2& newPosition) {
+	if (transform) {
+		transform->position = newPosition;
+	}
 }
