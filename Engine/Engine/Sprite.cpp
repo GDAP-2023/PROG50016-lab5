@@ -33,14 +33,10 @@ void Sprite::Update() {
 }
 
 void Sprite::Load(json::JSON& node) {
-    // Checks for width in RenderSettings
-    if (!node.hasKey("ClassData"))
-    {
-        return;
-    }
 
-    if (json::JSON class_data = node["ClassData"]; class_data.hasKey("Texture")) {
-        const std::string tex_asset_guid = class_data["Texture"].ToString();
+    if (node.hasKey("Texture")) {
+        const std::string tex_asset_guid = node["Texture"].ToString();
+        LOG("Trying to load Texture: " << tex_asset_guid);
         SetTextureAsset(dynamic_cast<TextureAsset*>(AssetManager::Get().GetAsset(tex_asset_guid)));
     }
 }
@@ -61,6 +57,11 @@ void Sprite::SetTextureAsset(TextureAsset* texAsset) {
 
 void Sprite::Render()
 {
+    if (texture == nullptr)
+    {
+        LOG("No pretty picture :(");
+        return;
+    }
     const auto texture = this->texture->GetTexture();
     SDL_SetTextureColorMod(texture, filterColor.r, filterColor.g, filterColor.b);
     SDL_RenderCopyEx(
