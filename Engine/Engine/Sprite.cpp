@@ -2,6 +2,8 @@
 #include "RenderSystem.h"
 #include "Sprite.h"
 
+#include "AssetManager.h"
+
 IMPLEMENT_DYNAMIC_CLASS(Sprite);
 
 Sprite::Sprite() {
@@ -19,7 +21,6 @@ void Sprite::Destroy() {
 }
 
 void Sprite::Update() {
-
 }
 
 void Sprite::Load(json::JSON& document) {
