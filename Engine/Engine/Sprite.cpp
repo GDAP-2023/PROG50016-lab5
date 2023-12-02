@@ -2,6 +2,8 @@
 #include "RenderSystem.h"
 #include "Sprite.h"
 
+#include "AssetManager.h"
+
 IMPLEMENT_DYNAMIC_CLASS(Sprite);
 
 Sprite::Sprite() {
@@ -19,7 +21,7 @@ void Sprite::Destroy() {
 }
 
 void Sprite::Update() {
-
+	AssetManager::Get().GetAsset<int>();
 }
 
 void Sprite::SetSourceRect(SDL_Rect _rect) {

@@ -11,8 +11,8 @@ class FontAsset : public Asset
     TTF_Font* font = nullptr;
 
 	DECLARE_DYNAMIC_DERIVED_CLASS(FontAsset, Asset)
-    FontAsset();
-    ~FontAsset() override;
+    FontAsset() = default;
+    ~FontAsset() override = default;
     void Initialize() override;
     void Destroy() override;
     void Load(json::JSON&) override;

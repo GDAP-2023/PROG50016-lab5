@@ -6,24 +6,38 @@
 #include <filesystem>
 #include "Asset.h"
 
+struct AssetMapEntry
+{
+	Asset* asset;
+	unsigned int ref_count;
+};
+
 class AssetManager {
 	DECLARE_SINGLETON(AssetManager)
 
 	std::string assetDirectory = "../Assets";
 	bool recursiveSearch = true;
 
-	std::list<Asset*> assets;
+	std::map<STRCODE, AssetMapEntry> assets;
 public:
 
 	void Destroy();
 
+	void HandleAssetEntry(const std::filesystem::directory_entry& entry);
 	void Initialize();
 
-	void AddAsset(Asset* newAsset);
+	void AddAsset(Asset* asset);
 
-	void LoadAsset(int AssetId);
+	void LoadSceneAsset(std::string guid);
+	void LoadSceneAsset(STRCODE id);
+	void UnloadSceneAsset(std::string guid);
+	void UnloadSceneAsset(STRCODE id);
 
-	void RemoveAsset(Asset* asset);
+	Asset* GetAsset(std::string guid);
+	Asset* GetAsset(STRCODE id);
+	
+	void RemoveAsset(std::string guid);
+	void RemoveAsset(STRCODE id);
 
 	void Load(const std::string& config_file);
 

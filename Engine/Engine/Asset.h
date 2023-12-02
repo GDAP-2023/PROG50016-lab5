@@ -7,6 +7,7 @@
 
 class Asset : public Object
 {
+protected:
 	std::string filepath;
 
 	DECLARE_ABSTRACT_DERIVED_CLASS(Asset, Object)
@@ -14,6 +15,7 @@ class Asset : public Object
 	~Asset() override = default;
 	void Initialize() override;
 	void Destroy() override;
+	void Load(json::JSON&) override;
 
 	friend class AssetManager;
 };
