@@ -5,7 +5,6 @@
 
 #include "EngineCore.h"
 #include "SDL.h"
-//#include "CollisionSystem.h"
 #include "Entity.h"
 #include "SceneManager.h"
 #include "Transform.h"
@@ -23,10 +22,9 @@ enum class ColliderType {
  * The ICollider class is an abstract class used by CollisionSystem, BoxCollider, and CircleCollider in order to store and call colliders regardless of type
  * Since it is an abstract class, its functions should never be called and instead should be implemented by its child classes BoxCollider and CircleCollider
  */
-class ICollider
+class ICollider : public Component
 {
-
-	DECLARE_ABSTRACT_BASE_CLASS(ICollider);
+	DECLARE_ABSTRACT_DERIVED_CLASS(ICollider, Component);
 
 protected:
 

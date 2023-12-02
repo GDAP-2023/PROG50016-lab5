@@ -15,9 +15,9 @@
  * It uses the entity's SDL_Rect as its position and bounds
  * To check for collisions, use the OnCollisionEnter, OnCollisionStay, or OnCollisionExit functions and consult their implementation
  */
-class BoxCollider : public ICollider,public Component
+class BoxCollider : public ICollider
 {
-	DECLARE_DYNAMIC_DERIVED_CLASS(BoxCollider, ICollider, Component);
+	DECLARE_DYNAMIC_DERIVED_CLASS(BoxCollider, ICollider);
 
 private:
 	SDL_Rect m_rect;
