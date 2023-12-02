@@ -36,11 +36,11 @@ private:
 protected:
 	SDL_RendererFlip flip = SDL_FLIP_NONE;
 
-	SDL_Color _filterColor = { 255, 255, 255 };
+	SDL_Color filterColor = { 255, 255, 255 };
 
 	Renderable();
 
-	~Renderable();
+	~Renderable() override;
 };
 
 #endif

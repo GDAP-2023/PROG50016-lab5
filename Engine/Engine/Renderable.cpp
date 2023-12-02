@@ -31,8 +31,8 @@ Renderable::~Renderable()
 */
 void Renderable::SetFilterColor(int r, int g, int b, int a)
 {
-	_filterColor.r = r;
-	_filterColor.g = g;
-	_filterColor.b = b;
-	_filterColor.a = a;
+	filterColor.r = r;
+	filterColor.g = g;
+	filterColor.b = b;
+	filterColor.a = a;
 }
