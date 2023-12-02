@@ -30,7 +30,7 @@ void Engine::Initialize()
 
 	InputSystem::Instance().registerQuitEventHandler([this] {isRunning = false; });
 
-	InputSystem::Instance().setupQuitHandler(*this);
+
 
 }
 
