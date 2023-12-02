@@ -20,17 +20,16 @@ class CircleCollider : public ICollider
 private:
 	float m_radius;
 	SDL_Rect m_rect;
-	bool isSolid = false;
-	Transform* transform;
 public:
 	/**
  * @brief CircleCollider Constructor. Gets transform but not radius
  */
-	CircleCollider();
+	CircleCollider() = default;
 protected:
-	~CircleCollider();
+	~CircleCollider() override = default;
+	void Initialize() override;
 	void Update() override;  // declared in Component
-	void Destroy();
+	void Destroy() override;
 
 public:
 	/**
@@ -44,21 +43,8 @@ public:
  *
  * @return returns the float radius of the collider
  */
-	float GetRadius();
-	float GetBroadPhaseRadius() const;
-
-	/**
- * @brief Checks the bool isSolid to tell if this Entity should be treated as a solid object
- *
- * @return returns the boolean isSolid to tell if this Entity should be treated as solid
- */
-	bool IsSolid() const;
-	/**
- * @brief Sets the bool isSolid which tells if this Entity should be treated as a solid object
- *
- * @param solid True if the object should be solid, False if the object should not
- */
-	void SetSolid(bool solid);
+	float GetRadius() const;
+	float GetBroadPhaseRadius() const override;
 
 	/**
  * @brief Currently unimplemented, would use the isSolid variable to prevent two solid objects from overlapping
@@ -66,7 +52,7 @@ public:
  * @param other The other solid collider object that the CollisionSystem has found you to be colliding with
  * @return Always returns true
  */
-	bool HandleCollision(ICollider* other);
+	bool HandleCollision(ICollider* other) override;
 
 	/**
  * @brief Currently unimplemented, should return the x,y values of the transform attached to this collider's attached object
@@ -88,7 +74,7 @@ public:
 * @param other The other collider you want to check if there's been a collision with
 * @return Either an empty list if you did not just collide with other, or a list that only contains other's game Entity if you did collide with other
 */
-	std::list<Entity*> OnCollisionEnter(ICollider* other);
+	std::list<Entity*> OnCollisionEnter(ICollider* other) override;
 
 	/**
 * @brief Used for handling collisions that have been occuring for more than one run of code by checking if another collider collides with you
@@ -96,7 +82,7 @@ public:
 * @param other The other collider you want to check if there's been a collision with
 * @return Either an empty list if you did not collide with other, or a list that only contains other's game Entity if you did collide with other
 */
-	std::list<Entity*> OnCollisionStay(ICollider* other);
+	std::list<Entity*> OnCollisionStay(ICollider* other) override;
 
 	/**
 * @brief Used for handling collisions that have just stopped occuring by checking if another collider collides with you
@@ -104,7 +90,7 @@ public:
 * @param other The other collider you want to check if there's been a collision with
 * @return Either an empty list if you did not just stop colliding with other, or a list that only contains other's game Entity if you did stop colliding with other
 */
-	std::list<Entity*> OnCollisionExit(ICollider* other);
+	std::list<Entity*> OnCollisionExit(ICollider* other) override;
 
 
 
