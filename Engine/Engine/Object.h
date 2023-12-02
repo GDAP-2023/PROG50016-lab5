@@ -5,31 +5,31 @@
 
 class Object
 {
-	DECLARE_ABSTRACT_BASE_CLASS(Object)
+    DECLARE_ABSTRACT_BASE_CLASS(Object)
 
 protected:
-	bool isActive = false;
+    bool isActive = false;
 
-	std::string name = "";
-	std::string guid = "";
-	STRCODE uid = -1;
+    std::string name;
+    std::string guid;
+    STRCODE uid = -1;
 
 protected:
-	Object();
-	Object(std::string _guid) : guid(_guid) { }
-	Object(std::string _guid, std::string& _name) : guid(_guid), name(_name) { }
-	virtual ~Object();
+    Object();
+    explicit Object(std::string guid);
+    Object(std::string guid, std::string name);
+    virtual ~Object() = default;
 
-	virtual void Initialize() = 0;
-	virtual void Destroy() {};
+    virtual void Initialize() = 0;
+    virtual void Destroy() {}
 
 public:
-	virtual void Load(json::JSON&);
+    virtual void Load(json::JSON&);
 
-	inline bool IsActive() { return isActive; }
-	inline std::string& GetName() { return name; }
-	inline std::string Getguid() { return guid; }
-	inline STRCODE GetUid() { return uid; }
+    bool IsActive() const { return isActive; }
+    std::string& GetName() { return name; }
+    std::string& GetGuid() { return guid; }
+    STRCODE GetUid() const { return uid; }
 };
 
 #endif // !_OBJECT_H_

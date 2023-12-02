@@ -5,16 +5,33 @@ IMPLEMENT_ABSTRACT_CLASS(Object)
 
 Object::Object()
 {
-	UUID _uid;
-	CreateUUID(&_uid);
+    UUID uuid;
+    CreateUUID(&uuid);
 
-	uid = GUIDToSTRCODE(_uid);
-	guid = GUIDTostring(_uid);
+    uid = GUIDToSTRCODE(uuid);
+    guid = GUIDTostring(uuid);
 }
 
-Object::~Object() = default;
-
-void Object::Load(json::JSON& json_component)
+Object::Object(std::string guid) : guid(std::move(guid))
 {
-	//
+    uid = GetHashCode(this->guid.c_str());
+}
+
+Object::Object(std::string guid, std::string name) : name(std::move(name)), guid(std::move(guid))
+{
+    uid = GetHashCode(this->guid.c_str());
+}
+
+void Object::Load(json::JSON& node)
+{
+    if (node.hasKey("Name"))
+    {
+        name = node["Name"].ToString();
+    }
+
+    if (node.hasKey("GUID"))
+    {
+        guid = node["GUID"].ToString();
+        uid = GetHashCode(guid.c_str());
+    }
 }
