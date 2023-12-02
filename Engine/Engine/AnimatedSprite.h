@@ -48,6 +48,8 @@ private:
 	 */
 	void Update() override;
 
+	void Load(json::JSON&) override;
+
 public:
 	/**
 	 * @brief AnimatedSprite constructor
