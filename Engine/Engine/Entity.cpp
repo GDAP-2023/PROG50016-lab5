@@ -83,7 +83,7 @@ bool Entity::HasComponent(const std::string& componentName) const
 {
 	for (const auto component : components)
 	{
-		if (component->GetClassName() == componentName)
+		if (component->GetDerivedClassName() == componentName)
 		{
 			return true;
 		}
@@ -103,7 +103,11 @@ Component* Entity::GetComponent(const std::string& componentName) const
 {
 	for (auto component : components)
 	{
-		if (component->GetClassName() == componentName)
+#define DEBUG_ENTITY_GET_COMPONENT
+#ifdef DEBUG_ENTITY_GET_COMPONENT
+		LOG(componentName << ", " << component->GetDerivedClassName())
+#endif
+		if (component->GetDerivedClassName() == componentName)
 		{
 			return component;
 		}

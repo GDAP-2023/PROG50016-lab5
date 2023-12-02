@@ -9,6 +9,7 @@
 #include "Engine.h"
 #include "Entity.h"
 #include "InputSystem.h"
+#include "CollisionSystem.h"
 #include "Component.h"
 #include "Player.h"
 

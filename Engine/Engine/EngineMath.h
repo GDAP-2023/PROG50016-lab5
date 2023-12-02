@@ -62,6 +62,8 @@ union Vec2
     // Only because Roy asked me to :(
     float Distance(const Vec2 &rhs) const;
     static float Distance(const Vec2 &lhs, const Vec2 &rhs);
+
+    static Vec2 Lerp(const Vec2& lhs, const Vec2& rhs, float t);
 };
 
 // Exercise for the viewer :)
@@ -117,6 +119,5 @@ inline Vec2 vec2_from_json(json::JSON& node) {
 
     return Vec2::Zero;
 }
-
 
 #endif

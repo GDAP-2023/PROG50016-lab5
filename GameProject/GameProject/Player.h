@@ -14,6 +14,7 @@ public:
     void Load(json::JSON&) override;
 private:
     float speed = 5.0f;
+    BoxCollider* collider = nullptr;
 };
 
 #endif // PLAYER_H
