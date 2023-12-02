@@ -70,7 +70,7 @@ void FontSprite::Render()
 			(int)(outputSizing.x * ownerEntity->GetTransform()->scale.x), (int)(outputSizing.y * ownerEntity->GetTransform()->scale.y) };
 
 		SDL_RenderCopyEx(
-			&RenderSystem::Instance().GetRenderer(), 
+			&RenderSystem::Get().GetRenderer(),
 			_output, NULL, 
 			&_fontRect,
 			ownerEntity->GetTransform()->rotation,
@@ -165,7 +165,7 @@ void FontSprite::RegenerateOutput()
 	if (_font != NULL)
 	{
 		SDL_Surface* textSurface = TTF_RenderText_Solid((*_font).GetFont(), _text.c_str(), _fontColor);
-		_output = SDL_CreateTextureFromSurface(&RenderSystem::Instance().GetRenderer(), textSurface);
+		_output = SDL_CreateTextureFromSurface(&RenderSystem::Get().GetRenderer(), textSurface);
 		SDL_FreeSurface(textSurface);
 	}
 }

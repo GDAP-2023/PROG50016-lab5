@@ -64,7 +64,7 @@ void AnimatedSprite::Update() {
 void AnimatedSprite::Render() {
 	SDL_SetTextureColorMod(texture, _filterColor.r, _filterColor.g, _filterColor.b);
 	SDL_RenderCopyEx(
-		&RenderSystem::Instance().GetRenderer(),
+		&RenderSystem::Get().GetRenderer(),
 		texture,
 		&spriteRect,
 		&targetRect,

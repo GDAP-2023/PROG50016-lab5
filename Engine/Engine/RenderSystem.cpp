@@ -9,26 +9,6 @@
 #include "RenderSystem.h"
 #include "Renderable.h"
 
-RenderSystem* RenderSystem::_instance = nullptr;
-
-RenderSystem& RenderSystem::Instance()
-{
-	if (_instance == nullptr)
-	{
-		_instance = new RenderSystem();
-	}
-	return *_instance;
-}
-
-RenderSystem::RenderSystem()
-{
-
-}
-
-RenderSystem::~RenderSystem()
-{
-
-}
 
 void RenderSystem::Initialize()
 {
@@ -85,8 +65,6 @@ void RenderSystem::Destroy()
 {
 	SDL_DestroyWindow(_window);
 	SDL_DestroyRenderer(_renderer);
-
-	delete _instance;
 }
 
 void RenderSystem::Update()

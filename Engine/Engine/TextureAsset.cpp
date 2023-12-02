@@ -8,7 +8,7 @@ void TextureAsset::Initialize()
 {
 	Asset::Initialize();
 	SDL_Surface* image = IMG_Load(filepath.c_str());
-	texture = SDL_CreateTextureFromSurface(&RenderSystem::Instance().GetRenderer(), image);
+	texture = SDL_CreateTextureFromSurface(&RenderSystem::Get().GetRenderer(), image);
 	SDL_QueryTexture(texture, nullptr, nullptr, &width, &height);
 	SDL_FreeSurface(image);
 }

@@ -20,6 +20,8 @@ class RenderSystem
 {
 	friend class Engine;
 
+	DECLARE_SINGLETON(RenderSystem)
+
 	std::string _name = "DEFAULT NAME";
 
 	unsigned int _width = 1280;
@@ -31,17 +33,9 @@ class RenderSystem
 
 	std::list<Renderable*> _renderables;
 
-	static RenderSystem* _instance;
-
 	SDL_Window* _window = nullptr;
 	SDL_Renderer* _renderer = nullptr;
 
-	RenderSystem();
-
-	~RenderSystem();
-
-	inline explicit RenderSystem(RenderSystem const&) = delete;
-	inline RenderSystem& operator=(RenderSystem const&) = delete;
 
 protected:
 
@@ -54,8 +48,6 @@ protected:
 	void Load();
 
 public:
-
-	static RenderSystem& Instance();
 
 	SDL_Window& GetWindow();
 

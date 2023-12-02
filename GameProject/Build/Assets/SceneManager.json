@@ -12,10 +12,6 @@
         {
             "GUID": "45f479c9-f110-43c5-be35-9fbbc5d7d694",
             "Path": "Scenes/Scene02.json"
-        },
-        {
-            "GUID": "fe0ca67d-8cb3-46f8-a3a2-99e61e7afcd2",
-            "Path": "Scenes/Scene03.json"
         }
     ]
 }

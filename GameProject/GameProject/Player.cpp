@@ -4,12 +4,17 @@
 #include <EngineTime.h>
 #include <Entity.cpp>
 
+IMPLEMENT_DYNAMIC_CLASS(Player)
 
+void Player::Initialize()
+{
+	Component::Initialize();
+}
 
-void Player::Update(const InputSystem& inputSystem) {
+void Player::Update() {
 	Vec2 player_pos = ownerEntity->GetTransform()->position;
 	Vec2 dir = Vec2::Zero;
-	InputSystem& input = InputSystem::Instance();
+	InputSystem& input = InputSystem::Get();
 
 	if (input.isKeyPressed(SDLK_LEFT) || input.isKeyPressed(SDLK_a) || input.isGamepadButtonPressed(0, SDL_CONTROLLER_BUTTON_DPAD_LEFT)) {
 		dir.x -= 1;

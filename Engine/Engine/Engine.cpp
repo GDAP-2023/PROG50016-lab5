@@ -26,15 +26,12 @@ void Engine::Initialize()
 
 	// Initialize the managers
 	AssetManager::Get().Initialize();
-	RenderSystem::Instance().Initialize();
+	RenderSystem::Get().Initialize();
 	AudioSystem::Get().Initialize();
 
 	SceneManager::Get().Initialize();
 
-	InputSystem::Instance().registerQuitEventHandler([this] {isRunning = false; });
-
-
-
+	InputSystem::Get().registerQuitEventHandler([this] {isRunning = false; });
 }
 
 void Engine::Destroy()
@@ -42,7 +39,7 @@ void Engine::Destroy()
 	Time::Instance().Destroy();
 	AssetManager::Get().Destroy();
 	AudioSystem::Get().Destroy();
-	RenderSystem::Instance().Destroy();
+	RenderSystem::Get().Destroy();
 	delete instance;
 	instance = nullptr;
 }
@@ -58,7 +55,7 @@ void Engine::GameLoop()
 
 		// --------------------- Update Phase ---------------------
 		SceneManager::Get().Update();
-		RenderSystem::Instance().Update();
+		RenderSystem::Get().Update();
 
 		// --------------------- Post-update Phase ---------------------
 		SceneManager::Get().PostUpdate();
@@ -71,7 +68,7 @@ void Engine::GameLoop()
 
 
 			// --------------------- Input Phase ---------------------
-		InputSystem::Instance().Update();
+		InputSystem::Get().Update();
 
 	/*	if (Time::Instance().TotalTime() > 5.0f)
 		{
@@ -81,7 +78,7 @@ void Engine::GameLoop()
 		SDL_Event event;
 		while (SDL_PollEvent(&event)) {
 			if (event.type == SDL_QUIT) {
-				InputSystem::Instance().handleQuitEvent();
+				InputSystem::Get().handleQuitEvent();
 			}
 		}
 

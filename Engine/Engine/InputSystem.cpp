@@ -12,27 +12,6 @@
  * and gamepad buttons and axes. It also supports registering event handlers for different inputs.
  */
 
-
-InputSystem* InputSystem::instance = nullptr;
-
-
-
-/**
- * @brief Constructor for the InputSystem class.
- */
-InputSystem::InputSystem()
-{
-}
-
-
-/**
- * @brief Destructor for the InputSystem class.
- */
-
-InputSystem::~InputSystem()
-{
-}
-
 /**
  * @brief Initializes the input system by setting up key and mouse button states and event handlers.
  */

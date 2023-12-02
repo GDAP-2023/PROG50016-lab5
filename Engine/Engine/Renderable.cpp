@@ -14,12 +14,12 @@ IMPLEMENT_ABSTRACT_CLASS(Renderable)
 
 Renderable::Renderable()
 {
-	RenderSystem::Instance().AddRenderable(this);
+	RenderSystem::Get().AddRenderable(this);
 }
 
 Renderable::~Renderable()
 {
-	RenderSystem::Instance().RemoveRenderable(this);
+	RenderSystem::Get().RemoveRenderable(this);
 }
 
 /*

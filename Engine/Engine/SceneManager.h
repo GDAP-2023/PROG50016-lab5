@@ -19,7 +19,7 @@ class Entity;
 class SceneManager
 {
 private:
-	DECLARE_SINGLETON(SceneManager);
+	DECLARE_SINGLETON(SceneManager)
 
 	const std::string DATA_FILE = "../Assets/SceneManager.json";
 
