@@ -29,6 +29,7 @@ public:
 	CircleCollider();
 protected:
 	~CircleCollider();
+	void Update() override;  // declared in Component
 	void Destroy();
 
 public:

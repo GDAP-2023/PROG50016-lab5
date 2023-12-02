@@ -32,6 +32,7 @@ public:
 
 protected:
 	~BoxCollider();
+	void Update() override;  // declared in Component
 	void Destroy();
 
 public:
@@ -62,14 +63,14 @@ public:
 *
 * @return returns the boolean isSolid to tell if this Entity should be treated as solid
 */
-	virtual bool IsSolid() const = 0;
+	virtual bool IsSolid() const;
 
 	/**
 * @brief Sets the bool isSolid which tells if this Entity should be treated as a solid object
 *
 * @param solid True if the object should be solid, False if the object should not
 */
-	virtual void SetSolid(bool solid) = 0;
+	virtual void SetSolid(bool solid);
 
 	/**
 * @brief returns a float as if this box had a radius, this is needed for BroadPhaseDetection in CollisionSystem
