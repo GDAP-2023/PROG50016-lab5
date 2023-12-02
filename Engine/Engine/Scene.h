@@ -26,6 +26,10 @@ private:
 	std::list<Entity*> entities;
 	std::list<Entity*> entitiesToDestroy;
 
+	// Keep a record of all the assets loaded by a scene
+	// as they get unloaded with the scene
+	std::list<std::string> assetsGUIDs;
+
 protected:
 	void Initialize();
 	void Load(json::JSON&);
