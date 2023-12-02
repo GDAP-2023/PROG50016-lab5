@@ -21,7 +21,6 @@ void Sprite::Destroy() {
 }
 
 void Sprite::Update() {
-	AssetManager::Get().GetAsset<int>();
 }
 
 void Sprite::Load(json::JSON& document) {
