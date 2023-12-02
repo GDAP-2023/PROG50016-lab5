@@ -37,11 +37,9 @@ void Engine::Initialize()
 void Engine::Destroy()
 {
 	Time::Instance().Destroy();
-
-	if (instance == nullptr)
-	{
-		delete instance;
-	}
+	AssetManager::Get().Destroy();
+	delete instance;
+	instance = nullptr;
 }
 
 void Engine::GameLoop()
