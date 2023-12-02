@@ -52,9 +52,6 @@ protected:
 	void Initialize();
 	void Destroy();
 	void Update();
-
-	void SetID(ICollider*);
-
 private:
 
 	bool CircleCircleCollision(ICollider*, ICollider*);
