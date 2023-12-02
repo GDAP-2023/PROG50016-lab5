@@ -141,6 +141,11 @@ float Vec2::Distance(const Vec2& lhs, const Vec2& rhs) {
 	return (lhs - rhs).Magnitude();
 }
 
+Vec2 Vec2::Lerp(const Vec2& lhs, const Vec2& rhs, float t)
+{
+	return lhs + (rhs - lhs) * t;
+}
+
 IVec2 IVec2::Zero = IVec2();
 IVec2 IVec2::UnitX = IVec2(1, 0);
 IVec2 IVec2::UnitY = IVec2(0, 1);
