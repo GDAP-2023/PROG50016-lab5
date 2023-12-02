@@ -24,20 +24,22 @@ void AnimatedSprite::Destroy() {
 
 void AnimatedSprite::Update() {
 	Transform t = ownerEntity->GetTransform();
+	size.x = std::abs(spriteWidth * t.scale.x);
+	size.y = std::abs(spriteHeight * t.scale.y);
+
 	targetRect = {
-		(int)(t.position.x - spriteWidth * .5f),
-		(int)(t.position.y - spriteHeight * .5f),
+		(int)(t.position.x - size.x * .5f),
+		(int)(t.position.y - size.y * .5f),
 		spriteWidth,
 		spriteHeight
 	};
-	if (t.position.x < 0) {
+
+	flip = SDL_FLIP_NONE;
+	if (t.scale.x < 0) {
 		flip = SDL_FLIP_HORIZONTAL;
 	}
-	else if (t.position.y < 0) {
-		flip = SDL_FLIP_VERTICAL;
-	}
-	else {
-		SDL_FLIP_NONE;
+	if (t.scale.y < 0) {
+		flip = (SDL_RendererFlip)(flip | SDL_FLIP_VERTICAL);
 	}
 
 	if (!running) return;
@@ -78,21 +80,24 @@ void AnimatedSprite::SetSpriteSheet(int rows, int cols, int _totalFrames) {
 	spriteSheetColumns = cols;
 	totalFrames = _totalFrames;
 
+	size.x = sourceRect.w / cols;
+	size.y = sourceRect.h / rows;
+
 	spriteWidth = sourceRect.w / cols;
 	spriteHeight = sourceRect.h / rows;
 
 	spriteRect = {
 		sourceRect.x,
 		sourceRect.y,
-		spriteWidth,
-		spriteHeight
+		size.x,
+		size.y
 	};
 
 	targetRect = {
 		(int)(ownerEntity->GetTransform().position.x - spriteWidth * .5f),
 		(int)(ownerEntity->GetTransform().position.y - spriteHeight * .5f),
-		spriteWidth,
-		spriteHeight
+		size.x,
+		size.y
 	};
 }
 
