@@ -18,13 +18,13 @@ class CircleCollider : public ICollider
 	DECLARE_DYNAMIC_DERIVED_CLASS(CircleCollider, ICollider);
 
 private:
-	float m_radius;
+	float m_radius = 0;
 	SDL_Rect m_rect;
 public:
 	/**
  * @brief CircleCollider Constructor. Gets transform but not radius
  */
-	CircleCollider() = default;
+	CircleCollider(): m_rect({0, 0, 0, 0}) {}
 protected:
 	~CircleCollider() override = default;
 	void Initialize() override;
