@@ -197,6 +197,8 @@
     <None Include="..\Build\Assets\hitEffect03.wav.asset" />
     <None Include="..\Build\Assets\RenderSettings.json" />
     <None Include="..\Build\Assets\SceneManager.json" />
+    <None Include="..\Build\Assets\Scenes\Scene01.json" />
+    <None Include="..\Build\Assets\Scenes\Scene02.json" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="..\Build\Assets\hitEffect03.wav" />

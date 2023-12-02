@@ -39,7 +39,7 @@ void Sprite::Load(json::JSON& node) {
     if (node.hasKey("Texture")) {
         const std::string tex_asset_guid = node["Texture"].ToString();
         LOG("Trying to load Texture: " << tex_asset_guid);
-        SetTextureAsset(dynamic_cast<TextureAsset*>(AssetManager::Get().GetAsset(tex_asset_guid)));
+        SetTextureAsset((TextureAsset*)(AssetManager::Get().GetAsset(tex_asset_guid)));
     }
 }
 

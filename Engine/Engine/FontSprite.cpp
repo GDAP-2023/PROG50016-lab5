@@ -104,7 +104,7 @@ void FontSprite::Load(json::JSON& document)
 
     std::string guid = document["Font"].ToString();
 
-    font = dynamic_cast<FontAsset*>(AssetManager::Get().GetAsset(guid));
+    font = (FontAsset*)(AssetManager::Get().GetAsset(guid));
 
     RegenerateOutput();
 }
