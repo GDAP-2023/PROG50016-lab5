@@ -2,7 +2,7 @@
 * @class Entity
 *
 * The Entity class is the base class for all the objects in the game.
-* It contains a list of Components and a Transform.
+* It represents a game object and contains a list of Components and a Transform.
 */
 #pragma once
 
@@ -26,15 +26,60 @@ private:
     std::list<Component*> componentsToRemove;
 
 protected:
+    /**
+     * @brief Default constructor for the Entity class.
+     * This constructor is protected to prevent direct instantiation of the Entity class. 
+     * Use derived classes to create specific entity types.
+     */
     Entity() = default;
+
+    /**
+     * @brief Constructor for the Entity class.
+     *
+     * @param _guid The GUID of the entity.
+     */
     Entity(std::string _guid) : Object(_guid) { }
+
+    /**
+     * @brief Destructor for the Entity class.
+     */
     ~Entity() override = default;
 
+    /**
+     * @brief Initializes the entity.
+     * This function is called during the initialization of the entity.
+     */
     void Initialize() override;
+
+    /**
+     * @brief Loads entity data from JSON.
+     *
+     * @param node The JSON object containing the entity data.
+     */
     void Load(json::JSON& node) override;
+
+    /**
+     * @brief Updates the entity's state.
+     */
     void Update();
+
+    /**
+     * @brief Performs pre-update operations on the entity.
+     * This function adds the components in the componentsToAdd list to the entity.
+     */
     void PreUpdate();
+
+    /**
+     * @brief Performs post-update operations on the entity.
+     * This function removes the components in the componentsToRemove list from the entity.
+     */
     void PostUpdate();
+
+    /**
+     * @brief Destroys the entity.
+     * This function is called when the entity is being destroyed,
+     * can be overridden by derived classes to perform additional cleanup.
+     */
     void Destroy() override;
 
 public:
