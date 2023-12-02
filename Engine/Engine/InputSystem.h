@@ -24,7 +24,7 @@ public:
 	InputSystem();
 	~InputSystem();
 	void Initialize();
-	void update();
+	void Update();
 
 	void triggerKeyEvent(SDL_Keycode key, bool pressed);
 
@@ -38,14 +38,16 @@ public:
 
 	void handleGamepadAxis(SDL_JoystickID joystickID, SDL_GameControllerAxis axis, Sint16 value);
 
-	Sint16 getGamepadAxisState(SDL_JoystickID joystickID, SDL_GameControllerAxis axis) const;
+	float getGamepadAxisState(SDL_JoystickID joystickID, SDL_GameControllerAxis axis) const;
 
 	void registerQuitEventHandler(std::function<void()> handler);
 
 	void handleQuitEvent();
 
-	void setupQuitHandler(Engine& engine);
 
+
+
+	void setupQuitHandler(Engine& engine);
 	void registerKeyEventHandler(SDL_Keycode key, bool onPress, std::function<void()> handler);
 	void handleGamepadConnection(int joystickIndex);
 	void registerMouseEventHandler(Uint8 button, bool onPress, std::function<void()> handler);

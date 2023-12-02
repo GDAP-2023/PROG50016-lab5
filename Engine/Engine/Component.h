@@ -5,20 +5,29 @@
 
 #include "Object.h"
 
+class Entity;
+
 class Component : public Object
 {
-	DECLARE_ABSTRACT_DERIVED_CLASS(Component, Object)
+    DECLARE_ABSTRACT_DERIVED_CLASS(Component, Object)
 
-	int value = 0;
+protected:
+    Entity* ownerEntity;
 
 public:
-	Component();
-	~Component() override;
+    Component();
+    virtual ~Component() override;
 
-	void Initialize() override;
-	virtual void Update();
+    virtual void Initialize() override;
+    //change to pure virtual function
+    virtual void Update() = 0;
+    virtual void Load(json::JSON& node) override;
+    virtual void Render() {}; // Are some components going to need to render?
 
-	friend class Entity;
+    void SetOwner(Entity* owner);
+    Entity* GetOwner() const;
+
+    friend class Entity; // To allow Entity to access protected/private members
 };
 
 #endif // !_COMPONENT_H_

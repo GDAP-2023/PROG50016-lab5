@@ -27,7 +27,11 @@ void Engine::Initialize()
 	AssetManager::Get().Initialize();
 	RenderSystem::Instance().Initialize();
 	SceneManager::Get().Initialize();
+
+	InputSystem::Instance().registerQuitEventHandler([this] {isRunning = false; });
+
 	InputSystem::Instance().setupQuitHandler(*this);
+
 }
 
 void Engine::Destroy()
@@ -56,6 +60,16 @@ void Engine::GameLoop()
 		// --------------------- Post-update Phase ---------------------
 		SceneManager::Get().PostUpdate();
 
+
+		/*	if (Time::Instance().TotalTime() > 5.0f)
+			{
+				break;
+			}*/
+
+
+			// --------------------- Input Phase ---------------------
+		InputSystem::Instance().Update();
+
 	/*	if (Time::Instance().TotalTime() > 5.0f)
 		{
 			break;
@@ -67,6 +81,7 @@ void Engine::GameLoop()
 				InputSystem::Instance().handleQuitEvent();
 			}
 		}
+
 
 	}
 }
