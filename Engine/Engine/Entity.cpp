@@ -103,6 +103,10 @@ Component* Entity::GetComponent(const std::string& componentName) const
 {
 	for (auto component : components)
 	{
+#define DEBUG_ENTITY_GET_COMPONENT
+#ifdef DEBUG_ENTITY_GET_COMPONENT
+		LOG(componentName << ", " << component->GetClassName())
+#endif
 		if (component->GetClassName() == componentName)
 		{
 			return component;
