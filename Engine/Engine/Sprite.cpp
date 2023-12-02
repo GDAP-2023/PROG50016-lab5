@@ -29,7 +29,7 @@ void Sprite::Update() {
         size.x,
         size.y
     };
-    LOG(targetRect.x << ", " << targetRect.y << ", " << targetRect.w << ", " << targetRect.h);
+    // LOG(targetRect.x << ", " << targetRect.y << ", " << targetRect.w << ", " << targetRect.h);
 
     flip = static_cast<SDL_RendererFlip>((transform.scale.x < 0) | ((transform.scale.y < 0) << 1));
 }
@@ -39,7 +39,7 @@ void Sprite::Load(json::JSON& node) {
     if (node.hasKey("Texture")) {
         const std::string tex_asset_guid = node["Texture"].ToString();
         LOG("Trying to load Texture: " << tex_asset_guid);
-        SetTextureAsset(dynamic_cast<TextureAsset*>(AssetManager::Get().GetAsset(tex_asset_guid)));
+        SetTextureAsset((TextureAsset*)(AssetManager::Get().GetAsset(tex_asset_guid)));
     }
 }
 

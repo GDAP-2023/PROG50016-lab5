@@ -11,6 +11,7 @@ class Player : public Component
 public:
     void Initialize() override;
     void Update() override;
+    void Load(json::JSON&) override;
 private:
     float speed = 5.0f;
 };

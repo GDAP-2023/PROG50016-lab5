@@ -20,9 +20,10 @@ public:
 
     void Initialize() override;
     // Change to pure virtual function
-    virtual void Update()
-    {
-        LOG("big mean uwu")
+    virtual void Update() {
+#ifdef DEBUG_COMPONENT
+        LOG("Component Update called on " << this->uid)
+#endif
     };
     void Load(json::JSON& node) override;
     void Destroy() override;

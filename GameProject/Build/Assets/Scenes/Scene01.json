@@ -26,11 +26,11 @@
                     {
                         "ClassName": "Player",
                         "ClassData": {
-                            "Speed": 5.0
+                            "Speed": 42.0
                         }
                     },
                     {
-                        "ClassName": "AnimatedSprite",
+                        "ClassName": "Sprite",
                         "ClassData": {
                             "Texture": "awooga"
                         }
