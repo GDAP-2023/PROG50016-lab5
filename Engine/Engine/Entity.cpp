@@ -3,6 +3,9 @@
 #include "Component.h"
 #include "Transform.h"
 
+
+#define NDEBUG_ENTITY_GET_COMPONENT
+
 IMPLEMENT_DYNAMIC_CLASS(Entity)
 
 void Entity::Initialize()
@@ -103,7 +106,6 @@ Component* Entity::GetComponent(const std::string& componentName) const
 {
 	for (auto component : components)
 	{
-#define DEBUG_ENTITY_GET_COMPONENT
 #ifdef DEBUG_ENTITY_GET_COMPONENT
 		LOG(componentName << ", " << component->GetDerivedClassName())
 #endif
