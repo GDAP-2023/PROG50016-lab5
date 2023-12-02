@@ -1,12 +1,8 @@
 #pragma once
 #ifndef PLAYER_H
 #define PLAYER_H
+
 #include "GameCore.h"
-#include "InputSystem.h"
-#include <functional>
-
-
-#include "Component.h"
 
 class Player : public Component
 {
@@ -15,7 +11,6 @@ class Player : public Component
 public:
     void Initialize() override;
     void Update() override;
-    virtual const std::string& GetComponentType();
 private:
     float speed = 5.0f;
 };

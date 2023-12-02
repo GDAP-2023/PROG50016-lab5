@@ -1,6 +1,7 @@
 #include "GameCore.h"
 #include "Player.h"
 
+IMPLEMENT_DYNAMIC_CLASS(Player)
 
 void Player::Initialize()
 {
