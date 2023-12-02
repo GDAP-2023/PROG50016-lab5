@@ -29,10 +29,10 @@ void AudioSystem::Load(const std::string& config_file)
 
 void AudioSystem::SetMusic(MusicAsset* music)
 {
-	//Mix_PlayMusic(music->GetMusic(), 0);
+	Mix_PlayMusic(music->GetMusic(), 0);
 }
 
 void AudioSystem::PlaySound(SoundAsset* sound)
 {
-	//Mix_PlayChannel(-1, sound->GetChunk(), 0);
+	Mix_PlayChannel(-1, sound->GetSound(), 0);
 }
