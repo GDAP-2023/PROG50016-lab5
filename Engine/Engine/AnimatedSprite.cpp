@@ -37,9 +37,24 @@ void AnimatedSprite::Update() {
     }
 }
 
-void AnimatedSprite::Load(json::JSON& json)
+void AnimatedSprite::Load(json::JSON& node)
 {
-    Sprite::Load(json);
+    Sprite::Load(node);
+    if (node.hasKey("SpriteSheet")) {
+        json::JSON spriteSheetNode = node["SpriteSheet"];
+
+        if (spriteSheetNode.hasKey("Rows")) {
+            spriteSheetRows = spriteSheetNode["Rows"].ToInt();
+        }
+        if (spriteSheetNode.hasKey("Columns")) {
+            spriteSheetColumns = spriteSheetNode["Columns"].ToInt();
+        }
+        if (spriteSheetNode.hasKey("Frames")) {
+            totalFrames = spriteSheetNode["Frames"].ToInt();
+        }
+
+        this->SetSpriteSheet(spriteSheetRows, spriteSheetColumns, totalFrames);
+    }
 }
 
 void AnimatedSprite::SetSpriteSheet(int rows, int cols, int _totalFrames) {
@@ -54,12 +69,8 @@ void AnimatedSprite::SetSpriteSheet(int rows, int cols, int _totalFrames) {
     spriteWidth = texRect.x / cols;
     spriteHeight = texRect.y / rows;
 
-    sourceRect = {
-        0,
-        0,
-        size.x,
-        size.y
-    };
+    sourceRect.w = size.x;
+    sourceRect.h = size.y;
 }
 
 void AnimatedSprite::Restart() {

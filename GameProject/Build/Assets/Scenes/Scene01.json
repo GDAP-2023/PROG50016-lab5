@@ -5,6 +5,9 @@
                 "GUID": "awooga"
             },
             {
+                "GUID": "girl"
+            },
+            {
                 "GUID": "meow"
             }
         ]
@@ -18,9 +21,9 @@
                 "Name": "Player",
                 "GUID": "uwu",
                 "Transform": {
-                    "Position": [0.0, 0.0],
-                    "Rotation": 0,
-                    "Scale": [1.0, 1.0]
+                    "Position": [300.0, 300.0],
+                    "Rotation": 22.0,
+                    "Scale": [-1.0, 1.0]
                 },
                 "Components": [
                     {
@@ -30,9 +33,14 @@
                         }
                     },
                     {
-                        "ClassName": "Sprite",
+                        "ClassName": "AnimatedSprite",
                         "ClassData": {
-                            "Texture": "awooga"
+                            "Texture": "girl",
+                            "SpriteSheet": {
+                                "Rows": 1,
+                                "Columns": 20,
+                                "Frames":  20
+                            }
                         }
                     },
                     {

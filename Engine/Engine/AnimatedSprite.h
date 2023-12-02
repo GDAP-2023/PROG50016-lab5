@@ -13,8 +13,8 @@
 class AnimatedSprite : public Sprite {
 	DECLARE_DYNAMIC_DERIVED_CLASS(AnimatedSprite, Sprite);
 public:
-	int spriteSheetRows = 0;
-	int spriteSheetColumns = 0;
+	int spriteSheetRows = 1;
+	int spriteSheetColumns = 1;
 
 	int spriteWidth = 0;
 	int spriteHeight = 0;
@@ -23,7 +23,7 @@ public:
 	int defaultFrameNumber = 0;
 
 	int currentFrame = 0;
-	float frameDelay = 0.1f;
+	float frameDelay = 0.05f;
 
 private:
 	float frameCounter = 0;
