@@ -10,6 +10,7 @@ public:
     //overriding virtual functions from Component
     void Initialize() override;
     void Update() override;
+    void Load(json::JSON& node) override;
 
     //xyz properties, angle in degrees or radians
     Vec2 position;

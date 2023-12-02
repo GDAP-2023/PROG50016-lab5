@@ -11,14 +11,28 @@ void Transform::Update() {
 
 }
 
+void Transform::Load(json::JSON& node)
+{
+	if (node.hasKey("Position")) {
+		position = vec2_from_json(node["Position"]);
+	}
+	if (node.hasKey("Rotation"))
+	{
+		rotation = node["Rotation"].ToFloat();
+	}
+	if (node.hasKey("Scale")) {
+		position = vec2_from_json(node["Scale"]);
+	}
+}
+
 void Transform::Translate(const Vec2& delta) { // next 3 functions for adjusting position, rotation and scale by a given vector
-    position += delta;
+	position += delta;
 }
 
 void Transform::Rotate(float delta) {
-    rotation += delta;
+	rotation += delta;
 }
 
 void Transform::Scale(const Vec2& delta) {
-    scale *= delta;
+	scale *= delta;
 }

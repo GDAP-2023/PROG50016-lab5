@@ -130,3 +130,4 @@ float Vec2::Distance(const Vec2& rhs) const {
 float Vec2::Distance(const Vec2& lhs, const Vec2& rhs) {
 	return (lhs - rhs).Magnitude();
 }
+
