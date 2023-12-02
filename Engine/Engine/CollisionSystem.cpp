@@ -15,7 +15,9 @@ void CollisionSystem::Destroy()
 
 void CollisionSystem::Update()
 {
+	//what i do here is i get a list of all potential collisions, then i narrow it down to a list of actual collisions
 	auto potentialCollisions = BroadPhaseDetection();
+	//this is the list of actual collisions
 	auto currentFrameCollisions = NarrowPhaseDetection(potentialCollisions);
 
 	std::set<std::pair<ICollider*, ICollider*>> collisionsToRemove;
@@ -27,6 +29,7 @@ void CollisionSystem::Update()
 	// Handle new and ongoing collisions
 	for (const auto& collisionPair : currentFrameCollisions)
 	{
+        // Resolve collision if both colliders are solid
 		if (collisionPair.first->IsSolid() && collisionPair.second->IsSolid())
 		{
 			ResolveCollision(collisionPair.first, collisionPair.second);
@@ -54,9 +57,12 @@ void CollisionSystem::Update()
 	// Determine which collisions have ended
 	for (const auto& oldCollision : ongoingCollisions) 
 	{
+		// If the collision is not in the current frame's collision list, it has ended
 		if (currentFrameCollisions.find(oldCollision) == currentFrameCollisions.end()) 
 		{
+            //add to the list of collisions to remove
 			collisionsToRemove.insert(oldCollision);
+			
 			oldCollision.first->OnCollisionExit(oldCollision.second);
 			oldCollision.second->OnCollisionExit(oldCollision.first);
 			exitCollisions.push_back(oldCollision);
@@ -76,7 +82,7 @@ void CollisionSystem::Update()
 	ongoingCollisions = std::move(currentFrameCollisions);
 
 }
-
+// add and remove colliders from the list
 void CollisionSystem::AddCollider(ICollider* collider)
 {
 	colliders.push_back(collider);
@@ -87,6 +93,7 @@ void CollisionSystem::RemoveCollider(ICollider* collider)
 	colliders.remove(collider);
 }
 
+//Broad phase detection
 std::list<std::pair<ICollider*, ICollider*>> CollisionSystem::BroadPhaseDetection()
 {
 

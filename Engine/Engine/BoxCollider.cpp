@@ -1,8 +1,13 @@
+// By Alan
+// BoxCollider.cpp
+// For Lab 5
+ 
 #include "EngineCore.h"
 #include "BoxCollider.h"
 
 IMPLEMENT_DYNAMIC_CLASS(BoxCollider);
 
+//
 BoxCollider::BoxCollider():m_rect({0,0,0,0})
 {
 	int myID = GetId();

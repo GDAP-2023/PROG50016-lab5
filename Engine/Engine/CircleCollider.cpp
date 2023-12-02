@@ -1,4 +1,4 @@
-#include "EngineCore.h"
+#include "E//ngineCore.h"
 #include "CircleCollider.h"
 
 IMPLEMENT_DYNAMIC_CLASS(CircleCollider);
@@ -35,12 +35,13 @@ void CircleCollider::Destroy()
 {
 
 }
-
+// currently not used
 bool CircleCollider::HandleCollision(ICollider* other)
 {
 	return true;
 }
 
+// Get the position of the collider
 Vec2 CircleCollider::GetPosition() const
 {
 	//return Vec2(transform.x, transform.y);
@@ -54,10 +55,12 @@ void CircleCollider::SetRadius(float radius)
 	m_radius = radius;
 }
 
+// Get the radius of the collider
 float CircleCollider::GetBroadPhaseRadius() const
 {
 	return m_radius;
 }
+// get the type of collider
 ColliderType CircleCollider::GetType() const
 {
 	return ColliderType::Circle;
