@@ -64,13 +64,13 @@ std::list<Entity*> BoxCollider::OnCollisionEnter(ICollider* other) {
 		{
 			if (((Component*)collisionPairs.first)->GetUid() == ((Component*)other)->GetUid() && ((Component*)collisionPairs.second)->GetUid() == GetUid())
 			{
-				int otherId = ((Component*)other)->GetUid();
+				STRCODE otherId = ((Component*)other)->GetUid();
 				Entity* toAdd = SceneManager::Get().FindEntity(otherId);
 				result.push_back(toAdd);
 			}
 			else if (((Component*)collisionPairs.second)->GetUid() == ((Component*)other)->GetUid() && ((Component*)collisionPairs.first)->GetUid() == GetUid())
 			{
-				int otherId = ((Component*)other)->GetUid();
+				STRCODE otherId = ((Component*)other)->GetUid();
 				Entity* toAdd = SceneManager::Get().FindEntity(otherId);
 				result.push_back(toAdd);
 			}
@@ -88,13 +88,13 @@ std::list<Entity*> BoxCollider::OnCollisionStay(ICollider* other) {
 		{
 			if (((Component*)collisionPairs.first)->GetUid() == ((Component*)other)->GetUid() && ((Component*)collisionPairs.second)->GetUid() == GetUid())
 			{
-				int otherId = ((Component*)other)->GetUid();
+				STRCODE otherId = ((Component*)other)->GetUid();
 				Entity* toAdd = SceneManager::Get().FindEntity(otherId);
 				result.push_back(toAdd);
 			}
 			else if (((Component*)collisionPairs.second)->GetUid() == ((Component*)other)->GetUid() && ((Component*)collisionPairs.first)->GetUid() == GetUid())
 			{
-				int otherId = ((Component*)other)->GetUid();
+				STRCODE otherId = ((Component*)other)->GetUid();
 				Entity* toAdd = SceneManager::Get().FindEntity(otherId);
 				result.push_back(toAdd);
 			}
@@ -112,13 +112,13 @@ std::list<Entity*> BoxCollider::OnCollisionExit(ICollider* other) {
 		{
 			if (((Component*)collisionPairs.first)->GetUid() == ((Component*)other)->GetUid() && ((Component*)collisionPairs.second)->GetUid() == GetUid())
 			{
-				int otherId = ((Component*)other)->GetUid();
+				STRCODE otherId = ((Component*)other)->GetUid();
 				Entity* toAdd = SceneManager::Get().FindEntity(otherId);
 				result.push_back(toAdd);
 			}
 			else if (((Component*)collisionPairs.second)->GetUid() == ((Component*)other)->GetUid() && ((Component*)collisionPairs.first)->GetUid() == GetUid())
 			{
-				int otherId = ((Component*)other)->GetUid();
+				STRCODE otherId = ((Component*)other)->GetUid();
 				Entity* toAdd = SceneManager::Get().FindEntity(otherId);
 				result.push_back(toAdd);
 			}
