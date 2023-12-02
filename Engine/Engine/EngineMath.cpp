@@ -15,9 +15,9 @@ Vec2::Vec2(const float value) {
 	y = value;
 }
 
-Vec2::Vec2(float _x, float _y) : x(_x), y(_y) {}
+Vec2::Vec2(float x, float y) : x(x), y(y) {}
 
-Vec2::Vec2(IVec2 value)
+Vec2::Vec2(const IVec2 value)
 {
 	x = static_cast<float>(value.x);
 	y = static_cast<float>(value.y);
@@ -105,9 +105,13 @@ Vec2 Vec2::operator/(const float& f) const {
 	return { this->x * inv_f, this->y * inv_f };
 }
 
+Vec2 Vec2::Abs() const
+{
+	return { std::abs(this->x), std::abs(this->y) };
+}
+
 void Vec2::Normalize() {
-	// TODO: Maybe rework this check?
-	if (this->x == 0 || this->y == 0) {
+	if (*this == Zero) {
 		return;
 	}
 	*this /= this->Magnitude();
@@ -151,9 +155,9 @@ IVec2::IVec2(const int value) {
 	y = value;
 }
 
-IVec2::IVec2(int _x, int _y) : x(_x), y(_y) {}
+IVec2::IVec2(int x, int y) : x(x), y(y) {}
 
-IVec2::IVec2(Vec2 value)
+IVec2::IVec2(const Vec2 value)
 {
 	x = static_cast<int>(value.x);
 	y = static_cast<int>(value.y);
@@ -237,4 +241,9 @@ IVec2 IVec2::operator*(const int& f) const {
 
 IVec2 IVec2::operator/(const int& f) const {
 	return { this->x / f, this->y / f };
+}
+
+IVec2 IVec2::Abs() const
+{
+	return { std::abs(this->x), std::abs(this->y) };
 }

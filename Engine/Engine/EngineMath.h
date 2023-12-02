@@ -19,7 +19,7 @@ union Vec2
 
     Vec2();
     explicit Vec2(float value);
-    Vec2(float _x, float _y);
+    Vec2(float x, float y);
     Vec2(IVec2 value);
     static Vec2 Zero;
     static Vec2 UnitX;
@@ -51,6 +51,8 @@ union Vec2
     Vec2 operator*(const float &f) const;
     Vec2 operator/(const float &f) const;
 
+    Vec2 Abs() const;
+
     float Magnitude() const;
     float MagnitudeSquared() const;
     void Normalize();
@@ -73,7 +75,7 @@ union IVec2
 
     IVec2();
     explicit IVec2(int value);
-    IVec2(int _x, int _y);
+    IVec2(int x, int y);
     IVec2(Vec2 value);
     static IVec2 Zero;
     static IVec2 UnitX;
@@ -103,6 +105,8 @@ union IVec2
 
     IVec2 operator*(const int &f) const;
     IVec2 operator/(const int &f) const;
+    
+    IVec2 Abs() const;
 };
 
 inline Vec2 vec2_from_json(json::JSON& node) {
