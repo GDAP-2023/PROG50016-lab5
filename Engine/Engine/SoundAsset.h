@@ -6,7 +6,7 @@
 #include "Asset.h"
 #include "SDL_mixer.h"
 
-class SoundAsset : public Asset
+class SoundAsset final : public Asset
 {
     Mix_Chunk* sound = nullptr;
 

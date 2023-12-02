@@ -6,7 +6,7 @@
 #include "SDL_ttf.h"
 
 
-class FontAsset : public Asset
+class FontAsset final : public Asset
 {
     TTF_Font* font = nullptr;
 
