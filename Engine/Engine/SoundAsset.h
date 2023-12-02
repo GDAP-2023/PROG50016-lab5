@@ -17,7 +17,7 @@ class SoundAsset final : public Asset
     void Destroy() override;
     void Load(json::JSON&) override;
 
-    Mix_Chunk* GetFX() { return sound; }
+    Mix_Chunk* GetSound() const;
 };
 
 #endif // !_SOUND_ASSET_H_
