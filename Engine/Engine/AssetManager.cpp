@@ -30,7 +30,7 @@ void AssetManager::HandleAssetEntry(const std::filesystem::directory_entry& entr
 
 	const auto assetType = node.at("AssetType").ToString();
 	auto asset = (Asset*)CreateObject(assetType.c_str());
-	asset->filepath = entry.path().stem().string();
+	asset->filepath = entry.path().relative_path().replace_extension("").generic_string();
 	asset->Load(node);
 
 	AddAsset(asset);
