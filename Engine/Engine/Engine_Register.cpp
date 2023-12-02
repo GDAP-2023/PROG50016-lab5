@@ -10,6 +10,9 @@
 #include "MusicAsset.h"
 #include "SoundAsset.h"
 #include "TextureAsset.h"
+#include "ICollider.h"
+#include "CircleCollider.h"
+#include "BoxCollider.h"
 
 void Engine_Register()
 {
@@ -24,4 +27,7 @@ void Engine_Register()
 	REGISTER_TYPECLASS(FontAsset);
 	REGISTER_TYPECLASS(SoundAsset);
 	REGISTER_TYPECLASS(MusicAsset);
+	REGISTER_TYPECLASS(ICollider);
+	REGISTER_TYPECLASS(BoxCollider);
+	REGISTER_TYPECLASS(CircleCollider);
 }
