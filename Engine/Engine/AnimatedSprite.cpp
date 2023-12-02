@@ -37,6 +37,11 @@ void AnimatedSprite::Update() {
     }
 }
 
+void AnimatedSprite::Load(json::JSON& json)
+{
+    Sprite::Load(json);
+}
+
 void AnimatedSprite::SetSpriteSheet(int rows, int cols, int _totalFrames) {
     spriteSheetRows = rows;
     spriteSheetColumns = cols;

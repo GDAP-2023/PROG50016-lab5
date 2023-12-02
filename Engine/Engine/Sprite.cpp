@@ -19,6 +19,7 @@ void Sprite::Destroy() {
 }
 
 void Sprite::Update() {
+    Renderable::Update();
     const Transform& transform = ownerEntity->GetTransform();
     size = IVec2(transform.scale * IVec2(sourceRect.w, sourceRect.h)).Abs();
     const IVec2 pos = transform.position - size / 2;
@@ -28,6 +29,7 @@ void Sprite::Update() {
         size.x,
         size.y
     };
+    LOG(targetRect.x << ", " << targetRect.y << ", " << targetRect.w << ", " << targetRect.h);
 
     flip = static_cast<SDL_RendererFlip>((transform.scale.x < 0) | ((transform.scale.y < 0) << 1));
 }

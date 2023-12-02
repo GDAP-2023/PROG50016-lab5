@@ -10,7 +10,7 @@ void Transform::Initialize() { // empty function but initial values are est in c
 }
 
 void Transform::Update() {
-
+	Component::Update();
 }
 
 void Transform::Load(json::JSON& node)

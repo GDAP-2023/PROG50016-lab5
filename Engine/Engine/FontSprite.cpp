@@ -30,6 +30,7 @@ void FontSprite::Initialize()
 
 void FontSprite::Update()
 {
+    Renderable::Update();
     if (output == nullptr)
     {
         return;

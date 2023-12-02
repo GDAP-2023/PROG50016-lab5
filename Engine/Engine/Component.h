@@ -20,7 +20,10 @@ public:
 
     void Initialize() override;
     // Change to pure virtual function
-    virtual void Update() = 0;
+    virtual void Update()
+    {
+        LOG("big mean uwu")
+    };
     void Load(json::JSON& node) override;
     void Destroy() override;
 
