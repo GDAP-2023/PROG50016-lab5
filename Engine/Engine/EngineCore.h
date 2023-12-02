@@ -49,4 +49,5 @@
 #include "EngineMath.h"
 #include "EngineTime.h"
 #include "Transform.h"
+#include "Entity.h"
 #include "SDL_events.h"
