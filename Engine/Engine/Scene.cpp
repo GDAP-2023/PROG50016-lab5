@@ -8,6 +8,7 @@
 #include "EngineCore.h"
 #include "Scene.h"
 #include "Entity.h"
+#include "AssetManager.h"
 
 /**
  * @brief Scene constructor generates a random GUID & UID.
@@ -55,7 +56,20 @@ void Scene::Load(json::JSON& sceneJSON)
 	THROW_RUNTIME_ERROR(!sceneJSON.hasKey("AssetManager"), "Scene JSON must contain GUIDs of all the assets it needs.");
 	THROW_RUNTIME_ERROR(!sceneJSON.hasKey("Scene"), "Scene JSON must contain scene info.");
 
-	// TODO: Pass sceneJSON["AssetManager"] json to AssetManager
+	// Load all the assets used by this scene
+	json::JSON assetsJSON = sceneJSON["AssetManager"];
+	if (assetsJSON.hasKey("Assets"))
+	{
+		for (json::JSON& assetJSON : assetsJSON["Assets"].ArrayRange())
+		{
+			if (assetJSON.hasKey("GUID"))
+			{
+				std::string assetGUID = assetJSON["GUID"].ToString();
+				AssetManager::Get().LoadSceneAsset(assetGUID);
+				assetsGUIDs.push_back(assetGUID);
+			}
+		}
+	}
 
 	json::JSON sceneData = sceneJSON["Scene"];
 	if (sceneData.hasKey("Name"))
@@ -138,6 +152,12 @@ void Scene::Destroy()
 		delete entity;
 	}
 	entities.clear();
+
+	// Unload all assets
+	for (std::string& assetGUID : assetsGUIDs)
+	{
+		AssetManager::Get().UnloadSceneAsset(assetGUID);
+	}
 }
 
 /**

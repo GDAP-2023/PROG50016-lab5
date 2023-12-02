@@ -2,6 +2,7 @@
 #include "AnimatedSprite.h"
 #include "RenderSystem.h"
 #include "EngineTime.h"
+#include "Entity.h"
 
 IMPLEMENT_DYNAMIC_CLASS(AnimatedSprite);
 
@@ -43,8 +44,15 @@ void AnimatedSprite::Update() {
 
 void AnimatedSprite::Render() {
 	SDL_SetTextureColorMod(texture, _filterColor.r, _filterColor.g, _filterColor.b);
-	double angle = 0;
-	SDL_RenderCopyEx(&RenderSystem::Instance().GetRenderer(), texture, &spriteRect, &targetRect, angle, NULL, SDL_FLIP_NONE);
+	SDL_RenderCopyEx(
+		&RenderSystem::Instance().GetRenderer(),
+		texture,
+		&spriteRect,
+		&targetRect,
+		ownerEntity->GetTransform().rotation,
+		NULL,
+		SDL_FLIP_NONE
+	);
 	SDL_SetTextureColorMod(texture, 255, 255, 255);
 }
 
@@ -63,10 +71,9 @@ void AnimatedSprite::SetSpriteSheet(int rows, int cols, int _totalFrames) {
 		spriteHeight
 	};
 
-	int pos[2] = { 100, 100 };
 	targetRect = {
-		(int)(pos[0] - spriteWidth * .5f),
-		(int)(pos[1] - spriteHeight * .5f),
+		(int)(ownerEntity->GetTransform().position.x - spriteWidth * .5f),
+		(int)(ownerEntity->GetTransform().position.y - spriteHeight * .5f),
 		spriteWidth,
 		spriteHeight
 	};

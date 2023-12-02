@@ -7,6 +7,8 @@
 
 #include <SDL_rect.h>
 
+union IVec2;
+
 union Vec2
 {
 	struct {
@@ -14,16 +16,17 @@ union Vec2
 		float y;
 	};
 	SDL_FPoint data;
-
-	Vec2();
-	explicit Vec2(float value);
-	Vec2(float _x, float _y);
-	static Vec2 Zero;
-	static Vec2 UnitX;
-	static Vec2 UnitY;
-	Vec2 operator-() const;
-	Vec2& operator+=(const Vec2& rhs);
-	Vec2& operator-=(const Vec2& rhs);
+	
+    Vec2();
+    explicit Vec2(float value);
+    Vec2(float _x, float _y);
+    Vec2(IVec2 value);
+    static Vec2 Zero;
+    static Vec2 UnitX;
+    static Vec2 UnitY;
+    Vec2 operator-() const;
+    Vec2& operator+=(const Vec2 &rhs);
+    Vec2& operator-=(const Vec2 &rhs);
 
 
 	bool operator==(const Vec2& rhs) const;
@@ -71,11 +74,44 @@ inline Vec2 vec2_from_json(json::JSON& node) {
 // Exercise for the viewer :)
 union IVec2
 {
-	struct {
-		int x;
-		int y;
-	};
-	SDL_Point data;
+    struct {
+        int x;
+        int y;
+    };
+    SDL_Point data;
+
+    IVec2();
+    explicit IVec2(int value);
+    IVec2(int _x, int _y);
+    IVec2(Vec2 value);
+    static IVec2 Zero;
+    static IVec2 UnitX;
+    static IVec2 UnitY;
+    IVec2 operator-() const;
+    IVec2& operator+=(const IVec2 &rhs);
+    IVec2& operator-=(const IVec2 &rhs);
+    
+    bool operator==(const IVec2 &rhs) const;
+    bool operator!=(const IVec2 &rhs) const;
+
+    // Cursed shader-programmer zone starts
+    IVec2& operator*=(const IVec2 &rhs);
+    IVec2& operator/=(const IVec2 &rhs);
+    // Cursed shader-programmer zone ends
+
+    IVec2& operator*=(const int &f);
+    IVec2& operator/=(const int &f);
+
+    IVec2 operator+(const IVec2 &rhs) const;
+    IVec2 operator-(const IVec2 &rhs) const;
+    
+    // Cursed shader-programmer zone starts
+    IVec2 operator*(const IVec2 &rhs) const;
+    IVec2 operator/(const IVec2 &rhs) const;
+    // Cursed shader-programmer zone ends
+
+    IVec2 operator*(const int &f) const;
+    IVec2 operator/(const int &f) const;
 };
 
 #endif
