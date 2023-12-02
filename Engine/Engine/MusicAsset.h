@@ -15,6 +15,8 @@ class MusicAsset final : public Asset {
     void Initialize() override;
     void Destroy() override;
     void Load(json::JSON&) override;
+
+    Mix_Music* GetMusic() { return music; }
 };
 
 #endif // !_MUSIC_ASSET_H_
