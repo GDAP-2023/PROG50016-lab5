@@ -1,6 +1,8 @@
 #include "GameCore.h"
 #include "Player.h"
 
+#define DEBUG_PLAYER
+
 IMPLEMENT_DYNAMIC_CLASS(Player)
 
 void Player::Initialize()
@@ -32,6 +34,9 @@ void Player::Update() {
 
     if (dir != Vec2::Zero) {
         dir.Normalize();
+#ifdef DEBUG_PLAYER
+        LOG("Input: " << dir.x << ", " << dir.y);
+#endif
     }
 
     ownerEntity->GetTransform().position += dir * (speed * Time::Instance().DeltaTime());
