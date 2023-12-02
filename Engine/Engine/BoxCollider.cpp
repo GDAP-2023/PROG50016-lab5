@@ -10,11 +10,11 @@ void BoxCollider::Initialize()
     ICollider::Initialize();
 	if (ownerEntity->HasComponent("Sprite"))
 	{
-		m_rect = dynamic_cast<Sprite*>(ownerEntity->GetComponent("Sprite"))->targetRect;
+		m_rect = ((Sprite*)(ownerEntity->GetComponent("Sprite")))->targetRect;
 	}
 	else if (ownerEntity->HasComponent("AnimatedSprite"))
 	{
-		m_rect = dynamic_cast<AnimatedSprite*>(ownerEntity->GetComponent("AnimatedSprite"))->targetRect;
+		m_rect = ((AnimatedSprite*)(ownerEntity->GetComponent("AnimatedSprite")))->targetRect;
 	}
 }
 
