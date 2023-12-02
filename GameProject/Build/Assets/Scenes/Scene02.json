@@ -9,7 +9,7 @@
     "Scene": {
         "Name": "Level02",
         "GUID": "45f479c9-f110-43c5-be35-9fbbc5d7d694",
-        "IsEnabled": true,
+        "IsEnabled": false,
         "Entities": [
             {
                 "Name": "GameOver",

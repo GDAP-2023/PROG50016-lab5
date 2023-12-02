@@ -41,3 +41,12 @@ void Player::Update() {
 
     ownerEntity->GetTransform().position += dir * (speed * Time::Instance().DeltaTime());
 }
+
+void Player::Load(json::JSON& node)
+{
+    Component::Load(node);
+    if (node.hasKey("Speed"))
+    {
+        speed = static_cast<float>(node.at("Speed").ToFloat());
+    }
+}
