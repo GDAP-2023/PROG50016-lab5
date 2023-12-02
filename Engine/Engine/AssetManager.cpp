@@ -65,13 +65,12 @@ void AssetManager::LoadSceneAsset(unsigned id) {
 		LOG("Could not find Asset with id: " << id);
 		return;
 	}
-	auto& entry = assets.at(id);
-	LOG("UWU")
-	if (entry.ref_count == 0)
+	auto& [asset, ref_count] = assets.at(id);
+	if (ref_count == 0)
 	{
-		entry.asset->Initialize();
+		asset->Initialize();
 	}
-	entry.ref_count++;
+	ref_count++;
 }
 
 void AssetManager::UnloadSceneAsset(std::string guid) {
