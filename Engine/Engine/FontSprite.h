@@ -19,6 +19,10 @@ class FontSprite : public Renderable
 {
 	DECLARE_DYNAMIC_DERIVED_CLASS(FontSprite, Renderable);
 
+private:
+
+	SDL_Point outputSizing = { 0, 0 };
+
 	std::string _text = "DEFAULT TEXT";
 
 	FontAsset* _font = nullptr;

@@ -35,6 +35,26 @@ void FontSprite::Initialize()
 	RegenerateOutput();
 }
 
+void FontSprite::Update()
+{
+	Transform t = ownerEntity->GetTransform();
+
+	_fontRect = {
+		(int)ownerEntity->GetTransform().position.x,
+		(int)ownerEntity->GetTransform().position.y,
+			(int)(outputSizing.x * ownerEntity->GetTransform().scale.x), 
+			(int)(outputSizing.y * ownerEntity->GetTransform().scale.y)
+	};
+
+	flip = SDL_FLIP_NONE;
+	if (t.scale.x < 0) {
+		flip = SDL_FLIP_HORIZONTAL;
+	}
+	if (t.scale.y < 0) {
+		flip = (SDL_RendererFlip)(flip | SDL_FLIP_VERTICAL);
+	}
+}
+
 void FontSprite::Destroy()
 {
 	SDL_DestroyTexture(_output);
@@ -44,22 +64,19 @@ void FontSprite::Render()
 {
 	if (_output == NULL)
 	{
-		SDL_Point outputSizing;
 		SDL_QueryTexture(_output, NULL, NULL, &outputSizing.x, &outputSizing.y);
 
 		_fontRect = { (int)ownerEntity->GetTransform().position.x, (int)ownerEntity->GetTransform().position.y,
 			(int)(outputSizing.x * ownerEntity->GetTransform().scale.x), (int)(outputSizing.y * ownerEntity->GetTransform().scale.y) };
 
-		if (ownerEntity->GetTransform().scale.x < 0 || ownerEntity->GetTransform().scale.y < 0)
-		{
-			SDL_RenderCopyEx(&RenderSystem::Instance().GetRenderer(), _output, NULL, &_fontRect, ownerEntity->GetTransform().rotation,
-				NULL, SDL_FLIP_HORIZONTAL);
-		}
-		else
-		{
-			SDL_RenderCopyEx(&RenderSystem::Instance().GetRenderer(), _output, NULL, &_fontRect, ownerEntity->GetTransform().rotation,
-				NULL, SDL_FLIP_NONE);
-		}
+		SDL_RenderCopyEx(
+			&RenderSystem::Instance().GetRenderer(), 
+			_output, NULL, 
+			&_fontRect,
+			ownerEntity->GetTransform().rotation,
+			NULL,
+			flip
+		);
 	}
 }
 
@@ -99,11 +116,6 @@ void FontSprite::Load(json::JSON& document)
 	_font = (FontAsset*)AssetManager::Get().GetAsset(guid);
 
 	RegenerateOutput();
-}
-
-void FontSprite::Update()
-{
-
 }
 
 /*

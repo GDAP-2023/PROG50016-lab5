@@ -74,10 +74,10 @@ void Sprite::SetNewTexture(SDL_Texture* _texture) {
 		(int)(size.x * std::abs(t.scale.x)), (int)(size.y * std::abs(t.scale.y))
 	};
 	flip = SDL_FLIP_NONE;
-	if (t.position.x < 0) {
+	if (t.scale.x < 0) {
 		flip = SDL_FLIP_HORIZONTAL;
 	}
-	if (t.position.y < 0) {
+	if (t.scale.y < 0) {
 		flip = (SDL_RendererFlip)(flip | SDL_FLIP_VERTICAL);
 	}
 }
