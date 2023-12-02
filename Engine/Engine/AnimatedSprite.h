@@ -13,7 +13,6 @@
 class AnimatedSprite : public Sprite {
 	DECLARE_DYNAMIC_DERIVED_CLASS(AnimatedSprite, Sprite);
 public:
-	SDL_Rect spriteRect = { 0,0,0,0 };
 	int spriteSheetRows = 0;
 	int spriteSheetColumns = 0;
 
@@ -49,24 +48,18 @@ private:
 	 */
 	void Update();
 
-	/**
-	 * @brief Copies the sprite onto a renderer to be displayed for that frame
-	 *
-	 */
-	void Render() override;
-
 public:
 	/**
 	 * @brief AnimatedSprite constructor
 	 *
 	 */
-	AnimatedSprite();
+	AnimatedSprite() = default;
 
 	/**
 	 * @brief AnimatedSprite destructor
 	 *
 	 */
-	~AnimatedSprite();
+	~AnimatedSprite() override = default;
 
 	/**
 	 * @brief Setter for how to parse the spritesheet

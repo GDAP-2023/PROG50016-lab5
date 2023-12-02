@@ -6,47 +6,23 @@
 
 IMPLEMENT_DYNAMIC_CLASS(AnimatedSprite);
 
-AnimatedSprite::AnimatedSprite() {
-	
-}
-
-AnimatedSprite::~AnimatedSprite() {
-
-}
-
 void AnimatedSprite::Initialize() {
-
+	Sprite::Initialize();
 }
 
 void AnimatedSprite::Destroy() {
-
+	Sprite::Destroy();
 }
 
 void AnimatedSprite::Update() {
-	const Transform* t = ownerEntity->GetTransform();
-	size.x = std::abs(spriteWidth * t->scale.x);
-	size.y = std::abs(spriteHeight * t->scale.y);
-
-	targetRect = {
-		(int)(t->position.x - size.x * .5f),
-		(int)(t->position.y - size.y * .5f),
-		spriteWidth,
-		spriteHeight
-	};
-
-	flip = SDL_FLIP_NONE;
-	if (t->scale.x < 0) {
-		flip = SDL_FLIP_HORIZONTAL;
-	}
-	if (t->scale.y < 0) {
-		flip = (SDL_RendererFlip)(flip | SDL_FLIP_VERTICAL);
-	}
+	Sprite::Update();
 
 	if (!running) return;
 	frameCounter += Time::Instance().DeltaTime();
 
-	spriteRect.x = spriteWidth * (currentFrame % spriteSheetColumns);
-	spriteRect.y = spriteHeight * (int)(currentFrame / spriteSheetColumns);
+	sourceRect.x = spriteWidth * (currentFrame % spriteSheetColumns);
+	sourceRect.y = spriteHeight * (currentFrame / spriteSheetColumns);
+
 	if (currentFrame == totalFrames) {
 		if (loop) {
 			currentFrame = 0;
@@ -61,41 +37,21 @@ void AnimatedSprite::Update() {
 	}
 }
 
-void AnimatedSprite::Render() {
-	SDL_SetTextureColorMod(texture, _filterColor.r, _filterColor.g, _filterColor.b);
-	SDL_RenderCopyEx(
-		&RenderSystem::Instance().GetRenderer(),
-		texture,
-		&spriteRect,
-		&targetRect,
-		ownerEntity->GetTransform()->rotation,
-		NULL,
-		flip
-	);
-	SDL_SetTextureColorMod(texture, 255, 255, 255);
-}
-
 void AnimatedSprite::SetSpriteSheet(int rows, int cols, int _totalFrames) {
 	spriteSheetRows = rows;
 	spriteSheetColumns = cols;
 	totalFrames = _totalFrames;
 
-	size.x = sourceRect.w / cols;
-	size.y = sourceRect.h / rows;
+	const auto texRect = texture->GetDimensions();
 
-	spriteWidth = sourceRect.w / cols;
-	spriteHeight = sourceRect.h / rows;
+	size = texRect / IVec2(cols, rows);
 
-	spriteRect = {
-		sourceRect.x,
-		sourceRect.y,
-		size.x,
-		size.y
-	};
+	spriteWidth = texRect.x / cols;
+	spriteHeight = texRect.y / rows;
 
-	targetRect = {
-		(int)(ownerEntity->GetTransform()->position.x - spriteWidth * .5f),
-		(int)(ownerEntity->GetTransform()->position.y - spriteHeight * .5f),
+	sourceRect = {
+		0,
+		0,
 		size.x,
 		size.y
 	};
