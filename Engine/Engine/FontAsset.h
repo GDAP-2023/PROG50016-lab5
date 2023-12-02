@@ -16,6 +16,10 @@ class FontAsset : public Asset
     void Initialize() override;
     void Destroy() override;
     void Load(json::JSON&) override;
+    TTF_Font* GetFont() const
+    {
+	    return font;
+    }
 };
 
 #endif // !_FONT_ASSET_H_
