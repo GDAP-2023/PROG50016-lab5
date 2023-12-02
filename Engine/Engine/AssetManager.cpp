@@ -24,8 +24,8 @@ void AssetManager::HandleAssetEntry(const std::filesystem::directory_entry& entr
 	json::JSON node = json::JSON::Load(str);
 
 	if (!node.hasKey("AssetType")) {
-		LOG("File " << entry.path() << " does not have a 'AssetType' field. Skipping.")
-			return;
+		LOG("File " << entry.path() << " does not have a 'AssetType' field. Skipping.");
+		return;
 	}
 
 	const auto assetType = node.at("AssetType").ToString();
@@ -62,8 +62,8 @@ void AssetManager::LoadSceneAsset(std::string guid) {
 
 void AssetManager::LoadSceneAsset(unsigned id) {
 	if (assets.find(id) == assets.end()) {
-		LOG("Could not find Asset with id: " << id)
-			return;
+		LOG("Could not find Asset with id: " << id);
+		return;
 	}
 
 	assets.at(id).ref_count++;
@@ -76,8 +76,8 @@ void AssetManager::UnloadSceneAsset(std::string guid) {
 
 void AssetManager::UnloadSceneAsset(STRCODE id) {
 	if (assets.find(id) == assets.end()) {
-		LOG("Could not find Asset with id: " << id)
-			return;
+		LOG("Could not find Asset with id: " << id);
+		return;
 	}
 
 	assets.at(id).ref_count--;
@@ -96,8 +96,8 @@ Asset* AssetManager::GetAsset(STRCODE id) {
 		return assets.at(id).asset;
 	}
 
-	LOG("Could not find Asset with id: " << id)
-		return nullptr;
+	LOG("Could not find Asset with id: " << id);
+	return nullptr;
 }
 
 void AssetManager::RemoveAsset(std::string guid) {
