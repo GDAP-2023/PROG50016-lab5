@@ -14,7 +14,7 @@ class Player : public Component
 
 public:
     void Initialize() override;
-    void Update(const InputSystem& inputSystem);
+    void Update() override;
     virtual const std::string& GetComponentType();
 private:
     float speed = 5.0f;
