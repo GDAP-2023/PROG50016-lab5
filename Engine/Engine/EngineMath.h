@@ -63,7 +63,7 @@ inline Vec2 vec2_from_json(json::JSON& node) {
 	if (node.length() == 2) {
 		return Vec2((float) node[0].ToFloat(), (float) node[1].ToFloat());
 	}
-	LOG("ERROR: Vec2::Load() - node is not a Vec2 or does not have 2 elements");
+	//LOG("ERROR: Vec2::Load() - node is not a Vec2 or does not have 2 elements");
 
 	return Vec2::Zero;
 }

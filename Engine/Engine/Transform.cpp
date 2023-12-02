@@ -1,10 +1,12 @@
 #include "EngineCore.h"
 #include "Transform.h"
 
+IMPLEMENT_DYNAMIC_CLASS(Transform);
+
 Transform::Transform() : position(Vec2::Zero), rotation(0.0f), scale(Vec2(1.0f, 1.0f)) {} //constructor & initialize pos to 0, rotation to 0, scale to 1
 
 void Transform::Initialize() { // empty function but initial values are est in constructor
-
+	//LOG(position.x << ", " << position.y << ", " << rotation)
 }
 
 void Transform::Update() {
@@ -13,6 +15,8 @@ void Transform::Update() {
 
 void Transform::Load(json::JSON& node)
 {
+	Component::Load(node);
+
 	if (node.hasKey("Position")) {
 		position = vec2_from_json(node["Position"]);
 	}
@@ -21,8 +25,9 @@ void Transform::Load(json::JSON& node)
 		rotation = node["Rotation"].ToFloat();
 	}
 	if (node.hasKey("Scale")) {
-		position = vec2_from_json(node["Scale"]);
+		scale = vec2_from_json(node["Scale"]);
 	}
+	//LOG(position.x << ", " << position.y << ", " << rotation)
 }
 
 void Transform::Translate(const Vec2& delta) { // next 3 functions for adjusting position, rotation and scale by a given vector

@@ -15,14 +15,12 @@ void Entity::Initialize()
 	}
 }
 
-void Entity::Load(json::JSON& _entityJSON)
+void Entity::Load(json::JSON& entityData)
 {
-	json::JSON entityData = _entityJSON["Scene"];
-
 	if (entityData.hasKey("Name"))
 	{
 		name = entityData["Name"].ToString();
-		std::cout << "Entity Name: " << name << std::endl;
+		//std::cout << "Entity Name: " << name << std::endl;
 	}
 
 	if (entityData.hasKey("GUID"))
@@ -40,16 +38,16 @@ void Entity::Load(json::JSON& _entityJSON)
 		{
 			json::JSON transformJSON = entityData["Transform"];
 			transform = (Transform*)CreateComponent("Transform");
-			std::cout << "Transform Component Created" << std::endl;
-			transform->Load(transformJSON);
+			//std::cout << "Transform Component Created" << std::endl;
+			transform->Load(transformJSON["ClassData"]);
 		}
 
 		for (json::JSON& componentJSON : componentsJSON.ArrayRange())
 		{
 			std::string componentClassName = componentJSON["ClassName"].ToString();
 			Component* component = CreateComponent(componentClassName);
-			component->Load(componentJSON);
-			std::cout<< "Component Created: " << componentClassName << std::endl;
+			component->Load(componentJSON["ClassData"]);
+			//std::cout<< "Component Created: " << componentClassName << std::endl;
 		}
 	}
 }

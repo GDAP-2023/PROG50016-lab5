@@ -1,6 +1,7 @@
 #include "EngineCore.h"
 
 #include "Object.h"
+#include "Transform.h"
 #include "Component.h"
 #include "Renderable.h"
 #include "FontSprite.h"
@@ -13,4 +14,6 @@ void Engine_Register()
 	REGISTER_TYPECLASS(Renderable);
 	REGISTER_TYPECLASS(FontSprite);
 	REGISTER_TYPECLASS(AnimatedSprite);
+	REGISTER_TYPECLASS(Sprite);
+	REGISTER_TYPECLASS(Transform);
 }

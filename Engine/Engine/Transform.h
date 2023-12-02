@@ -4,6 +4,7 @@
 #include "EngineMath.h"  
 
 class Transform : public Component {
+   DECLARE_DYNAMIC_DERIVED_CLASS(Transform, Component);
 public:
     Transform();
 
