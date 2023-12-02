@@ -43,6 +43,11 @@ protected:
 
 	~FontSprite();
 
+	/*
+	* @Initialize
+	* 
+	* There is no default font. You will see nothing until you provide a font to the FontSprite
+	*/
 	void Initialize();
 
 	void Destroy();
@@ -52,6 +57,8 @@ protected:
 	void Save(json::JSON&);
 
 	void Load(json::JSON&) override;
+
+	void Update() override;
 
 public:
 

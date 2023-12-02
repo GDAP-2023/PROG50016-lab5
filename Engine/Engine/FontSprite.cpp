@@ -15,7 +15,7 @@
 
 IMPLEMENT_DYNAMIC_CLASS(FontSprite);
 
-FontSprite::FontSprite()
+FontSprite::FontSprite() : Renderable()
 {
 
 }
@@ -99,6 +99,11 @@ void FontSprite::Load(json::JSON& document)
 	_font = (FontAsset*)AssetManager::Get().GetAsset(guid);
 
 	RegenerateOutput();
+}
+
+void FontSprite::Update()
+{
+
 }
 
 /*
