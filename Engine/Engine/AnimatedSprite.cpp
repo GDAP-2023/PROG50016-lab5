@@ -49,7 +49,7 @@ void AnimatedSprite::Render() {
 		texture,
 		&spriteRect,
 		&targetRect,
-		ownerEntity->GetTransform().rotation,
+		static_cast<double>(ownerEntity->GetTransform()->rotation),
 		NULL,
 		SDL_FLIP_NONE
 	);
@@ -72,8 +72,8 @@ void AnimatedSprite::SetSpriteSheet(int rows, int cols, int _totalFrames) {
 	};
 
 	targetRect = {
-		(int)(ownerEntity->GetTransform().position.x - spriteWidth * .5f),
-		(int)(ownerEntity->GetTransform().position.y - spriteHeight * .5f),
+		(int)(ownerEntity->GetTransform()->position.x - spriteWidth * .5f),
+		(int)(ownerEntity->GetTransform()->position.y - spriteHeight * .5f),
 		spriteWidth,
 		spriteHeight
 	};

@@ -50,12 +50,12 @@ void Sprite::SetNewTexture(SDL_Texture* _texture) {
 	SDL_Point size;
 	SDL_QueryTexture(texture, NULL, NULL, &size.x, &size.y);
 	
-	Transform t = ownerEntity->GetTransform();
+	const Transform* t = ownerEntity->GetTransform();
 	sourceRect = { 0, 0, size.x, size.y };
 	targetRect = { 
-		(int)(t.position.x - size.x * .5f),
-		(int)(t.position.y - size.y * .5f),
-		(int)(size.x * t.scale.x), (int)(size.y * t.scale.y)
+		(int)(t->position.x - size.x * .5f),
+		(int)(t->position.y - size.y * .5f),
+		(int)(size.x * t->scale.x), (int)(size.y * t->scale.y)
 	};
 }
 
@@ -67,7 +67,7 @@ void Sprite::Render()
 		texture,
 		&sourceRect,
 		&targetRect,
-		ownerEntity->GetTransform().rotation,
+		static_cast<double>(ownerEntity->GetTransform()->rotation),
 		NULL,
 		SDL_FLIP_NONE
 	);
