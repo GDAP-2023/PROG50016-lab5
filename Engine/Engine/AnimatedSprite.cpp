@@ -23,6 +23,23 @@ void AnimatedSprite::Destroy() {
 }
 
 void AnimatedSprite::Update() {
+	Transform t = ownerEntity->GetTransform();
+	targetRect = {
+		(int)(t.position.x - spriteWidth * .5f),
+		(int)(t.position.y - spriteHeight * .5f),
+		spriteWidth,
+		spriteHeight
+	};
+	if (t.position.x < 0) {
+		flip = SDL_FLIP_HORIZONTAL;
+	}
+	else if (t.position.y < 0) {
+		flip = SDL_FLIP_VERTICAL;
+	}
+	else {
+		SDL_FLIP_NONE;
+	}
+
 	if (!running) return;
 	frameCounter += Time::Instance().DeltaTime();
 
@@ -51,7 +68,7 @@ void AnimatedSprite::Render() {
 		&targetRect,
 		ownerEntity->GetTransform().rotation,
 		NULL,
-		SDL_FLIP_NONE
+		flip
 	);
 	SDL_SetTextureColorMod(texture, 255, 255, 255);
 }
