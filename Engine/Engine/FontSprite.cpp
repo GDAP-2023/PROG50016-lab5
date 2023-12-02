@@ -30,15 +30,15 @@ void FontSprite::Initialize()
 
 void FontSprite::Update()
 {
-    if (_output == nullptr)
+    if (output == nullptr)
     {
         return;
     }
-    SDL_QueryTexture(_output, nullptr, nullptr, &outputSizing.x, &outputSizing.y);
+    SDL_QueryTexture(output, nullptr, nullptr, &outputSizing.x, &outputSizing.y);
 
     const Transform& transform = ownerEntity->GetTransform();
 
-    _fontRect = { static_cast<int>(transform.position.x), static_cast<int>(transform.position.y),
+    fontRect = { static_cast<int>(transform.position.x), static_cast<int>(transform.position.y),
         (outputSizing.x * static_cast<int>(transform.scale.x)), (outputSizing.y * static_cast<int>(transform.scale.y)) };
 
     flip = static_cast<SDL_RendererFlip>((transform.scale.x < 0) | ((transform.scale.y < 0) << 1));
@@ -46,13 +46,13 @@ void FontSprite::Update()
 
 void FontSprite::Destroy()
 {
-    SDL_DestroyTexture(_output);
+    SDL_DestroyTexture(output);
     Renderable::Destroy();
 }
 
 void FontSprite::Render()
 {
-    if (_output == nullptr)
+    if (output == nullptr)
     {
         return;
     }
@@ -61,9 +61,9 @@ void FontSprite::Render()
 
     SDL_RenderCopyEx(
         &RenderSystem::Instance().GetRenderer(),
-        _output,
+        output,
         nullptr,
-        &_fontRect,
+        &fontRect,
         (double)transform.rotation,
         nullptr,
         flip
@@ -72,38 +72,38 @@ void FontSprite::Render()
 
 void FontSprite::Save(json::JSON& document) const
 {
-    document["Text"] = _text;
+    document["Text"] = text;
 
     json::JSON subObject = json::JSON::Object();
-    subObject["R"] = _fontColor.r;
-    subObject["G"] = _fontColor.g;
-    subObject["B"] = _fontColor.b;
-    subObject["A"] = _fontColor.a;
+    subObject["R"] = fontColor.r;
+    subObject["G"] = fontColor.g;
+    subObject["B"] = fontColor.b;
+    subObject["A"] = fontColor.a;
 
     document["FontColor"] = subObject;
 
-    document["Font"] = _font->GetGuid();
+    document["Font"] = font->GetGuid();
 }
 
 void FontSprite::Load(json::JSON& document)
 {
     if (document.hasKey("Text"))
     {
-        _text = document["Text"].ToString();
+        text = document["Text"].ToString();
     }
 
     if (document.hasKey("FontColor"))
     {
         json::JSON subObject = document["FontColor"];
-        _fontColor.r = static_cast<Uint8>(subObject["R"].ToInt());
-        _fontColor.g = static_cast<Uint8>(subObject["G"].ToInt());
-        _fontColor.b = static_cast<Uint8>(subObject["B"].ToInt());
-        _fontColor.a = static_cast<Uint8>(subObject["A"].ToInt());
+        fontColor.r = static_cast<Uint8>(subObject["R"].ToInt());
+        fontColor.g = static_cast<Uint8>(subObject["G"].ToInt());
+        fontColor.b = static_cast<Uint8>(subObject["B"].ToInt());
+        fontColor.a = static_cast<Uint8>(subObject["A"].ToInt());
     }
 
     std::string guid = document["Font"].ToString();
 
-    _font = dynamic_cast<FontAsset*>(AssetManager::Get().GetAsset(guid));
+    font = dynamic_cast<FontAsset*>(AssetManager::Get().GetAsset(guid));
 
     RegenerateOutput();
 }
@@ -115,7 +115,7 @@ void FontSprite::Load(json::JSON& document)
 */
 void FontSprite::SetText(std::string text)
 {
-    _text = std::move(text);
+    this->text = std::move(text);
     RegenerateOutput();
 }
 
@@ -126,7 +126,7 @@ void FontSprite::SetText(std::string text)
 */
 void FontSprite::SetFont(FontAsset* font)
 {
-    _font = font;
+    this->font = font;
     RegenerateOutput();
 }
 
@@ -137,10 +137,10 @@ void FontSprite::SetFont(FontAsset* font)
 */
 void FontSprite::SetFontColor(int r, int g, int b, int a)
 {
-    _fontColor.r = static_cast<Uint8>(r);
-    _fontColor.g = static_cast<Uint8>(g);
-    _fontColor.b = static_cast<Uint8>(b);
-    _fontColor.a = static_cast<Uint8>(a);
+    fontColor.r = static_cast<Uint8>(r);
+    fontColor.g = static_cast<Uint8>(g);
+    fontColor.b = static_cast<Uint8>(b);
+    fontColor.a = static_cast<Uint8>(a);
     RegenerateOutput();
 }
 
@@ -152,12 +152,12 @@ void FontSprite::SetFontColor(int r, int g, int b, int a)
 */
 void FontSprite::RegenerateOutput()
 {
-    if (_font == nullptr)
+    if (font == nullptr)
     {
         return;
     }
 
-    SDL_Surface* textSurface = TTF_RenderText_Solid((*_font).GetFont(), _text.c_str(), _fontColor);
-    _output = SDL_CreateTextureFromSurface(&RenderSystem::Instance().GetRenderer(), textSurface);
+    SDL_Surface* textSurface = TTF_RenderText_Solid((*font).GetFont(), text.c_str(), fontColor);
+    output = SDL_CreateTextureFromSurface(&RenderSystem::Instance().GetRenderer(), textSurface);
     SDL_FreeSurface(textSurface);
 }
