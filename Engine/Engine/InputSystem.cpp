@@ -1,7 +1,7 @@
 #include "EngineCore.h"
 #include "InputSystem.h"
 
-#define #NDEBUG_INPUT
+#define NDEBUG_INPUT
 
 /**
  * @class InputSystem
@@ -69,7 +69,9 @@ void InputSystem::Update()
         case SDL_KEYDOWN:
         {
             SDL_Scancode scancode = SDL_GetScancodeFromKey(event.key.keysym.sym);
+#ifdef DEBUG_INPUT
             LOG((int)scancode);
+#endif
             if (!keyStates[scancode]) {
                 keyStates[scancode] = true;
                 triggerKeyEvent(event.key.keysym.sym, true); // Assuming triggerKeyEvent still uses SDL_Keycode
@@ -100,10 +102,8 @@ void InputSystem::Update()
             }
             break;
         case SDL_CONTROLLERDEVICEADDED:
-            int joystickIndex = event.cdevice.which;
-            SDL_GameControllerOpen(joystickIndex);
-            // Assign an ID to this gamepad, like the index or a unique identifier
-            gamepadId = joystickIndex;
+            gamepadId = event.cdevice.which;
+            SDL_GameControllerOpen(gamepadId);
             break;
 
         case SDL_CONTROLLERBUTTONDOWN:
