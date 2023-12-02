@@ -5,7 +5,7 @@
                 "GUID": "012"
             },
             {
-                "GUID": "098"
+                "GUID": "meow"
             }
         ]
     },
@@ -32,7 +32,7 @@
                     {
                         "ClassName": "AnimatedSprite",
                         "ClassData": {
-                            
+                            "Texture": "012"
                         }
                     },
                     {
