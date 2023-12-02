@@ -10,8 +10,8 @@
 #define _ENTITY_H_
 
 #include "Object.h"
-#include "Transform.h"
 
+class Transform;
 class Component;
 
 class Entity final : public Object
