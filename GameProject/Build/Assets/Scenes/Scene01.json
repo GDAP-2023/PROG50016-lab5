@@ -2,7 +2,7 @@
     "AssetManager": {
         "Assets": [
             {
-                "GUID": "012"
+                "GUID": "awooga"
             },
             {
                 "GUID": "meow"
@@ -32,7 +32,7 @@
                     {
                         "ClassName": "AnimatedSprite",
                         "ClassData": {
-                            "Texture": "012"
+                            "Texture": "awooga"
                         }
                     },
                     {
@@ -50,10 +50,6 @@
                     "Scale": [1, 1]
                 },
                 "Components": [
-                    {
-                        "ClassName": "Enemy",
-                        "ClassData": {}
-                    },
                     {
                         "ClassName": "CircleCollider",
                         "ClassData": {}

@@ -1,24 +1,46 @@
 {
     "AssetManager": {
         "Assets": [
+            {
+                "GUID": "awooga"
+            }
         ]
     },
     "Scene": {
-        "Name": "Second Scene",
+        "Name": "Level02",
         "GUID": "45f479c9-f110-43c5-be35-9fbbc5d7d694",
-        "IsEnabled": false,
+        "IsEnabled": true,
         "Entities": [
             {
-                "Name": "Camera",
-                "GUID": "812",
+                "Name": "GameOver",
+                "GUID": "uwu",
+                "Transform": {
+                    "Position": [
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": 0,
+                    "Scale": [
+                        1,
+                        1
+                    ]
+                },
                 "Components": [
                     {
-                        "ClassName": "Transform",
+                        "ClassName": "Player",
                         "ClassData": {
-                            "Position": [0.5, -7, 5.7],
-                            "Rotation": 30.65,
-                            "Scale": [1, 1]
+                            "Speed": 5.0
                         }
+                    },
+                    {
+                        "ClassName": "AnimatedSprite",
+                        "ClassData": {
+                            "Texture": "awooga"
+                        }
+                    },
+                    {
+                        "ClassName": "BoxCollider",
+                        "ClassData": {}
                     }
                 ]
             }
