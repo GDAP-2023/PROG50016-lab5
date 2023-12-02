@@ -6,6 +6,7 @@
 
 #include "TextureAsset.h"
 #include "Entity.h"
+#include <cmath>
 
 IMPLEMENT_DYNAMIC_CLASS(Sprite);
 
@@ -24,6 +25,22 @@ void Sprite::Destroy() {
 }
 
 void Sprite::Update() {
+	Transform t = ownerEntity->GetTransform();
+	size.x = std::abs(sourceRect.w * t.scale.x);
+	size.y = std::abs(sourceRect.h * t.scale.y);
+	targetRect = {
+		(int)(t.position.x - size.x * .5f),
+		(int)(t.position.y - size.y * .5f),
+		size.x,
+		size.y
+	};
+	flip = SDL_FLIP_NONE;
+	if (t.scale.x < 0) {
+		flip = SDL_FLIP_HORIZONTAL;
+	}
+	if (t.scale.y < 0) {
+		flip = (SDL_RendererFlip)(flip | SDL_FLIP_VERTICAL);
+	}
 }
 
 void Sprite::Load(json::JSON& document) {
@@ -47,7 +64,6 @@ void Sprite::SetSourceRect(SDL_Rect _rect) {
 
 void Sprite::SetNewTexture(SDL_Texture* _texture) {
 	texture = _texture;
-	SDL_Point size;
 	SDL_QueryTexture(texture, NULL, NULL, &size.x, &size.y);
 	
 	Transform t = ownerEntity->GetTransform();
@@ -55,8 +71,15 @@ void Sprite::SetNewTexture(SDL_Texture* _texture) {
 	targetRect = { 
 		(int)(t.position.x - size.x * .5f),
 		(int)(t.position.y - size.y * .5f),
-		(int)(size.x * t.scale.x), (int)(size.y * t.scale.y)
+		(int)(size.x * std::abs(t.scale.x)), (int)(size.y * std::abs(t.scale.y))
 	};
+	flip = SDL_FLIP_NONE;
+	if (t.position.x < 0) {
+		flip = SDL_FLIP_HORIZONTAL;
+	}
+	if (t.position.y < 0) {
+		flip = (SDL_RendererFlip)(flip | SDL_FLIP_VERTICAL);
+	}
 }
 
 void Sprite::Render()
@@ -69,7 +92,7 @@ void Sprite::Render()
 		&targetRect,
 		ownerEntity->GetTransform().rotation,
 		NULL,
-		SDL_FLIP_NONE
+		flip
 	);
 	SDL_SetTextureColorMod(texture, 255, 255, 255);
 }

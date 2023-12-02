@@ -20,6 +20,7 @@ public:
 
 protected:
 	SDL_Texture* texture = nullptr;
+	SDL_Point size = {0, 0};
 	SDL_Rect sourceRect = { 0,0,0,0 };
 
 	/**
@@ -35,7 +36,7 @@ protected:
 	void Destroy();
 
 	/**
-	 * @brief Updates the sprite class
+	 * @brief Updates the sprite class rendering to match transforms
 	 *
 	 */
 	void Update();

@@ -7,6 +7,10 @@ IMPLEMENT_DYNAMIC_CLASS(TextureAsset);
 void TextureAsset::Initialize()
 {
 	Asset::Initialize();
+	SDL_Surface* image = IMG_Load(filepath.c_str());
+	texture = SDL_CreateTextureFromSurface(&RenderSystem::Instance().GetRenderer(), image);
+	SDL_QueryTexture(texture, nullptr, nullptr, &width, &height);
+	SDL_FreeSurface(image);
 }
 
 void TextureAsset::Destroy()
@@ -20,7 +24,9 @@ void TextureAsset::Destroy()
 void TextureAsset::Load(json::JSON& json)
 {
 	Asset::Load(json);
-	SDL_Surface* image = IMG_Load(filepath.c_str());
-	texture = SDL_CreateTextureFromSurface(&RenderSystem::Instance().GetRenderer(), image);
-	SDL_FreeSurface(image);
+}
+
+IVec2 TextureAsset::GetDimensions() const
+{
+	return IVec2(width, height);
 }
