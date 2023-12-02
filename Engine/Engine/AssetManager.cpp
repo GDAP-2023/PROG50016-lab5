@@ -65,8 +65,13 @@ void AssetManager::LoadSceneAsset(unsigned id) {
 		LOG("Could not find Asset with id: " << id);
 		return;
 	}
-
-	assets.at(id).ref_count++;
+	auto& entry = assets.at(id);
+	LOG("UWU")
+	if (entry.ref_count == 0)
+	{
+		entry.asset->Initialize();
+	}
+	entry.ref_count++;
 }
 
 void AssetManager::UnloadSceneAsset(std::string guid) {
@@ -106,6 +111,9 @@ void AssetManager::RemoveAsset(std::string guid) {
 }
 
 void AssetManager::RemoveAsset(STRCODE id) {
+	if (assets.find(id) != assets.end()) {
+		assets.at(id).asset->Destroy();
+	}
 	assets.erase(id);
 }
 
