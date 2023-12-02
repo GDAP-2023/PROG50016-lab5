@@ -33,9 +33,11 @@ void Sprite::Update() {
 	};
 	if (t.position.x < 0) {
 		flip = SDL_FLIP_HORIZONTAL;
-	}
-	if (t.position.y < 0) {
+	} else if (t.position.y < 0) {
 		flip = SDL_FLIP_VERTICAL;
+	}
+	else {
+		SDL_FLIP_NONE;
 	}
 }
 
@@ -72,8 +74,11 @@ void Sprite::SetNewTexture(SDL_Texture* _texture) {
 	if (t.position.x < 0) {
 		flip = SDL_FLIP_HORIZONTAL;
 	}
-	if (t.position.y < 0) {
+	else if (t.position.y < 0) {
 		flip = SDL_FLIP_VERTICAL;
+	}
+	else {
+		SDL_FLIP_NONE;
 	}
 }
 

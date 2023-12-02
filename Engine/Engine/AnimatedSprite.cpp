@@ -33,8 +33,11 @@ void AnimatedSprite::Update() {
 	if (t.position.x < 0) {
 		flip = SDL_FLIP_HORIZONTAL;
 	}
-	if (t.position.y < 0) {
+	else if (t.position.y < 0) {
 		flip = SDL_FLIP_VERTICAL;
+	}
+	else {
+		SDL_FLIP_NONE;
 	}
 
 	if (!running) return;
