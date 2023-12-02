@@ -10,10 +10,13 @@ void SoundAsset::Initialize()
 
 void SoundAsset::Destroy()
 {
+	Mix_FreeChunk(sound);
+	sound = nullptr;
 	Asset::Destroy();
 }
 
 void SoundAsset::Load(json::JSON& json)
 {
 	Asset::Load(json);
+	sound = Mix_LoadWAV(filepath.c_str());
 };

@@ -16,6 +16,8 @@ class SoundAsset final : public Asset
     void Initialize() override;
     void Destroy() override;
     void Load(json::JSON&) override;
+
+    Mix_Chunk* GetFX() { return sound; }
 };
 
 #endif // !_SOUND_ASSET_H_
