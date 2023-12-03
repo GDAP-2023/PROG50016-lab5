@@ -6,93 +6,74 @@
 
 #include "TextureAsset.h"
 #include "Entity.h"
-#include <cmath>
 
 IMPLEMENT_DYNAMIC_CLASS(Sprite);
 
-Sprite::Sprite() {
-}
-
-Sprite::~Sprite() {
-}
-
 void Sprite::Initialize() {
-
+    Renderable::Initialize();
 }
 
 void Sprite::Destroy() {
-	texture = nullptr;
+    texture = nullptr;
+    Renderable::Destroy();
 }
 
 void Sprite::Update() {
-	const Transform* t = ownerEntity->GetTransform();
-	size.x = std::abs(sourceRect.w * t->scale.x);
-	size.y = std::abs(sourceRect.h * t->scale.y);
-	targetRect = {
-		(int)(t->position.x - size.x * .5f),
-		(int)(t->position.y - size.y * .5f),
-		size.x,
-		size.y
-	};
-	flip = SDL_FLIP_NONE;
-	if (t->scale.x < 0) {
-		flip = SDL_FLIP_HORIZONTAL;
-	}
-	if (t->scale.y < 0) {
-		flip = (SDL_RendererFlip)(flip | SDL_FLIP_VERTICAL);
-	}
+    Renderable::Update();
+    const Transform& transform = ownerEntity->GetTransform();
+    size = IVec2(transform.scale * IVec2(sourceRect.w, sourceRect.h)).Abs();
+    const IVec2 pos = transform.position - size / 2;
+    targetRect = {
+        pos.x,
+        pos.y,
+        size.x,
+        size.y
+    };
+    // LOG(targetRect.x << ", " << targetRect.y << ", " << targetRect.w << ", " << targetRect.h);
+
+    flip = static_cast<SDL_RendererFlip>((transform.scale.x < 0) | ((transform.scale.y < 0) << 1));
 }
 
-void Sprite::Load(json::JSON& document) {
-	// Checks for width in RenderSettings
-	if (document.hasKey("ClassData"))
-	{
-		json::JSON classData = document["ClassData"];
+void Sprite::Load(json::JSON& node) {
 
-		if (classData.hasKey("Texture")) {
-			std::string guid = classData["Texture"].ToString();
-			SetNewTexture(
-				((TextureAsset*)AssetManager::Get().GetAsset(guid))->GetTexture()
-			);
-		}
-	}
+    if (node.hasKey("Texture")) {
+        const std::string tex_asset_guid = node["Texture"].ToString();
+        LOG("Trying to load Texture: " << tex_asset_guid);
+        SetTextureAsset((TextureAsset*)(AssetManager::Get().GetAsset(tex_asset_guid)));
+    }
 }
 
-void Sprite::SetSourceRect(SDL_Rect _rect) {
-	sourceRect = _rect;
+void Sprite::SetSourceRect(const SDL_Rect rect) {
+    sourceRect = rect;
 }
 
-void Sprite::SetNewTexture(SDL_Texture* _texture) {
-	texture = _texture;
-	SDL_QueryTexture(texture, NULL, NULL, &size.x, &size.y);
-	
-	const Transform* t = ownerEntity->GetTransform();
-	sourceRect = { 0, 0, size.x, size.y };
-	targetRect = { 
-		(int)(t->position.x - size.x * .5f),
-		(int)(t->position.y - size.y * .5f),
-		(int)(size.x * std::abs(t->scale.x)), (int)(size.y * std::abs(t->scale.y))
-	};
-	flip = SDL_FLIP_NONE;
-	if (t->scale.x < 0) {
-		flip = SDL_FLIP_HORIZONTAL;
-	}
-	if (t->scale.y < 0) {
-		flip = (SDL_RendererFlip)(flip | SDL_FLIP_VERTICAL);
-	}
+void Sprite::SetTextureAsset(TextureAsset* texAsset) {
+    texture = texAsset;
+
+    if (texAsset != nullptr)
+    {
+        size = texAsset->GetDimensions();
+        sourceRect = { 0, 0, size.x, size.y };
+    }
 }
 
 void Sprite::Render()
 {
-	SDL_SetTextureColorMod(texture, _filterColor.r, _filterColor.g, _filterColor.b);
-	SDL_RenderCopyEx(
-		&RenderSystem::Instance().GetRenderer(),
-		texture,
-		&sourceRect,
-		&targetRect,
-		ownerEntity->GetTransform()->rotation,
-		NULL,
-		flip
-	);
-	SDL_SetTextureColorMod(texture, 255, 255, 255);
+    if (texture == nullptr)
+    {
+        LOG("No pretty picture :(");
+        return;
+    }
+    const auto texture = this->texture->GetTexture();
+    SDL_SetTextureColorMod(texture, filterColor.r, filterColor.g, filterColor.b);
+    SDL_RenderCopyEx(
+        &RenderSystem::Instance().GetRenderer(),
+        texture,
+        &sourceRect,
+        &targetRect,
+        (double)ownerEntity->GetTransform().rotation,
+        nullptr,
+        flip
+    );
+    SDL_SetTextureColorMod(texture, 255, 255, 255);
 }

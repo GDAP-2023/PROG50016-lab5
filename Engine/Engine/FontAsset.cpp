@@ -1,12 +1,15 @@
 #include "EngineCore.h"
 #include "FontAsset.h"
 
+#include "RenderSystem.h"
+
 IMPLEMENT_DYNAMIC_CLASS(FontAsset)
 
 void FontAsset::Initialize()
 {
-	font = TTF_OpenFont(filepath.c_str(), font_size);
+	TTF_Init();
 	Asset::Initialize();
+	font = TTF_OpenFont(filepath.c_str(), font_size);
 }
 
 void FontAsset::Destroy()
@@ -14,6 +17,7 @@ void FontAsset::Destroy()
 	TTF_CloseFont(font);
 	font = nullptr;
 	Asset::Destroy();
+	TTF_Quit();
 }
 
 void FontAsset::Load(json::JSON& node)

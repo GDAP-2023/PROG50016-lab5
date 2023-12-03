@@ -19,7 +19,7 @@ protected:
 	void Load(const std::string& config_file);
 public:
 	void SetMusic(MusicAsset* music);
-	void PlaySound(SoundAsset* sound);
+	void PlayFX(SoundAsset* sound);
 };
 
 #endif

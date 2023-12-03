@@ -69,9 +69,6 @@ protected:
 	void Initialize();
 	void Destroy();
 	void Update();
-	
-	void SetID(ICollider*);
-
 private:
 
 	/**

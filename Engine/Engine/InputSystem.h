@@ -44,10 +44,6 @@ public:
 
 	void handleQuitEvent();
 
-
-
-
-	void setupQuitHandler(Engine& engine);
 	void registerKeyEventHandler(SDL_Keycode key, bool onPress, std::function<void()> handler);
 	void handleGamepadConnection(int joystickIndex);
 	void registerMouseEventHandler(Uint8 button, bool onPress, std::function<void()> handler);

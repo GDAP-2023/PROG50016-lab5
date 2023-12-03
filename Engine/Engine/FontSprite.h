@@ -21,17 +21,17 @@ class FontSprite : public Renderable
 
 private:
 
-	SDL_Point outputSizing = { 0, 0 };
+	IVec2 outputSizing = { 0, 0 };
 
-	std::string _text = "DEFAULT TEXT";
+	std::string text = "DEFAULT TEXT";
 
-	FontAsset* _font = nullptr;
+	FontAsset* font = nullptr;
 
-	SDL_Rect _fontRect = { 0,0,250,250 };
+	SDL_Rect fontRect = { 0,0,250,250 };
 
-	SDL_Texture* _output = nullptr;
+	SDL_Texture* output = nullptr;
 
-	SDL_Color _fontColor = { 255,255,255,255 };
+	SDL_Color fontColor = { 255,255,255,255 };
 
 	/*
 	* @RegenerateOutput
@@ -43,22 +43,22 @@ private:
 
 protected:
 
-	FontSprite();
+	FontSprite() = default;
 
-	~FontSprite();
+	~FontSprite() override = default;
 
 	/*
 	* @Initialize
 	* 
 	* There is no default font. You will see nothing until you provide a font to the FontSprite
 	*/
-	void Initialize();
+	void Initialize() override;
 
-	void Destroy();
+	void Destroy() override;
 
 	void Render() override;
 
-	void Save(json::JSON&);
+	void Save(json::JSON&) const;
 
 	void Load(json::JSON&) override;
 

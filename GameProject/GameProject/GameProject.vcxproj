@@ -99,6 +99,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)..\engine\Engine;$(SolutionDir)..\Engine\External-Libs\SDL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Create</PrecompiledHeader>
       <PrecompiledHeaderFile>GameCore.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -121,6 +122,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)..\engine\Engine;$(SolutionDir)..\Engine\External-Libs\SDL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Create</PrecompiledHeader>
       <PrecompiledHeaderFile>GameCore.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -143,6 +145,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)..\engine\Engine;$(SolutionDir)..\Engine\External-Libs\SDL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Create</PrecompiledHeader>
       <PrecompiledHeaderFile>GameCore.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -165,6 +168,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)..\engine\Engine;$(SolutionDir)..\Engine\External-Libs\SDL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Create</PrecompiledHeader>
       <PrecompiledHeaderFile>GameCore.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -179,12 +183,31 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GameOver.cpp" />
+    <ClCompile Include="Game_Register.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameCore.h" />
+    <ClInclude Include="GameOver.h" />
     <ClInclude Include="Player.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\Build\Assets\alien.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Build\Assets\alien.png.asset" />
+    <None Include="..\Build\Assets\AssetManager.json" />
+    <None Include="..\Build\Assets\AudioSystem.json" />
+    <None Include="..\Build\Assets\hitEffect03.wav.asset" />
+    <None Include="..\Build\Assets\RenderSettings.json" />
+    <None Include="..\Build\Assets\SceneManager.json" />
+    <None Include="..\Build\Assets\Scenes\Scene01.json" />
+    <None Include="..\Build\Assets\Scenes\Scene02.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="..\Build\Assets\hitEffect03.wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

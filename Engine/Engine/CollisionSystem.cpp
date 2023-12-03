@@ -1,6 +1,8 @@
 #include "EngineCore.h"
 #include "CollisionSystem.h"
 
+#define NDEBUG_COLLISION_SYSTEM
+
 CollisionSystem* CollisionSystem::instance = nullptr;
 /**
  * @brief Initializes the CollisionSystem. Currently not implemented.
@@ -42,17 +44,17 @@ void CollisionSystem::Update()
 			if (ongoingCollisions.find(collisionPair) == ongoingCollisions.end()) 
 			{
 				// New collision
-				//not sure if these next two lines are code with our new implementation of OnEnter/Stay/Exit
-				collisionPair.first->OnCollisionEnter(collisionPair.second);
-				collisionPair.second->OnCollisionEnter(collisionPair.first);
 				enterCollisions.push_back(collisionPair);
 			}
 			else 
 			{
 				// Ongoing collision
-				collisionPair.first->OnCollisionStay(collisionPair.second);
-				collisionPair.second->OnCollisionStay(collisionPair.first);
-				stayCollisions.push_back(collisionPair);
+				bool inStay = false;
+				for (const auto& existingPair : stayCollisions)
+				{
+					inStay = true;
+				}
+				if (inStay) { stayCollisions.push_back(collisionPair); }
 			}
 		}
 	}
@@ -63,8 +65,6 @@ void CollisionSystem::Update()
 		if (currentFrameCollisions.find(oldCollision) == currentFrameCollisions.end()) 
 		{
 			collisionsToRemove.insert(oldCollision);
-			oldCollision.first->OnCollisionExit(oldCollision.second);
-			oldCollision.second->OnCollisionExit(oldCollision.first);
 			exitCollisions.push_back(oldCollision);
 			//flush this pair from the stay list
 			bool inList = std::find(stayCollisions.begin(), stayCollisions.end(), oldCollision) != stayCollisions.end();
@@ -80,7 +80,9 @@ void CollisionSystem::Update()
 
 	// Update ongoing collisions for the next frame
 	ongoingCollisions = std::move(currentFrameCollisions);
-
+#ifdef DEBUG_COLLISION_SYSTEM
+	LOG(ongoingCollisions.size() << " collisions Collisioning.");
+#endif
 }
 /**
  * @brief Adds a collider to the CollisionSystem for tracking.
@@ -195,8 +197,8 @@ float DistanceSquared(const Vec2& a, const Vec2& b) {
 
 // Helper function for Circle-Circle collision
 bool CollisionSystem::CircleCircleCollision(ICollider* col1, ICollider* col2) {
-	CircleCollider* circle1 = (CircleCollider*)col1;
-	CircleCollider* circle2 = (CircleCollider*)col2;
+	CircleCollider* circle1 = static_cast<CircleCollider*>(col1);
+	CircleCollider* circle2 = static_cast<CircleCollider*>(col2);
 	Vec2 positionDiff = circle1->GetPosition() - circle2->GetPosition();
 	float radiusSum = circle1->GetRadius() + circle2->GetRadius();
 	return positionDiff.MagnitudeSquared() <= (radiusSum * radiusSum);
@@ -204,21 +206,30 @@ bool CollisionSystem::CircleCircleCollision(ICollider* col1, ICollider* col2) {
 
 // Helper function for Box-Box collision using AABB (Axis-Aligned Bounding Box)
 bool CollisionSystem::BoxBoxCollision(ICollider* col1, ICollider* col2) {
-	BoxCollider* box1 = (BoxCollider*)col1;
-	BoxCollider* box2 = (BoxCollider*)col2;
+	BoxCollider* box1 = static_cast<BoxCollider*>(col1);
+	BoxCollider* box2 = static_cast<BoxCollider*>(col2);
 	auto bounds1 = box1->GetBounds();
 	auto bounds2 = box2->GetBounds();
 
-	// Check if one box is to the left of the other or above the other
-	return !(bounds1.x + bounds1.w < bounds2.x || bounds2.x + bounds2.w < bounds1.x ||
-		bounds1.y + bounds1.h < bounds2.y || bounds2.y + bounds2.h < bounds1.y);
-}
+	// Calculate the half-widths and half-heights
+	float halfWidth1 = bounds1.w / 2.0f;
+	float halfHeight1 = bounds1.h / 2.0f;
+	float halfWidth2 = bounds2.w / 2.0f;
+	float halfHeight2 = bounds2.h / 2.0f;
 
+	// Check for overlap in the x axis
+	bool overlapX = abs(bounds1.x - bounds2.x) < (halfWidth1 + halfWidth2);
+	// Check for overlap in the y axis
+	bool overlapY = abs(bounds1.y - bounds2.y) < (halfHeight1 + halfHeight2);
+
+	// Collision occurs if both the x and y axes overlap
+	return overlapX && overlapY;
+}
 
 // Helper function for Circle-Box collision using AABB (Axis-Aligned Bounding Box)
 bool CollisionSystem::CircleBoxCollision(ICollider* col1, ICollider* col2) {
-	BoxCollider* box = (BoxCollider*)col1;
-	CircleCollider* circle = (CircleCollider*)col2;
+	BoxCollider* box = static_cast<BoxCollider*>(col1);
+	CircleCollider* circle = static_cast<CircleCollider*>(col2);
 	auto bounds = box->GetBounds();
 	Vec2 circleCenter = circle->GetPosition();
 	float circleRadius = circle->GetRadius();
@@ -244,14 +255,4 @@ bool CollisionSystem::CircleBoxCollision(ICollider* col1, ICollider* col2) {
  */
 void CollisionSystem::ResolveCollision(ICollider* col1, ICollider* col2)
 {
-	// Both colliders are solid, revert to previous positions
-	col1->ResetPosition();
-	col2->ResetPosition();
-	//reset position not implemented, causing errors when we call it here
 }
-
-//void CollisionSystem::ResolveCollision(ICollider* col1, ICollider* col2)
-//{
-//	col1->HandleCollision(col2);
-//	col2->HandleCollision(col1);
-//}

@@ -30,7 +30,7 @@ void AssetManager::HandleAssetEntry(const std::filesystem::directory_entry& entr
 
 	const auto assetType = node.at("AssetType").ToString();
 	auto asset = (Asset*)CreateObject(assetType.c_str());
-	asset->filepath = entry.path().stem().string();
+	asset->filepath = entry.path().relative_path().replace_extension("").generic_string();
 	asset->Load(node);
 
 	AddAsset(asset);
@@ -65,8 +65,12 @@ void AssetManager::LoadSceneAsset(unsigned id) {
 		LOG("Could not find Asset with id: " << id);
 		return;
 	}
-
-	assets.at(id).ref_count++;
+	auto& [asset, ref_count] = assets.at(id);
+	if (ref_count == 0)
+	{
+		asset->Initialize();
+	}
+	ref_count++;
 }
 
 void AssetManager::UnloadSceneAsset(std::string guid) {
@@ -106,6 +110,9 @@ void AssetManager::RemoveAsset(std::string guid) {
 }
 
 void AssetManager::RemoveAsset(STRCODE id) {
+	if (assets.find(id) != assets.end()) {
+		assets.at(id).asset->Destroy();
+	}
 	assets.erase(id);
 }
 

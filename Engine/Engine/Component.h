@@ -12,17 +12,21 @@ class Component : public Object
     DECLARE_ABSTRACT_DERIVED_CLASS(Component, Object)
 
 protected:
-    Entity* ownerEntity;
+    Entity* ownerEntity = nullptr;
 
 public:
-    Component();
-    virtual ~Component() override;
+    Component() = default;
+    ~Component() override = default;
 
-    virtual void Initialize() override;
-    //change to pure virtual function
-    virtual void Update() = 0;
-    virtual void Load(json::JSON& node) override;
-    virtual void Render() {}; // Are some components going to need to render?
+    void Initialize() override;
+    // Change to pure virtual function
+    virtual void Update() {
+#ifdef DEBUG_COMPONENT
+        LOG("Component Update called on " << this->uid)
+#endif
+    };
+    void Load(json::JSON& node) override;
+    void Destroy() override;
 
     void SetOwner(Entity* owner);
     Entity* GetOwner() const;

@@ -15,9 +15,9 @@ Vec2::Vec2(const float value) {
 	y = value;
 }
 
-Vec2::Vec2(float _x, float _y) : x(_x), y(_y) {}
+Vec2::Vec2(float x, float y) : x(x), y(y) {}
 
-Vec2::Vec2(IVec2 value)
+Vec2::Vec2(const IVec2 value)
 {
 	x = static_cast<float>(value.x);
 	y = static_cast<float>(value.y);
@@ -105,9 +105,13 @@ Vec2 Vec2::operator/(const float& f) const {
 	return { this->x * inv_f, this->y * inv_f };
 }
 
+Vec2 Vec2::Abs() const
+{
+	return { std::abs(this->x), std::abs(this->y) };
+}
+
 void Vec2::Normalize() {
-	// TODO: Maybe rework this check?
-	if (this->x == 0 || this->y == 0) {
+	if (*this == Zero) {
 		return;
 	}
 	*this /= this->Magnitude();
@@ -137,6 +141,11 @@ float Vec2::Distance(const Vec2& lhs, const Vec2& rhs) {
 	return (lhs - rhs).Magnitude();
 }
 
+Vec2 Vec2::Lerp(const Vec2& lhs, const Vec2& rhs, float t)
+{
+	return lhs + (rhs - lhs) * t;
+}
+
 IVec2 IVec2::Zero = IVec2();
 IVec2 IVec2::UnitX = IVec2(1, 0);
 IVec2 IVec2::UnitY = IVec2(0, 1);
@@ -151,9 +160,9 @@ IVec2::IVec2(const int value) {
 	y = value;
 }
 
-IVec2::IVec2(int _x, int _y) : x(_x), y(_y) {}
+IVec2::IVec2(int x, int y) : x(x), y(y) {}
 
-IVec2::IVec2(Vec2 value)
+IVec2::IVec2(const Vec2 value)
 {
 	x = static_cast<int>(value.x);
 	y = static_cast<int>(value.y);
@@ -237,4 +246,9 @@ IVec2 IVec2::operator*(const int& f) const {
 
 IVec2 IVec2::operator/(const int& f) const {
 	return { this->x / f, this->y / f };
+}
+
+IVec2 IVec2::Abs() const
+{
+	return { std::abs(this->x), std::abs(this->y) };
 }

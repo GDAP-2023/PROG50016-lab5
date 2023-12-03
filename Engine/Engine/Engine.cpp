@@ -10,6 +10,7 @@
 
 #include "AssetManager.h"
 #include "AudioSystem.h"
+#include "CollisionSystem.h"
 #include "Component.h"
 
 Engine* Engine::instance = nullptr;
@@ -21,13 +22,16 @@ void Engine::Initialize()
 	Engine_Register();
 
 	// Load the managers
+	AudioSystem::Get().Load("../Assets/AudioSystem.json");
 	AssetManager::Get().Load("../Assets/AssetManager.json");
+
+	AudioSystem::Get().Initialize();
+	AssetManager::Get().Initialize();
+
+	RenderSystem::Instance().Initialize();
 	SceneManager::Get().Load();
 
 	// Initialize the managers
-	AssetManager::Get().Initialize();
-	RenderSystem::Instance().Initialize();
-	AudioSystem::Get().Initialize();
 
 	SceneManager::Get().Initialize();
 
@@ -40,6 +44,8 @@ void Engine::Initialize()
 void Engine::Destroy()
 {
 	Time::Instance().Destroy();
+	CollisionSystem::Instance().Destroy();
+	SceneManager::Get().Destroy();
 	AssetManager::Get().Destroy();
 	AudioSystem::Get().Destroy();
 	RenderSystem::Instance().Destroy();
@@ -59,6 +65,7 @@ void Engine::GameLoop()
 		// --------------------- Update Phase ---------------------
 		SceneManager::Get().Update();
 		RenderSystem::Instance().Update();
+		CollisionSystem::Instance().Update();
 
 		// --------------------- Post-update Phase ---------------------
 		SceneManager::Get().PostUpdate();
@@ -72,19 +79,9 @@ void Engine::GameLoop()
 
 			// --------------------- Input Phase ---------------------
 		InputSystem::Instance().Update();
-
 	/*	if (Time::Instance().TotalTime() > 5.0f)
 		{
 			break;
 		}*/
-
-		SDL_Event event;
-		while (SDL_PollEvent(&event)) {
-			if (event.type == SDL_QUIT) {
-				InputSystem::Instance().handleQuitEvent();
-			}
-		}
-
-
 	}
 }

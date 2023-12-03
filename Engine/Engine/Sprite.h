@@ -3,8 +3,9 @@
 #ifndef _SPRITE_H_
 #define _SPRITE_H_
 
-#include "SDL.h"
+#include "SDL_rect.h"
 #include "Renderable.h"
+#include "TextureAsset.h"
 
 /**
  * @class Sprite
@@ -19,27 +20,27 @@ public:
 	SDL_Rect targetRect = { 0,0,0,0 };
 
 protected:
-	SDL_Texture* texture = nullptr;
-	SDL_Point size = {0, 0};
+	TextureAsset* texture = nullptr;
+	IVec2 size = {0, 0};
 	SDL_Rect sourceRect = { 0,0,0,0 };
 
 	/**
 	 * @brief Initializes any variables as needed
 	 *
 	 */
-	void Initialize();
+	void Initialize() override;
 
 	/**
 	 * @brief Cleans up any memory and pointers as needed
 	 *
 	 */
-	void Destroy();
+	void Destroy() override;
 
 	/**
 	 * @brief Updates the sprite class rendering to match transforms
 	 *
 	 */
-	void Update();
+	void Update() override;
 
 	/**
 	 * @brief Copies the sprite onto a renderer to be displayed for that frame
@@ -52,35 +53,35 @@ public:
 	 * @brief Sprite constructor
 	 *
 	 */
-	Sprite();
+	Sprite() = default;
 
 	/**
 	 * @brief Sprite destructor
 	 *
 	 */
-	~Sprite();
+	~Sprite() override = default;
 
 	/**
 	 * @brief Setter for the texture area to render
 	 *
-	 * @param _rect A rect of four values describing the area of the texture to render
+	 * @param rect A rect of four values describing the area of the texture to render
 	 */
-	void SetSourceRect(SDL_Rect _rect);
+	void SetSourceRect(SDL_Rect rect);
 
 	/**
-	 * @brief Initializes the sprite class
+	 * @brief Initializes the Sprite class
 	 *
-	 * @param _texture A pointer to an SDL texture for this class to render
+	 * @param texAsset A pointer to a Texture Asset
 	 */
-	void SetNewTexture(SDL_Texture* _texture);
+	void SetTextureAsset(TextureAsset* texAsset);
 
 
 	/**
-	 * @brief Loads the component and texture information from JSON
+	 * @brief Loads the Component and TextureAsset information from JSON
 	 *
-	 * @param document The json containing component information
+	 * @param node The JSON node containing component information
 	 */
-	void Load(json::JSON& document) override;
+	void Load(json::JSON& node) override;
 	
 };
 

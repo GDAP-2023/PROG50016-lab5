@@ -3,58 +3,51 @@
 #include "Component.h"
 #include "Transform.h"
 
+
+#define NDEBUG_ENTITY_GET_COMPONENT
+
 IMPLEMENT_DYNAMIC_CLASS(Entity)
 
 void Entity::Initialize()
 {
-	transform = (Transform*)CreateComponent("Transform");
+	transform.Initialize();
 
-	for (auto component : components)
+	for (const auto component : components)
 	{
 		component->Initialize();
 	}
 }
 
-void Entity::Load(json::JSON& entityData)
+void Entity::Load(json::JSON& node)
 {
-	if (entityData.hasKey("Name"))
-	{
-		name = entityData["Name"].ToString();
-		//std::cout << "Entity Name: " << name << std::endl;
-	}
+	Object::Load(node);
 
-	if (entityData.hasKey("GUID"))
+	// Load Transform
+	if (node.hasKey("Transform"))
 	{
-		guid = entityData["GUID"].ToString();
-		uid = GetHashCode(guid.c_str());
+		json::JSON transform_json = node["Transform"];
+		transform.Load(transform_json);
 	}
 
 	// Load the components
-	if (entityData.hasKey("Components"))
+	if (node.hasKey("Components"))
 	{
-		json::JSON componentsJSON = entityData["Components"];
+		json::JSON components_json = node["Components"];
 
-		if (componentsJSON.hasKey("Transform"))
+		for (json::JSON& component_json : components_json.ArrayRange())
 		{
-			json::JSON transformJSON = entityData["Transform"];
-			transform = (Transform*)CreateComponent("Transform");
-			//std::cout << "Transform Component Created" << std::endl;
-			transform->Load(transformJSON["ClassData"]);
-		}
-
-		for (json::JSON& componentJSON : componentsJSON.ArrayRange())
-		{
-			std::string componentClassName = componentJSON["ClassName"].ToString();
-			Component* component = CreateComponent(componentClassName);
-			component->Load(componentJSON["ClassData"]);
-			//std::cout<< "Component Created: " << componentClassName << std::endl;
+			std::string component_name = component_json["ClassName"].ToString();
+			Component* component = CreateComponent(component_name);
+			component->Load(component_json["ClassData"]);
 		}
 	}
 }
 
 void Entity::Update()
 {
-	for (auto component : components)
+	transform.Update();
+
+	for (const auto component : components)
 	{
 		component->Update();
 	}
@@ -82,18 +75,18 @@ void Entity::PostUpdate()
 
 void Entity::Destroy()
 {
-	for (auto component : components)
+	for (const auto component : components)
 	{
 		delete component;
 	}
 	components.clear();
 }
 
-bool Entity::HasComponent(std::string componentClassName)
+bool Entity::HasComponent(const std::string& componentName) const
 {
-	for (auto component : components)
+	for (const auto component : components)
 	{
-		if (component->GetClassName() == componentClassName)
+		if (component->GetDerivedClassName() == componentName)
 		{
 			return true;
 		}
@@ -101,19 +94,22 @@ bool Entity::HasComponent(std::string componentClassName)
 	return false;
 }
 
-void Entity::AddComponents(const std::vector<std::string>& _component_list)
+void Entity::AddComponents(const std::vector<std::string>& componentList)
 {
-	for (std::string component : _component_list)
+	for (const auto& component : componentList)
 	{
 		CreateComponent(component);
 	}
 }
 
-Component* const Entity::GetComponent(const std::string componentClassName)
+Component* Entity::GetComponent(const std::string& componentName) const
 {
 	for (auto component : components)
 	{
-		if (component->GetClassName() == componentClassName)
+#ifdef DEBUG_ENTITY_GET_COMPONENT
+		LOG(componentName << ", " << component->GetDerivedClassName())
+#endif
+		if (component->GetDerivedClassName() == componentName)
 		{
 			return component;
 		}
@@ -121,29 +117,29 @@ Component* const Entity::GetComponent(const std::string componentClassName)
 	return nullptr;
 }
 
-Component* Entity::CreateComponent(std::string componentClassName)
+Component* Entity::CreateComponent(const std::string& componentName)
 {
-	Component* component = (Component*)CreateObject(componentClassName.c_str());
+    const auto component = (Component*)CreateObject(componentName.c_str());
 	component->ownerEntity = this;
 	componentsToAdd.push_back(component);
 	return component;
 }
 
-bool Entity::RemoveComponent(Component* _component)
+bool Entity::RemoveComponent(const Component* component)
 {
-	for (auto component : components)
+	for (auto c : components)
 	{
-		if (component == _component)
+		if (c == component)
 		{
-			componentsToRemove.push_back(component);
+			componentsToRemove.push_back(c);
 			return true;
 		}
 	}
 	return false;
 }
 
-void Entity::SetPosition(const Vec2& newPosition) {
-	if (transform) {
-		transform->position = newPosition;
-	}
+Scene* Entity::GetParentScene() const
+{
+	ASSERT(ownerScene != nullptr, "ownerScene was null :(");
+	return ownerScene;
 }

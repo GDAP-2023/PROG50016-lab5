@@ -23,6 +23,8 @@
 #include "TypeClass.h"
 #include "Object.h"
 
+#define NDEBUG_TYPECLASS
+
 std::map<STRCODE, TypeClass*>* TypeClass::classTable;
 
 TypeClass::TypeClass(std::string _className, std::function<Object*()> ctor)
@@ -40,11 +42,17 @@ const TypeClass& TypeClass::GetTypeClass(std::string _className)
 
 const TypeClass& TypeClass::GetTypeClass(const char* _class)
 {
+#ifdef DEBUG_TYPECLASS
+	LOG("Trying to Get Type " << _class)
+#endif
 	return GetTypeClass(GetHashCode(_class));
 }
 
 const TypeClass& TypeClass::GetTypeClass(const STRCODE _class)
 {
+#ifdef DEBUG_TYPECLASS
+	LOG("Trying to Get Type " << _class)
+#endif
 	std::map<STRCODE, TypeClass*>::iterator _item = classTable->find(_class);
 	if (_item == classTable->end())
 	{

@@ -1,12 +1,8 @@
 #pragma once
 #ifndef PLAYER_H
 #define PLAYER_H
+
 #include "GameCore.h"
-#include "InputSystem.h"
-#include <functional>
-
-
-#include "Component.h"
 
 class Player : public Component
 {
@@ -14,10 +10,13 @@ class Player : public Component
 
 public:
     void Initialize() override;
-    void Update(const InputSystem& inputSystem);
-    virtual const std::string& GetComponentType();
+    void Update() override;
+    void Load(json::JSON&) override;
 private:
     float speed = 5.0f;
+    Vec2 start_pos;
+    BoxCollider* collider = nullptr;
+    STRCODE game_over_scene = -1;
 };
 
 #endif // PLAYER_H

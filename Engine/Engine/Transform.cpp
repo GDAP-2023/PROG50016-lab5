@@ -3,14 +3,14 @@
 
 IMPLEMENT_DYNAMIC_CLASS(Transform);
 
-Transform::Transform() : position(Vec2::Zero), rotation(0.0f), scale(Vec2(1.0f, 1.0f)) {} //constructor & initialize pos to 0, rotation to 0, scale to 1
+Transform::Transform() : position(Vec2::Zero), rotation(0), scale(Vec2(1)) {} //constructor & initialize pos to 0, rotation to 0, scale to 1
 
 void Transform::Initialize() { // empty function but initial values are est in constructor
 	//LOG(position.x << ", " << position.y << ", " << rotation)
 }
 
 void Transform::Update() {
-
+	Component::Update();
 }
 
 void Transform::Load(json::JSON& node)
@@ -22,7 +22,7 @@ void Transform::Load(json::JSON& node)
 	}
 	if (node.hasKey("Rotation"))
 	{
-		rotation = node["Rotation"].ToFloat();
+		rotation = static_cast<float>(node["Rotation"].ToFloat());
 	}
 	if (node.hasKey("Scale")) {
 		scale = vec2_from_json(node["Scale"]);

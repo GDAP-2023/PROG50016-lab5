@@ -1,12 +1,14 @@
 #include "EngineCore.h"
 #include "InputSystem.h"
 
+#define NDEBUG_INPUT
+
 /**
  * @class InputSystem
  * @brief Manages input events and state for keyboard, mouse, and game controllers.
  *
  * @author Brandon Bennie
- * 
+ *
  * This class handles the initialization, updating, and management of input devices.
  * It processes input events and maintains the state of keyboard keys, mouse buttons,
  * and gamepad buttons and axes. It also supports registering event handlers for different inputs.
@@ -42,7 +44,7 @@ void InputSystem::Initialize()
 	// Initialize the state of the input system
 // Initialize keyStates and mouseButtonStates
 // Initialize keyEventHandlers and mouseEventHandlers
-	for (int i = 0; i < 256; i++) {
+	for (int i = 0; i < 512; i++) {
 		keyStates[i] = false;
 	}
 	for (int i = 0; i < 5; i++) {
@@ -53,7 +55,13 @@ void InputSystem::Initialize()
 /**
  * @brief Updates the state of the input system by processing SDL events.
  *
- * This method should be called every frame to ensure all input events are captured and handled.
+ * This method processes various SDL events to update the state of the input system. It handles keyboard,
+ * mouse, and game controller inputs. For keyboard events, it updates the key states based on SDL_KEYDOWN and SDL_KEYUP events.
+ * For mouse events, it updates mouse button states. It also handles game controller connection events, button presses,
+ * button releases, and axis motions. The method ensures that appropriate event handlers are triggered for each type of input.
+ * Additionally, it handles the SDL_QUIT event to perform any necessary actions before quitting.
+ *
+ * This method should be called every frame to ensure all input events are captured and handled promptly.
  */
 
 void InputSystem::Update()
@@ -67,6 +75,9 @@ void InputSystem::Update()
 		case SDL_KEYDOWN:
 		{
 			SDL_Scancode scancode = SDL_GetScancodeFromKey(event.key.keysym.sym);
+#ifdef DEBUG_INPUT
+			LOG((int)scancode);
+#endif
 			if (!keyStates[scancode]) {
 				keyStates[scancode] = true;
 				triggerKeyEvent(event.key.keysym.sym, true); // Assuming triggerKeyEvent still uses SDL_Keycode
@@ -96,13 +107,9 @@ void InputSystem::Update()
 				triggerMouseEvent(event.button.button, false);
 			}
 			break;
-			if (event.type == SDL_CONTROLLERDEVICEADDED) {
-				int joystickIndex = event.cdevice.which;
-				SDL_GameController* gamepad = SDL_GameControllerOpen(joystickIndex);
-				// Assign an ID to this gamepad, like the index or a unique identifier
-				gamepadId = joystickIndex;
-
-			}
+		case SDL_CONTROLLERDEVICEADDED:
+			gamepadId = event.cdevice.which;
+			SDL_GameControllerOpen(gamepadId);
 			break;
 
 		case SDL_CONTROLLERBUTTONDOWN:
@@ -178,11 +185,24 @@ bool InputSystem::areKeysPressed(const std::vector<SDL_Keycode>& keys) const
 /**
  * @brief Checks if a specific key is currently pressed.
  *
- * @param key The SDL_Keycode of the key to check.
- * @return True if the specified key is pressed, false otherwise.
+ * This function converts the given SDL_Keycode to its corresponding SDL_Scancode and checks if this key is currently pressed.
+ * It's designed to handle keys in a layout-independent manner by using scancodes.
+ * The function also includes a safety check to handle out-of-range scancode values,
+ * ensuring stability and preventing access violations in the keyStates array.
+ *
+ * @param keycode The SDL_Keycode of the key to check. This is the symbol on the key and is layout dependent.
+ * @return True if the specified key is pressed, false otherwise. For out-of-range keys, it always returns false.
  */
 
-bool InputSystem::isKeyPressed(SDL_Keycode key) const {
+bool InputSystem::isKeyPressed(SDL_Keycode keycode) const {
+	const SDL_Scancode key = SDL_GetScancodeFromKey(keycode);
+	if (key >= 512)
+	{
+#ifdef DEBUG_INPUT
+		LOG("Unhandled Input (key out of range): " << key);
+#endif
+		return false;
+	}
 	return keyStates[key];
 }
 
@@ -217,7 +237,16 @@ void InputSystem::registerKeyEventHandler(SDL_Keycode key, bool onPress, std::fu
 	}
 }
 
-
+/**
+ * @brief Handles the connection of a gamepad controller.
+ *
+ * This method is responsible for handling the connection of gamepad controllers. When a gamepad is connected,
+ * it uses the SDL_GameControllerOpen function to initialize the gamepad controller with the given joystick index.
+ * Upon successful initialization, the gamepad controller is added to the `gamepadMap`, associating the joystick index
+ * with the SDL_GameController object. This allows the input system to manage and interact with the connected gamepads efficiently.
+ *
+ * @param joystickIndex The index of the joystick representing the connected gamepad. This index is used to identify and open the gamepad controller.
+ */
 
 void InputSystem::handleGamepadConnection(int joystickIndex) {
 	SDL_GameController* gamepad = SDL_GameControllerOpen(joystickIndex);

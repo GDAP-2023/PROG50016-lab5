@@ -6,16 +6,6 @@
 
 IMPLEMENT_ABSTRACT_CLASS(Component)
 
-//functionality needs to be added
-
-Component::Component() : ownerEntity(nullptr)
-{
-}
-
-Component::~Component()
-{
-}
-
 void Component::Initialize()
 {
 }
@@ -28,6 +18,12 @@ void Component::Load(json::JSON& node)
 #endif
 }
 
+void Component::Destroy()
+{
+    ownerEntity = nullptr;
+    Object::Destroy();
+}
+
 void Component::SetOwner(Entity* owner)
 {
     ownerEntity = owner;
@@ -36,8 +32,4 @@ void Component::SetOwner(Entity* owner)
 Entity* Component::GetOwner() const
 {
     return ownerEntity;
-}
-
-void Component::Update() {
-
 }

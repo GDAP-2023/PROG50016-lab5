@@ -13,9 +13,8 @@
 class AnimatedSprite : public Sprite {
 	DECLARE_DYNAMIC_DERIVED_CLASS(AnimatedSprite, Sprite);
 public:
-	SDL_Rect spriteRect = { 0,0,0,0 };
-	int spriteSheetRows = 0;
-	int spriteSheetColumns = 0;
+	int spriteSheetRows = 1;
+	int spriteSheetColumns = 1;
 
 	int spriteWidth = 0;
 	int spriteHeight = 0;
@@ -24,7 +23,7 @@ public:
 	int defaultFrameNumber = 0;
 
 	int currentFrame = 0;
-	float frameDelay = 0.1f;
+	float frameDelay = 0.05f;
 
 private:
 	float frameCounter = 0;
@@ -35,38 +34,34 @@ private:
 	 * @brief Initializes any variables as needed
 	 *
 	 */
-	void Initialize();
+	void Initialize() override;
 
 	/**
 	 * @brief Cleans up any memory and pointers as needed
 	 *
 	 */
-	void Destroy();
+	void Destroy() override;
 
 	/**
 	 * @brief Updates the animation frame to render based off of game time
 	 *
 	 */
-	void Update();
+	void Update() override;
 
-	/**
-	 * @brief Copies the sprite onto a renderer to be displayed for that frame
-	 *
-	 */
-	void Render() override;
+	void Load(json::JSON&) override;
 
 public:
 	/**
 	 * @brief AnimatedSprite constructor
 	 *
 	 */
-	AnimatedSprite();
+	AnimatedSprite() = default;
 
 	/**
 	 * @brief AnimatedSprite destructor
 	 *
 	 */
-	~AnimatedSprite();
+	~AnimatedSprite() override = default;
 
 	/**
 	 * @brief Setter for how to parse the spritesheet
