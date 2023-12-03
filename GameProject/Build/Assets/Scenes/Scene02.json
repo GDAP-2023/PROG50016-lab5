@@ -1,45 +1,46 @@
 {
-    "AssetManager": {
-        "Assets": [
-            {
-                "GUID": "awooga"
+  "AssetManager": {
+    "Assets": [
+      {
+        "GUID": "https-youtu-be-jVhlJNJopOQ"
+      }
+    ]
+  },
+  "Scene": {
+    "Name": "Level02",
+    "GUID": "45f479c9-f110-43c5-be35-9fbbc5d7d694",
+    "IsEnabled": false,
+    "Entities": [
+      {
+        "Name": "GameOver",
+        "GUID": "uwu",
+        "Transform": {
+          "Position": [
+            320.0,
+            320.0
+          ],
+          "Rotation": 0.0,
+          "Scale": [
+            0.2,
+            0.2
+          ]
+        },
+        "Components": [
+          {
+            "ClassName": "Player",
+            "ClassData": {
+              "Speed": 100.0
             }
-        ]
-    },
-    "Scene": {
-        "Name": "Level02",
-        "GUID": "45f479c9-f110-43c5-be35-9fbbc5d7d694",
-        "IsEnabled": false,
-        "Entities": [
-            {
-                "Name": "GameOver",
-                "GUID": "uwu",
-                "Transform": {
-                    "Position": [
-                        320.0,
-                        320.0
-                    ],
-                    "Rotation": 0.0,
-                    "Scale": [
-                        0.2,
-                        0.2
-                    ]
-                },
-                "Components": [
-                    {
-                        "ClassName": "Player",
-                        "ClassData": {
-                            "Speed": 100.0
-                        }
-                    },
-                    {
-                        "ClassName": "Sprite",
-                        "ClassData": {
-                            "Texture": "awooga"
-                        }
-                    }
-                ]
+          },
+          {
+            "ClassName": "FontSprite",
+            "ClassData": {
+              "Text": "Game Over",
+              "Font": "https-youtu-be-jVhlJNJopOQ"
             }
+          }
         ]
-    }
+      }
+    ]
+  }
 }

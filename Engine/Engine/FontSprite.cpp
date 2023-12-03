@@ -22,91 +22,81 @@ IMPLEMENT_DYNAMIC_CLASS(FontSprite);
 *
 * There is no default font. You will see nothing until you provide a font to the FontSprite
 */
-void FontSprite::Initialize()
-{
-    Renderable::Initialize();
-    RegenerateOutput();
+void FontSprite::Initialize() {
+	Renderable::Initialize();
+	RegenerateOutput();
 }
 
-void FontSprite::Update()
-{
-    Renderable::Update();
-    if (output == nullptr)
-    {
-        return;
-    }
-    SDL_QueryTexture(output, nullptr, nullptr, &outputSizing.x, &outputSizing.y);
+void FontSprite::Update() {
+	Renderable::Update(); RegenerateOutput();
+	if (output != nullptr) {
+		SDL_QueryTexture(output, nullptr, nullptr, &outputSizing.x, &outputSizing.y);
+	}
 
-    const Transform& transform = ownerEntity->GetTransform();
+	const Transform& transform = ownerEntity->GetTransform();
 
-    fontRect = { static_cast<int>(transform.position.x), static_cast<int>(transform.position.y),
-        (outputSizing.x * static_cast<int>(transform.scale.x)), (outputSizing.y * static_cast<int>(transform.scale.y)) };
+	fontRect = { static_cast<int>(transform.position.x), static_cast<int>(transform.position.y),
+		(outputSizing.x * static_cast<int>(transform.scale.x)), (outputSizing.y * static_cast<int>(transform.scale.y)) };
 
-    flip = static_cast<SDL_RendererFlip>((transform.scale.x < 0) | ((transform.scale.y < 0) << 1));
+	flip = static_cast<SDL_RendererFlip>((transform.scale.x < 0) | ((transform.scale.y < 0) << 1));
 }
 
-void FontSprite::Destroy()
-{
-    SDL_DestroyTexture(output);
-    Renderable::Destroy();
+void FontSprite::Destroy() {
+	SDL_DestroyTexture(output);
+	Renderable::Destroy();
 }
 
-void FontSprite::Render()
-{
-    if (output == nullptr)
-    {
-        return;
-    }
+void FontSprite::Render() {
+	if (output == nullptr) {
+		return;
+	}
 
-    const Transform& transform = ownerEntity->GetTransform();
+	const Transform& transform = ownerEntity->GetTransform();
 
-    SDL_RenderCopyEx(
-        &RenderSystem::Instance().GetRenderer(),
-        output,
-        nullptr,
-        &fontRect,
-        (double)transform.rotation,
-        nullptr,
-        flip
-    );
+	SDL_RenderCopyEx(
+		&RenderSystem::Instance().GetRenderer(),
+		output,
+		nullptr,
+		&fontRect,
+		(double)transform.rotation,
+		nullptr,
+		flip
+	);
 }
 
-void FontSprite::Save(json::JSON& document) const
-{
-    document["Text"] = text;
+void FontSprite::Save(json::JSON& document) const {
+	document["Text"] = text;
 
-    json::JSON subObject = json::JSON::Object();
-    subObject["R"] = fontColor.r;
-    subObject["G"] = fontColor.g;
-    subObject["B"] = fontColor.b;
-    subObject["A"] = fontColor.a;
+	json::JSON subObject = json::JSON::Object();
+	subObject["R"] = fontColor.r;
+	subObject["G"] = fontColor.g;
+	subObject["B"] = fontColor.b;
+	subObject["A"] = fontColor.a;
 
-    document["FontColor"] = subObject;
+	document["FontColor"] = subObject;
 
-    document["Font"] = font->GetGuid();
+	document["Font"] = font->GetGuid();
 }
 
-void FontSprite::Load(json::JSON& document)
-{
-    if (document.hasKey("Text"))
-    {
-        text = document["Text"].ToString();
-    }
+void FontSprite::Load(json::JSON& node) {
+	Renderable::Load(node);
 
-    if (document.hasKey("FontColor"))
-    {
-        json::JSON subObject = document["FontColor"];
-        fontColor.r = static_cast<Uint8>(subObject["R"].ToInt());
-        fontColor.g = static_cast<Uint8>(subObject["G"].ToInt());
-        fontColor.b = static_cast<Uint8>(subObject["B"].ToInt());
-        fontColor.a = static_cast<Uint8>(subObject["A"].ToInt());
-    }
+	if (node.hasKey("Text")) {
+		text = node["Text"].ToString();
+	}
 
-    std::string guid = document["Font"].ToString();
+	if (node.hasKey("FontColor")) {
+		json::JSON subObject = node["FontColor"];
+		fontColor.r = static_cast<Uint8>(subObject["R"].ToInt());
+		fontColor.g = static_cast<Uint8>(subObject["G"].ToInt());
+		fontColor.b = static_cast<Uint8>(subObject["B"].ToInt());
+		fontColor.a = static_cast<Uint8>(subObject["A"].ToInt());
+	}
 
-    font = (FontAsset*)(AssetManager::Get().GetAsset(guid));
+	std::string guid = node["Font"].ToString();
 
-    RegenerateOutput();
+	font = (FontAsset*)(AssetManager::Get().GetAsset(guid));
+	RegenerateOutput();
 }
 
 /*
@@ -114,10 +104,9 @@ void FontSprite::Load(json::JSON& document)
 *
 * Takes a string for the display text and regenerates the font texture.
 */
-void FontSprite::SetText(std::string text)
-{
-    this->text = std::move(text);
-    RegenerateOutput();
+void FontSprite::SetText(std::string text) {
+	this->text = std::move(text);
+	RegenerateOutput();
 }
 
 /*
@@ -125,10 +114,9 @@ void FontSprite::SetText(std::string text)
 *
 * Takes a TextureAsset for the new font and regenerates the font texture.
 */
-void FontSprite::SetFont(FontAsset* font)
-{
-    this->font = font;
-    RegenerateOutput();
+void FontSprite::SetFont(FontAsset* font) {
+	this->font = font;
+	RegenerateOutput();
 }
 
 /*
@@ -136,13 +124,12 @@ void FontSprite::SetFont(FontAsset* font)
 *
 * Takes RGB values along with an Alpha and regenerates the font texture.
 */
-void FontSprite::SetFontColor(int r, int g, int b, int a)
-{
-    fontColor.r = static_cast<Uint8>(r);
-    fontColor.g = static_cast<Uint8>(g);
-    fontColor.b = static_cast<Uint8>(b);
-    fontColor.a = static_cast<Uint8>(a);
-    RegenerateOutput();
+void FontSprite::SetFontColor(int r, int g, int b, int a) {
+	fontColor.r = static_cast<Uint8>(r);
+	fontColor.g = static_cast<Uint8>(g);
+	fontColor.b = static_cast<Uint8>(b);
+	fontColor.a = static_cast<Uint8>(a);
+	RegenerateOutput();
 }
 
 /*
@@ -151,14 +138,12 @@ void FontSprite::SetFontColor(int r, int g, int b, int a)
 * Used by other methods to regenerate the SDL_Texture after things like text, font or color
 * have changed.
 */
-void FontSprite::RegenerateOutput()
-{
-    if (font == nullptr)
-    {
-        return;
-    }
+void FontSprite::RegenerateOutput() {
+	if (font == nullptr) {
+		return;
+	}
 
-    SDL_Surface* textSurface = TTF_RenderText_Solid((*font).GetFont(), text.c_str(), fontColor);
-    output = SDL_CreateTextureFromSurface(&RenderSystem::Instance().GetRenderer(), textSurface);
-    SDL_FreeSurface(textSurface);
+	SDL_Surface* textSurface = TTF_RenderText_Solid((*font).GetFont(), text.c_str(), fontColor);
+	output = SDL_CreateTextureFromSurface(&RenderSystem::Instance().GetRenderer(), textSurface);
+	SDL_FreeSurface(textSurface);
 }
