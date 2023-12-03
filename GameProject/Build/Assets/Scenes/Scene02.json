@@ -3,6 +3,9 @@
     "Assets": [
       {
         "GUID": "https-youtu-be-jVhlJNJopOQ"
+      },
+      {
+        "GUID": "meow"
       }
     ]
   },
@@ -27,9 +30,11 @@
         },
         "Components": [
           {
-            "ClassName": "Player",
+            "ClassName": "GameOver",
             "ClassData": {
-              "Speed": 100.0
+              "SoundTimer": 5.0,
+              "Sound": "meow",
+              "SceneToLoad": "1a9e5171-c7ab-47d4-9af4-d490d1494201"
             }
           },
           {
