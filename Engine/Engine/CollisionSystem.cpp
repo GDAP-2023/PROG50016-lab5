@@ -41,7 +41,12 @@ void CollisionSystem::Update()
 			else 
 			{
 				// Ongoing collision
-				stayCollisions.push_back(collisionPair);
+				bool inStay = false;
+				for (const auto& existingPair : stayCollisions)
+				{
+					inStay = true;
+				}
+				if (inStay) { stayCollisions.push_back(collisionPair); }
 			}
 		}
 	}
