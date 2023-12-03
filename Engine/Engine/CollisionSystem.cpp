@@ -1,6 +1,8 @@
 #include "EngineCore.h"
 #include "CollisionSystem.h"
 
+#define NDEBUG_COLLISION_SYSTEM
+
 CollisionSystem* CollisionSystem::instance = nullptr;
 
 void CollisionSystem::Initialize()
@@ -72,8 +74,9 @@ void CollisionSystem::Update()
 
 	// Update ongoing collisions for the next frame
 	ongoingCollisions = std::move(currentFrameCollisions);
-
+#ifdef DEBUG_COLLISION_SYSTEM
 	LOG(ongoingCollisions.size() << " collisions Collisioning.");
+#endif
 }
 
 void CollisionSystem::AddCollider(ICollider* collider)
