@@ -5,8 +5,6 @@
 
 #include"EngineCore.h"
 #include"ICollider.h"
-#include"Component.h"
-#include"CollisionSystem.h"
 #include"SDL.h"
 /**
  * @class BoxCollider
@@ -18,10 +16,6 @@
 class BoxCollider : public ICollider
 {
 	DECLARE_DYNAMIC_DERIVED_CLASS(BoxCollider, ICollider);
-
-private:
-	SDL_Rect m_rect;
-public:
 	/**
 * @brief BoxCollider Constructor. Gets transform but not SDL_Rect values
 */
@@ -29,9 +23,6 @@ public:
 
 protected:
 	~BoxCollider() override = default;
-	void Initialize() override;
-	void Update() override;  // declared in Component
-	void Destroy() override;
 
 public:
 	/**
@@ -42,14 +33,7 @@ public:
 */
 	void SetSize(int width, int height);
 
-	/**
-* @brief Currently unimplemented, should return the x,y values of the transform attached to this collider's attached object
-*
-* @return Returns a Vec2 with values 0,0 always since unimplemented
-*/
-	Vec2 GetPosition() const override;
-
-	SDL_Rect GetBounds() { return m_rect; }
+	SDL_Rect GetBounds() { return *m_rect; }
 
 	/**
 * @brief Used to tell if this collider is a Circle or Box collider

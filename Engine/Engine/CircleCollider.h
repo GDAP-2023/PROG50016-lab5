@@ -19,17 +19,13 @@ class CircleCollider : public ICollider
 
 private:
 	float m_radius = 0;
-	SDL_Rect m_rect;
 public:
 	/**
  * @brief CircleCollider Constructor. Gets transform but not radius
  */
-	CircleCollider(): m_rect({0, 0, 0, 0}) {}
+	CircleCollider() = default;
 protected:
 	~CircleCollider() override = default;
-	void Initialize() override;
-	void Update() override;  // declared in Component
-	void Destroy() override;
 
 public:
 	/**
@@ -53,13 +49,6 @@ public:
  * @return Always returns true
  */
 	bool HandleCollision(ICollider* other) override;
-
-	/**
- * @brief Currently unimplemented, should return the x,y values of the transform attached to this collider's attached object
- *
- * @return Returns a Vec2 with values 0,0 always since unimplemented
- */
-	Vec2 GetPosition() const override;
 
 	/**
 * @brief Used to tell if this collider is a Circle or Box collider
