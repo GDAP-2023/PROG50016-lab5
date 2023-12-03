@@ -37,10 +37,6 @@
                         "ClassData": {
                             "Texture": "awooga"
                         }
-                    },
-                    {
-                        "ClassName": "BoxCollider",
-                        "ClassData": {}
                     }
                 ]
             }
