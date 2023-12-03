@@ -20,7 +20,6 @@ Entity::Entity(std::string _guid) : Object(_guid)
 void Entity::Initialize()
 {
 	// Initialize happens before first PreUpdate. So it must be called on componentsToAdd
-	LOG(componentsToAdd.size() << " components will be added to this entity.")
 	for (Object* component : componentsToAdd)
 	{
 		((Component*) component)->Initialize();

@@ -12,7 +12,8 @@ class TextureAsset final : public Asset {
     int height = 1;
 
 	DECLARE_DYNAMIC_DERIVED_CLASS(TextureAsset, Asset)
-    TextureAsset() = default;
+
+    TextureAsset();
     ~TextureAsset() override = default;
     void Initialize() override;
     void Destroy() override;

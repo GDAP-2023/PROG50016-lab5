@@ -12,6 +12,31 @@
 
 void RenderSystem::Initialize()
 {
+	_window = SDL_CreateWindow(_name.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, _width, _height, _fullScreen);
+	_renderer = SDL_CreateRenderer(_window, -1, SDL_RENDERER_ACCELERATED);
+}
+
+void RenderSystem::Destroy()
+{
+	SDL_DestroyWindow(_window);
+	SDL_DestroyRenderer(_renderer);
+}
+
+void RenderSystem::Update()
+{
+	SDL_RenderClear(_renderer);
+	SDL_SetRenderDrawColor(_renderer, _backgroundColor.r, _backgroundColor.g, _backgroundColor.b, _backgroundColor.a);
+
+	for (Renderable* renderable : _renderables)
+	{
+		renderable->Render();
+	}
+
+	SDL_RenderPresent(_renderer);
+}
+
+void RenderSystem::Load()
+{
 	//Pulls the window information from the RenderSettings file located in Assets
 	std::ifstream inputStream("../Assets/RenderSettings.json");
 	std::string str((std::istreambuf_iterator<char>(inputStream)), std::istreambuf_iterator<char>());
@@ -56,33 +81,6 @@ void RenderSystem::Initialize()
 	{
 		std::cout << "Fullscreen wasn't found in RenderSettings. Going with the Default instead.";
 	}
-
-	_window = SDL_CreateWindow(_name.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, _width, _height, _fullScreen);
-	_renderer = SDL_CreateRenderer(_window, -1, SDL_RENDERER_ACCELERATED);
-}
-
-void RenderSystem::Destroy()
-{
-	SDL_DestroyWindow(_window);
-	SDL_DestroyRenderer(_renderer);
-}
-
-void RenderSystem::Update()
-{
-	SDL_RenderClear(_renderer);
-	SDL_SetRenderDrawColor(_renderer, _backgroundColor.r, _backgroundColor.g, _backgroundColor.b, _backgroundColor.a);
-
-	for (Renderable* renderable : _renderables)
-	{
-		renderable->Render();
-	}
-
-	SDL_RenderPresent(_renderer);
-}
-
-void RenderSystem::Load()
-{
-
 }
 
 SDL_Window& RenderSystem::GetWindow()
@@ -104,6 +102,7 @@ SDL_Renderer& RenderSystem::GetRenderer()
 void RenderSystem::AddRenderable(Renderable* renderable)
 {
 	_renderables.push_back(renderable);
+	LOG("Added renderable")
 }
 
 /*

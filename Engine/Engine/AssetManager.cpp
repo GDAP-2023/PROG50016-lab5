@@ -28,7 +28,17 @@ void AssetManager::HandleAssetEntry(const std::filesystem::directory_entry& entr
 		return;
 	}
 
-	const auto assetType = node.at("AssetType").ToString();
+	std::string assetGUID = "";
+	std::string assetType = node.at("AssetType").ToString();
+	if (node.hasKey("GUID"))
+	{
+		assetGUID = node.at("GUID").ToString();
+	}
+	else
+	{
+		assetGUID = assetType;
+	}
+;
 	auto asset = (Asset*)CreateObject(assetType.c_str());
 	asset->filepath = entry.path().stem().string();
 	asset->Load(node);
@@ -37,14 +47,8 @@ void AssetManager::HandleAssetEntry(const std::filesystem::directory_entry& entr
 }
 
 void AssetManager::Initialize() {
-	if (recursiveSearch) {
-		for (const auto& entry : recursive_directory_iterator(assetDirectory)) {
-			HandleAssetEntry(entry);
-		}
-	} else {
-		for (const auto& entry : directory_iterator(assetDirectory)) {
-			HandleAssetEntry(entry);
-		}
+	for (const auto& pair : assets) {
+		pair.second.asset->Initialize();
 	}
 }
 
@@ -120,6 +124,17 @@ void AssetManager::Load(const std::string& config_file) {
 
 	if (node.hasKey("RecursiveSearch")) {
 		recursiveSearch = node.at("RecursiveSearch").ToBool();
+	}
+
+	if (recursiveSearch) {
+		for (const auto& entry : recursive_directory_iterator(assetDirectory)) {
+			HandleAssetEntry(entry);
+		}
+	}
+	else {
+		for (const auto& entry : directory_iterator(assetDirectory)) {
+			HandleAssetEntry(entry);
+		}
 	}
 }
 

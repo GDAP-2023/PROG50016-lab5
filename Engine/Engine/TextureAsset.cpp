@@ -4,9 +4,15 @@
 
 IMPLEMENT_DYNAMIC_CLASS(TextureAsset);
 
+TextureAsset::TextureAsset()
+{
+
+}
+
 void TextureAsset::Initialize()
 {
 	Asset::Initialize();
+	filepath = "../Assets/" + filepath;
 	SDL_Surface* image = IMG_Load(filepath.c_str());
 	texture = SDL_CreateTextureFromSurface(&RenderSystem::Get().GetRenderer(), image);
 	SDL_QueryTexture(texture, nullptr, nullptr, &width, &height);

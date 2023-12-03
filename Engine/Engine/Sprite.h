@@ -13,7 +13,7 @@
  */
 class Sprite : public Renderable
 {
-	DECLARE_DYNAMIC_DERIVED_CLASS(Sprite, Renderable);
+	DECLARE_DYNAMIC_DERIVED_CLASS(Sprite, Renderable)
 
 public:
 	SDL_Rect targetRect = { 0,0,0,0 };

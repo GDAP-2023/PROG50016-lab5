@@ -19,7 +19,7 @@
                 },
                 "Components": [
                     {
-                        "ClassName": "Sprite",
+                        "ClassName": "AnimatedSprite",
                         "ClassData": {
                             "Texture": "a30ed9f7-ae8d-4220-94fa-423973399541"
                         }

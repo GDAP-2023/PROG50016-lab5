@@ -45,16 +45,11 @@ void Sprite::Update() {
 
 void Sprite::Load(json::JSON& document) {
 	// Checks for width in RenderSettings
-	if (document.hasKey("ClassData"))
-	{
-		json::JSON classData = document["ClassData"];
-
-		if (classData.hasKey("Texture")) {
-			std::string guid = classData["Texture"].ToString();
-			SetNewTexture(
-				((TextureAsset*)AssetManager::Get().GetAsset(guid))->GetTexture()
-			);
-		}
+	if (document.hasKey("Texture")) {
+		std::string guid = document["Texture"].ToString();
+		SetNewTexture(
+			((TextureAsset*)AssetManager::Get().GetAsset(guid))->GetTexture()
+		);
 	}
 }
 

@@ -16,9 +16,9 @@ protected:
 
 protected:
 	Object();
-	Object(std::string _guid) : guid(_guid) { }
-	Object(std::string _guid, std::string& _name) : guid(_guid), name(_name) { }
-	virtual ~Object();
+	explicit Object(std::string guid);
+	Object(std::string guid, std::string name);
+	virtual ~Object() = default;
 
 	virtual void Initialize() = 0;
 	virtual void Destroy() {};

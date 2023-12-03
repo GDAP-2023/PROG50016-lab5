@@ -11,7 +11,7 @@
  * AnimatedSprite is a derived class of Sprite that renders an animation using a spritesheet
  */
 class AnimatedSprite : public Sprite {
-	DECLARE_DYNAMIC_DERIVED_CLASS(AnimatedSprite, Sprite);
+	DECLARE_DYNAMIC_DERIVED_CLASS(AnimatedSprite, Sprite)
 public:
 	SDL_Rect spriteRect = { 0,0,0,0 };
 	int spriteSheetRows = 0;
