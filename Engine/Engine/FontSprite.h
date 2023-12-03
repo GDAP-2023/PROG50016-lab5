@@ -21,7 +21,7 @@ class FontSprite : public Renderable
 
 private:
 
-	SDL_Point outputSizing = { 0, 0 };
+	IVec2 outputSizing = { 0, 0 };
 
 	std::string text = "DEFAULT TEXT";
 

@@ -52,9 +52,14 @@ void FontSprite::Render() {
 	}
 
 	const Transform& transform = ownerEntity->GetTransform();
-	fontRect = { static_cast<int>(transform.position.x), static_cast<int>(transform.position.y),
-		( static_cast<int>(outputSizing.x * transform.scale.x)), (static_cast<int>(outputSizing.y * transform.scale.y)) };
-
+    const auto size = IVec2(transform.scale * outputSizing);
+    const IVec2 pos = transform.position - size / 2;
+    fontRect = {
+        pos.x,
+        pos.y,
+        size.x,
+        size.y
+    };
 
 	SDL_RenderCopyEx(
 		&RenderSystem::Instance().GetRenderer(),
