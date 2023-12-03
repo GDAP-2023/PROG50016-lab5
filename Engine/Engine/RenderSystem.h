@@ -22,7 +22,7 @@ class RenderSystem
 
 	std::string _name = "DEFAULT NAME";
 
-	unsigned int _width = 1280;
+	int _width = 1280;
 	unsigned int _height = 720;
 
 	bool _fullScreen = false;
@@ -92,6 +92,8 @@ public:
 	* the Window is in fullscreen mode.
 	*/
 	void WindowSize(int width, int height);
+
+	IVec2 GetWindowSize() const;
 };
 
 #endif

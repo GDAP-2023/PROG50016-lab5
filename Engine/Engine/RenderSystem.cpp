@@ -177,3 +177,8 @@ void RenderSystem::WindowSize(int width, int height)
 		std::cout << "Can't resize a fullscreen window. Change the RenderSettings if you want to use this method." << std::endl;
 	}
 }
+
+IVec2 RenderSystem::GetWindowSize() const
+{
+	return {static_cast<int>(_width), static_cast<int>(_height)};
+}
