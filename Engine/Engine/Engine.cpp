@@ -22,14 +22,16 @@ void Engine::Initialize()
 	Engine_Register();
 
 	// Load the managers
+	AudioSystem::Get().Load("../Assets/AudioSystem.json");
 	AssetManager::Get().Load("../Assets/AssetManager.json");
+
+	AudioSystem::Get().Initialize();
 	AssetManager::Get().Initialize();
 
 	RenderSystem::Instance().Initialize();
 	SceneManager::Get().Load();
 
 	// Initialize the managers
-	AudioSystem::Get().Initialize();
 
 	SceneManager::Get().Initialize();
 
