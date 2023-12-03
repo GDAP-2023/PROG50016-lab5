@@ -8,6 +8,7 @@ void GameOver::Initialize()
     Component::Initialize();
     is_playing_audio = false;
     sound_timer = sound_delay;
+    ownerEntity->GetTransform().position = Vec2(RenderSystem::Instance().GetWindowSize()) * 0.5f;
 }
 void GameOver::Update() {
 	sound_timer -= Time::Instance().DeltaTime();
