@@ -36,7 +36,7 @@ void FontSprite::Update() {
 	const Transform& transform = ownerEntity->GetTransform();
 
 	fontRect = { static_cast<int>(transform.position.x), static_cast<int>(transform.position.y),
-		(outputSizing.x * static_cast<int>(transform.scale.x)), (outputSizing.y * static_cast<int>(transform.scale.y)) };
+		( static_cast<int>(outputSizing.x * transform.scale.x)), (static_cast<int>(outputSizing.y * transform.scale.y)) };
 
 	flip = static_cast<SDL_RendererFlip>((transform.scale.x < 0) | ((transform.scale.y < 0) << 1));
 }
@@ -52,6 +52,9 @@ void FontSprite::Render() {
 	}
 
 	const Transform& transform = ownerEntity->GetTransform();
+	fontRect = { static_cast<int>(transform.position.x), static_cast<int>(transform.position.y),
+		( static_cast<int>(outputSizing.x * transform.scale.x)), (static_cast<int>(outputSizing.y * transform.scale.y)) };
+
 
 	SDL_RenderCopyEx(
 		&RenderSystem::Instance().GetRenderer(),
@@ -144,6 +147,7 @@ void FontSprite::RegenerateOutput() {
 	}
 
 	SDL_Surface* textSurface = TTF_RenderText_Solid((*font).GetFont(), text.c_str(), fontColor);
+	SDL_DestroyTexture(output);
 	output = SDL_CreateTextureFromSurface(&RenderSystem::Instance().GetRenderer(), textSurface);
 	SDL_FreeSurface(textSurface);
 }
