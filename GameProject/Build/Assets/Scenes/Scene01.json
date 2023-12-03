@@ -44,7 +44,8 @@
           {
             "ClassName": "Player",
             "ClassData": {
-              "Speed": 400.0
+              "Speed": 400.0,
+              "DeathScene": "45f479c9-f110-43c5-be35-9fbbc5d7d694"
             }
           }
         ]

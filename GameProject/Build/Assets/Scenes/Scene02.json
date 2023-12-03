@@ -16,20 +16,20 @@
                 "GUID": "uwu",
                 "Transform": {
                     "Position": [
-                        0.0,
-                        0.0
+                        320.0,
+                        320.0
                     ],
-                    "Rotation": 0,
+                    "Rotation": 0.0,
                     "Scale": [
-                        1,
-                        1
+                        0.2,
+                        0.2
                     ]
                 },
                 "Components": [
                     {
                         "ClassName": "Player",
                         "ClassData": {
-                            "Speed": 5.0
+                            "Speed": 100.0
                         }
                     },
                     {

@@ -52,12 +52,14 @@ void Player::Update() {
     {
         return;
     }
-    for (const auto& colliders: collider->OnCollisionEnter())
+    for (const auto& other: collider->OnCollisionEnter())
     {
-        LOG("OMG HECK YEAH")
-	    if (collider->GetOwner()->HasComponent("Enemy"))
+	    if (other->GetOwner()->GetName() == "Enemy")
 	    {
-		    SceneManager::Get().SetActiveScene(1);
+            LOG("Scene: " << SceneManager::Get().GetActiveSceneId());
+            Scene* currentScene = SceneManager::Get().GetActiveScene();
+		    SceneManager::Get().SetActiveScene(game_over_scene.c_str());
+            SceneManager::Get().UnloadScene(currentScene->GetUID());
 	    }
     }
 }
@@ -67,5 +69,10 @@ void Player::Load(json::JSON& node)
     if (node.hasKey("Speed"))
     {
         speed = static_cast<float>(node.at("Speed").ToFloat());
+    }
+
+    if (node.hasKey("DeathScene"))
+    {
+	    game_over_scene = node.at("DeathScene").ToString();
     }
 }
