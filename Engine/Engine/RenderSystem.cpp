@@ -8,6 +8,7 @@
 #include "EngineCore.h"
 #include "RenderSystem.h"
 #include "Renderable.h"
+#include "Scene.h"
 
 RenderSystem* RenderSystem::_instance = nullptr;
 
@@ -96,6 +97,10 @@ void RenderSystem::Update()
 
 	for (Renderable* renderable : _renderables)
 	{
+		if (!renderable->ownerEntity->GetParentScene()->isEnabled)
+		{
+			continue;
+		}
 		renderable->Render();
 	}
 
