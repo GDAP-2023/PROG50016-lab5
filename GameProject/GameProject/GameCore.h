@@ -12,5 +12,8 @@
 #include "CollisionSystem.h"
 #include "Component.h"
 #include "Player.h"
+#include "GameOver.h"
+#include "AudioSystem.h"
+#include "AssetManager.h"
 
 #endif // !_GAME_CORE_H_

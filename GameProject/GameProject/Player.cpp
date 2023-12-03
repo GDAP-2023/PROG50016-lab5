@@ -9,7 +9,6 @@ void Player::Initialize()
 {
     Component::Initialize();
     collider = (BoxCollider*)ownerEntity->GetComponent("BoxCollider");
-    LOG("meow")
 }
 void Player::Update() {
     Vec2 dir = Vec2::Zero;
