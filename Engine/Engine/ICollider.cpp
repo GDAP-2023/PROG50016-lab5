@@ -35,25 +35,45 @@ void ICollider::Initialize()
 void ICollider::StorePosition(const Vec2 position) {
 	previousPosition = position;
 }
-
+/**
+* @brief reset the position of the collider
+* @param position
+* */
+	
 void ICollider::ResetPosition() const
 {
 	ownerEntity->GetTransform().position = previousPosition;
 }
+/**
+* @brief Gets the position of the collider.
+* 
+* @return The position of the collider.
+* */
 
 bool ICollider::IsSolid() const {
 	return isSolid;
 }
+/**
+* @brief Sets the solid state of the collider.
+* 
+* @param solid The new solid state of the collider.
+* */
 void ICollider::SetSolid(const bool solid) {
 	isSolid = solid;
 }
 
+/**
+*
+* @brief Gets the position of the collider.
+* 
+* @return The position of the collider.
+* */
 Vec2 ICollider::GetPosition() const
 {
 	return ownerEntity->GetTransform().position;
 }
 
-// Called when the collider enters a collision
+
 std::list<ICollider*> ICollider::OnCollisionEnter() {
 	std::list<ICollider*> result;
 	for (const auto& [first, second] : CollisionSystem::Instance().enterCollisions) {
