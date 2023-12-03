@@ -13,12 +13,14 @@
 
 class Transform;
 class Component;
+class Scene;
 
 class Entity final : public Object
 {
     DECLARE_DYNAMIC_DERIVED_CLASS(Entity, Object)
 
 private:
+    Scene* ownerScene = nullptr;
     Transform transform;
 
     std::list<Component*> components;
@@ -135,6 +137,8 @@ public:
     * @return the transform from the Entity
     */
     Transform& GetTransform() { return transform; }
+
+    Scene* GetParentScene() const;
 
     friend class Scene;
 };

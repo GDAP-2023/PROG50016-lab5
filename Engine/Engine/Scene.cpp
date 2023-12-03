@@ -168,6 +168,7 @@ void Scene::Destroy()
 Entity* Scene::CreateEntity()
 {
 	Entity* entity = new Entity();
+	entity->ownerScene = this;
 	// The scene that creates an entity has its ownership
 	entitiesToBeAdded.push_back(entity);
 	return entity;

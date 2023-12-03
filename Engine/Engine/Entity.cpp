@@ -137,3 +137,9 @@ bool Entity::RemoveComponent(const Component* component)
 	}
 	return false;
 }
+
+Scene* Entity::GetParentScene() const
+{
+	ASSERT(ownerScene != nullptr, "ownerScene was null :(");
+	return ownerScene;
+}
