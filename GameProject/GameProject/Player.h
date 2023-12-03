@@ -15,7 +15,7 @@ public:
 private:
     float speed = 5.0f;
     BoxCollider* collider = nullptr;
-    std::string game_over_scene;
+    STRCODE game_over_scene = -1;
 };
 
 #endif // PLAYER_H

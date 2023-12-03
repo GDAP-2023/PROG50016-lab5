@@ -58,8 +58,8 @@ void Player::Update() {
 	    {
             LOG("Scene: " << SceneManager::Get().GetActiveSceneId());
             Scene* currentScene = SceneManager::Get().GetActiveScene();
-		    SceneManager::Get().SetActiveScene(game_over_scene.c_str());
-            SceneManager::Get().UnloadScene(currentScene->GetUID());
+		    SceneManager::Get().SetActiveScene(game_over_scene);
+            currentScene->isEnabled = false;
 	    }
     }
 }
@@ -73,6 +73,6 @@ void Player::Load(json::JSON& node)
 
     if (node.hasKey("DeathScene"))
     {
-	    game_over_scene = node.at("DeathScene").ToString();
+	    game_over_scene = GetHashCode(node.at("DeathScene").ToString().c_str());
     }
 }
