@@ -10,8 +10,6 @@ void FontAsset::Initialize()
 	TTF_Init();
 	Asset::Initialize();
 	font = TTF_OpenFont(filepath.c_str(), font_size);
-	LOG(SDL_GetError())
-
 }
 
 void FontAsset::Destroy()
