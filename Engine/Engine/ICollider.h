@@ -56,9 +56,10 @@ public:
 
     virtual Vec2 GetPosition() const = 0;
 
-    virtual std::list<Entity*> OnCollisionEnter(ICollider*) = 0;
-    virtual std::list<Entity*> OnCollisionStay(ICollider*) = 0;
-    virtual std::list<Entity*> OnCollisionExit(ICollider*) = 0;
+    virtual std::list<ICollider*> OnCollisionEnter();
+    virtual std::list<ICollider*> OnCollisionStay();
+    virtual std::list<ICollider*> OnCollisionExit();
+
     virtual bool HandleCollision(ICollider*) = 0;
 
     void StorePosition(Vec2 position);

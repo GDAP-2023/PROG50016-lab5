@@ -72,33 +72,6 @@ public:
 * @return Always returns false
 */
 	bool HandleCollision(ICollider* other) override;
-
-
-	/**
-* @brief Used for handling collisions that have just started occuring by checking if another collider collides with you
-*
-* @param other The other collider you want to check if there's been a collision with
-* @return Either an empty list if you did not just collide with other, or a list that only contains other's game Entity if you did collide with other
-*/
-	std::list<Entity*> OnCollisionEnter(ICollider* other) override;
-
-	/**
-* @brief Used for handling collisions that have been occuring for more than one run of code by checking if another collider collides with you
-*
-* @param other The other collider you want to check if there's been a collision with
-* @return Either an empty list if you did not collide with other, or a list that only contains other's game Entity if you did collide with other
-*/
-	std::list<Entity*> OnCollisionStay(ICollider* other) override;
-
-	/**
-* @brief Used for handling collisions that have just stopped occuring by checking if another collider collides with you
-*
-* @param other The other collider you want to check if there's been a collision with
-* @return Either an empty list if you did not just stop colliding with other, or a list that only contains other's game Entity if you did stop colliding with other
-*/
-	std::list<Entity*> OnCollisionExit(ICollider* other) override;
-
-
 };
 
 
