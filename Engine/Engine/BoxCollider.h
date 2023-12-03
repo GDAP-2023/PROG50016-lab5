@@ -31,9 +31,9 @@ public:
 * @param width An int value that the collider's SDL_Rect's width will be set to
 * @param height An int value that the collider's  SDL_Rect's height will be set to
 */
-	void SetSize(int width, int height);
+	void SetSize(int width, int height) const;
 
-	SDL_Rect GetBounds() { return *m_rect; }
+	SDL_Rect GetBounds() const;
 
 	/**
 * @brief Used to tell if this collider is a Circle or Box collider

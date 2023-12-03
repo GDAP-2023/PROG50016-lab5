@@ -73,6 +73,7 @@ void CollisionSystem::Update()
 	// Update ongoing collisions for the next frame
 	ongoingCollisions = std::move(currentFrameCollisions);
 
+	LOG(ongoingCollisions.size() << " collisions Collisioning.");
 }
 
 void CollisionSystem::AddCollider(ICollider* collider)
