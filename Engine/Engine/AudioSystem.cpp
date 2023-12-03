@@ -32,7 +32,7 @@ void AudioSystem::SetMusic(MusicAsset* music)
 	Mix_PlayMusic(music->GetMusic(), 0);
 }
 
-void AudioSystem::PlaySound(SoundAsset* sound)
+void AudioSystem::PlayFX(SoundAsset* sound)
 {
 	Mix_PlayChannel(-1, sound->GetSound(), 0);
 }
