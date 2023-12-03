@@ -2,17 +2,23 @@
 #include "CollisionSystem.h"
 
 CollisionSystem* CollisionSystem::instance = nullptr;
-
+/**
+ * @brief Initializes the CollisionSystem. Currently not implemented.
+ */
 void CollisionSystem::Initialize()
 {
 
 }
-
+/**
+ * @brief Destroys the CollisionSystem. Currently not implemented.
+ */
 void CollisionSystem::Destroy()
 {
 
 }
-
+/**
+ * @brief Updates the CollisionSystem, handling collision detection and resolution.
+ */
 void CollisionSystem::Update()
 {
 	auto potentialCollisions = BroadPhaseDetection();
@@ -76,17 +82,29 @@ void CollisionSystem::Update()
 	ongoingCollisions = std::move(currentFrameCollisions);
 
 }
-
+/**
+ * @brief Adds a collider to the CollisionSystem for tracking.
+ *
+ * @param collider The collider to be added.
+ */
 void CollisionSystem::AddCollider(ICollider* collider)
 {
 	colliders.push_back(collider);
 }
-
+/**
+ * @brief Removes a collider from the CollisionSystem.
+ *
+ * @param collider The collider to be removed.
+ */
 void CollisionSystem::RemoveCollider(ICollider* collider)
 {
 	colliders.remove(collider);
 }
-
+/**
+ * @brief Performs broad phase collision detection to identify potential collisions.
+ *
+ * @return A list of pairs of potentially colliding colliders.
+ */
 std::list<std::pair<ICollider*, ICollider*>> CollisionSystem::BroadPhaseDetection()
 {
 
@@ -117,7 +135,12 @@ std::list<std::pair<ICollider*, ICollider*>> CollisionSystem::BroadPhaseDetectio
 	return potentialCollisions;
 }
 
-
+/**
+ * @brief Performs narrow phase collision detection on potential collisions identified in the broad phase.
+ *
+ * @param potentialCollisions List of potential colliding pairs from the broad phase.
+ * @return A set of pairs of colliders that are actually colliding.
+ */
 std::set<std::pair<ICollider*, ICollider*>> CollisionSystem::NarrowPhaseDetection(const std::list<std::pair<ICollider*, ICollider*>>& potentialCollisions) {
 	
 	std::set<std::pair<ICollider*, ICollider*>> currentFrameCollisions;
@@ -213,7 +236,12 @@ bool CollisionSystem::CircleBoxCollision(ICollider* col1, ICollider* col2) {
 }
 
 
-
+/**
+ * @brief Resolves collision between two solid colliders by resetting their positions.
+ *
+ * @param col1 First collider involved in the collision.
+ * @param col2 Second collider involved in the collision.
+ */
 void CollisionSystem::ResolveCollision(ICollider* col1, ICollider* col2)
 {
 	// Both colliders are solid, revert to previous positions

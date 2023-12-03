@@ -13,7 +13,11 @@ ICollider::~ICollider()
 {
 
 }
-
+/**
+ * @brief store the position of the collider
+ *
+ * @param position
+ */
 void ICollider::StorePosition(Vec2 position)
 {
 	previousPosition = position;

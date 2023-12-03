@@ -4,7 +4,9 @@
 #include "AnimatedSprite.h"
 
 IMPLEMENT_DYNAMIC_CLASS(CircleCollider);
-
+/**
+ * @brief Constructor for CircleCollider. Initializes the collider and registers it with the CollisionSystem.
+ */
 CircleCollider::CircleCollider():m_rect({ 0,0,0,0 })
 {
 	int myID = GetUid();
@@ -27,25 +29,41 @@ CircleCollider::CircleCollider():m_rect({ 0,0,0,0 })
 	CollisionSystem::Instance().AddCollider(this);
 }
 
+/**
+ * @brief Update method for CircleCollider. Currently not implemented.
+ */
 void CircleCollider::Update()
 {
 }
-
+/**
+ * @brief Destructor for CircleCollider. Removes the collider from the CollisionSystem.
+ */
 CircleCollider::~CircleCollider()
 {
 	CollisionSystem::Instance().RemoveCollider(this);
 }
-
+/**
+ * @brief Destroy method for CircleCollider. Currently not implemented.
+ */
 void CircleCollider::Destroy()
 {
 
 }
-
+/**
+ * @brief Handles collision with another collider. Currently always returns true.
+ *
+ * @param other The other collider involved in the collision.
+ * @return Always returns true.
+ */
 bool CircleCollider::HandleCollision(ICollider* other)
 {
 	return true;
 }
-
+/**
+ * @brief Gets the position of the CircleCollider.
+ *
+ * @return The position of the collider as a Vec2.
+ */
 Vec2 CircleCollider::GetPosition() const
 {
 	//return Vec2(transform.x, transform.y);
@@ -53,28 +71,51 @@ Vec2 CircleCollider::GetPosition() const
 	return tempVec;
 }
 
-// Set the radius of the collider
+/**
+ * @brief Sets the radius of the CircleCollider.
+ *
+ * @param radius The new radius for the collider.
+ */
 void CircleCollider::SetRadius(float radius)
 {
 	m_radius = radius;
 }
 
+/**
+ * @brief Gets the radius of the CircleCollider.
+ *
+ * @return The radius of the collider.
+ */
 float CircleCollider::GetRadius()
 {
 	return m_radius;
 }
-
+/**
+ * @brief Calculates the broad phase radius of the CircleCollider.
+ *
+ * @return The radius of the collider.
+ */
 float CircleCollider::GetBroadPhaseRadius() const
 {
 	return m_radius;
 }
+/**
+ * @brief Gets the type of the collider.
+ *
+ * @return The type of the collider, in this case Circle.
+ */
 ColliderType CircleCollider::GetType() const
 {
 	return ColliderType::Circle;
 }
 
 
-// Called when the collider enters a collision
+/**
+ * @brief Called when the collider enters a collision.
+ *
+ * @param other The other collider involved in the collision.
+ * @return A list of entities involved in the collision.
+ */
 std::list<Entity*> CircleCollider::OnCollisionEnter(ICollider* other) {
 	std::list<Entity*> result;
 	for (auto collisionPairs : CollisionSystem::Instance().enterCollisions)
@@ -98,7 +139,13 @@ std::list<Entity*> CircleCollider::OnCollisionEnter(ICollider* other) {
 	return result;
 }
 
-// Called when the collider stays in collision
+
+/**
+ * @brief Called when the collider stays in collision.
+ *
+ * @param other The other collider involved in the collision.
+ * @return A list of entities involved in the collision.
+ */
 std::list<Entity*> CircleCollider::OnCollisionStay(ICollider* other) {
 	std::list<Entity*> result;
 	for (auto collisionPairs : CollisionSystem::Instance().stayCollisions)
@@ -122,7 +169,12 @@ std::list<Entity*> CircleCollider::OnCollisionStay(ICollider* other) {
 	return result;
 }
 
-// Called when the collider exits a collision
+/**
+ * @brief Called when the collider exits a collision.
+ *
+ * @param other The other collider involved in the collision.
+ * @return A list of entities that were involved in the collision.
+ */
 std::list<Entity*> CircleCollider::OnCollisionExit(ICollider* other) {
 	std::list<Entity*> result;
 	for (auto collisionPairs : CollisionSystem::Instance().exitCollisions)
@@ -145,11 +197,20 @@ std::list<Entity*> CircleCollider::OnCollisionExit(ICollider* other) {
 	}
 	return result;
 }
-
+/**
+ * @brief Checks if the CircleCollider is solid.
+ *
+ * @return True if the collider is solid, false otherwise.
+ */
 bool CircleCollider::IsSolid() const
 {
 	return isSolid;
 }
+/**
+ * @brief Sets the solid state of the CircleCollider.
+ *
+ * @param solid True to make the collider solid, false otherwise.
+ */
 void CircleCollider::SetSolid(bool solid)
 {
 	isSolid= solid;

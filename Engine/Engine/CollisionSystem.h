@@ -40,10 +40,27 @@ public:
 	void AddCollider(ICollider*);
 	void RemoveCollider(ICollider*);
 
+
+	/**
+	* @brief narrow down what might be colliding, no need for square/circle specifics
+	*
+	* @param a list of pairs of colliders that might be colliding
+	*/
 	std::list<std::pair<ICollider*,ICollider*>> BroadPhaseDetection();
-	//broad phase = narrow down what might be colliding, no need for square/circle specifics
+
+	/**
+	* @brief check if the potential collisions are actually colliding
+	*
+	* @param a list passed in by BroadPhaseDetection
+	*/
 	std::set<std::pair<ICollider*, ICollider*>> NarrowPhaseDetection(const std::list<std::pair<ICollider*, ICollider*>>& potentialCollisions);
-	
+
+	/**
+	* @brief Resolve Collision
+	*	
+	* @param two colliders that are colliding
+	*/
+
 	void ResolveCollision(ICollider*, ICollider*);
 
 
@@ -52,15 +69,43 @@ protected:
 	void Initialize();
 	void Destroy();
 	void Update();
-
+	
 	void SetID(ICollider*);
 
 private:
 
+	/**
+	 * @brief Checks for collision between two circle colliders.
+	 *
+	 * @param collider1 Pointer to the first circle collider.
+	 * @param collider2 Pointer to the second circle collider.
+	 * @return True if there is a collision, false otherwise.
+	 */
 	bool CircleCircleCollision(ICollider*, ICollider*);
+
+	/**
+	 * @brief Checks for collision between two box colliders.
+	 *
+	 * @param collider1 Pointer to the first box collider.
+	 * @param collider2 Pointer to the second box collider.
+	 * @return True if there is a collision, false otherwise.
+	 */
 	bool BoxBoxCollision(ICollider*, ICollider*);
+	/**
+	 * @brief Checks for collision between a circle collider and a box collider.
+	 *
+	 * @param circleCollider Pointer to the circle collider.
+	 * @param boxCollider Pointer to the box collider.
+	 * @return True if there is a collision, false otherwise.
+	 */
 	bool CircleBoxCollision(ICollider*, ICollider*);
 
+
+	/**
+	* @brief check if two colliders are colliding
+	*	
+	* @param two colliders
+	*/
 	std::list<std::pair<ICollider*, ICollider*>> enterCollisions;
 	std::list<std::pair<ICollider*, ICollider*>> stayCollisions;
 	std::list<std::pair<ICollider*, ICollider*>> exitCollisions;
