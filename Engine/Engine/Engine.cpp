@@ -10,6 +10,7 @@
 
 #include "AssetManager.h"
 #include "AudioSystem.h"
+#include "CollisionSystem.h"
 #include "Component.h"
 
 Engine* Engine::instance = nullptr;
@@ -60,6 +61,7 @@ void Engine::GameLoop()
 		// --------------------- Update Phase ---------------------
 		SceneManager::Get().Update();
 		RenderSystem::Instance().Update();
+		CollisionSystem::Instance().Update();
 
 		// --------------------- Post-update Phase ---------------------
 		SceneManager::Get().PostUpdate();
@@ -73,19 +75,9 @@ void Engine::GameLoop()
 
 			// --------------------- Input Phase ---------------------
 		InputSystem::Instance().Update();
-
 	/*	if (Time::Instance().TotalTime() > 5.0f)
 		{
 			break;
 		}*/
-
-		SDL_Event event;
-		while (SDL_PollEvent(&event)) {
-			if (event.type == SDL_QUIT) {
-				InputSystem::Instance().handleQuitEvent();
-			}
-		}
-
-
 	}
 }

@@ -52,9 +52,9 @@ void Player::Update() {
     {
         return;
     }
-    LOG(collider->GetBounds().w << " " << collider->GetBounds().h);
     for (const auto& colliders: collider->OnCollisionEnter())
     {
+        LOG("OMG HECK YEAH")
 	    if (collider->GetOwner()->HasComponent("Enemy"))
 	    {
 		    SceneManager::Get().SetActiveScene(1);
