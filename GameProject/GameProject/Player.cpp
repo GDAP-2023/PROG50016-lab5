@@ -45,13 +45,21 @@ void Player::Update() {
 #endif
     }
 
-    if (collider != nullptr)
-    {
-        LOG(collider->GetBroadPhaseRadius());
-    }
-
     // Move the player
     ownerEntity->GetTransform().position += dir * (speed * Time::Instance().DeltaTime());
+
+    if (collider == nullptr)
+    {
+        return;
+    }
+    LOG(collider->GetBounds().w << " " << collider->GetBounds().h);
+    for (const auto& colliders: collider->OnCollisionEnter())
+    {
+	    if (collider->GetOwner()->HasComponent("Enemy"))
+	    {
+		    SceneManager::Get().SetActiveScene(1);
+	    }
+    }
 }
 void Player::Load(json::JSON& node)
 {
