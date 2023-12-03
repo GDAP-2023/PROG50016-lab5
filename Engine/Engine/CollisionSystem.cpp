@@ -36,6 +36,7 @@ void CollisionSystem::Update()
 			if (ongoingCollisions.find(collisionPair) == ongoingCollisions.end()) 
 			{
 				// New collision
+				//not sure if these next two lines are code with our new implementation of OnEnter/Stay/Exit
 				collisionPair.first->OnCollisionEnter(collisionPair.second);
 				collisionPair.second->OnCollisionEnter(collisionPair.first);
 				enterCollisions.push_back(collisionPair);
@@ -86,7 +87,6 @@ void CollisionSystem::RemoveCollider(ICollider* collider)
 	colliders.remove(collider);
 }
 
-// it takes all the colliders and checks if they are close enough to collide
 std::list<std::pair<ICollider*, ICollider*>> CollisionSystem::BroadPhaseDetection()
 {
 
@@ -107,7 +107,6 @@ std::list<std::pair<ICollider*, ICollider*>> CollisionSystem::BroadPhaseDetectio
 
 			Vec2 positionDiff = position1 - position2;
 			float radiusSum = radius1 + radius2;
-			// Check if the distance between the two colliders is less than the sum of their radii
 			if(positionDiff.MagnitudeSquared()<= (radiusSum * radiusSum))
 			{
 				potentialCollisions.push_back(std::make_pair(collider1, collider2));
@@ -118,7 +117,7 @@ std::list<std::pair<ICollider*, ICollider*>> CollisionSystem::BroadPhaseDetectio
 	return potentialCollisions;
 }
 
-// it takes all the colliders that are close enough to collide and checks if they actually collide
+
 std::set<std::pair<ICollider*, ICollider*>> CollisionSystem::NarrowPhaseDetection(const std::list<std::pair<ICollider*, ICollider*>>& potentialCollisions) {
 	
 	std::set<std::pair<ICollider*, ICollider*>> currentFrameCollisions;
@@ -214,7 +213,7 @@ bool CollisionSystem::CircleBoxCollision(ICollider* col1, ICollider* col2) {
 }
 
 
-//stop the colliders from moving
+
 void CollisionSystem::ResolveCollision(ICollider* col1, ICollider* col2)
 {
 	// Both colliders are solid, revert to previous positions

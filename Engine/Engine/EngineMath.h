@@ -3,7 +3,11 @@
 #ifndef _ENGINE_MATH_H_
 #define _ENGINE_MATH_H_
 
+#include "json.hpp"
+
 #include <SDL_rect.h>
+
+union IVec2;
 
 union Vec2
 {
@@ -16,6 +20,7 @@ union Vec2
     Vec2();
     explicit Vec2(float value);
     Vec2(float _x, float _y);
+    Vec2(IVec2 value);
     static Vec2 Zero;
     static Vec2 UnitX;
     static Vec2 UnitY;
@@ -65,6 +70,49 @@ union IVec2
         int y;
     };
     SDL_Point data;
+
+    IVec2();
+    explicit IVec2(int value);
+    IVec2(int _x, int _y);
+    IVec2(Vec2 value);
+    static IVec2 Zero;
+    static IVec2 UnitX;
+    static IVec2 UnitY;
+    IVec2 operator-() const;
+    IVec2& operator+=(const IVec2 &rhs);
+    IVec2& operator-=(const IVec2 &rhs);
+    
+    bool operator==(const IVec2 &rhs) const;
+    bool operator!=(const IVec2 &rhs) const;
+
+    // Cursed shader-programmer zone starts
+    IVec2& operator*=(const IVec2 &rhs);
+    IVec2& operator/=(const IVec2 &rhs);
+    // Cursed shader-programmer zone ends
+
+    IVec2& operator*=(const int &f);
+    IVec2& operator/=(const int &f);
+
+    IVec2 operator+(const IVec2 &rhs) const;
+    IVec2 operator-(const IVec2 &rhs) const;
+    
+    // Cursed shader-programmer zone starts
+    IVec2 operator*(const IVec2 &rhs) const;
+    IVec2 operator/(const IVec2 &rhs) const;
+    // Cursed shader-programmer zone ends
+
+    IVec2 operator*(const int &f) const;
+    IVec2 operator/(const int &f) const;
 };
+
+inline Vec2 vec2_from_json(json::JSON& node) {
+    if (node.length() == 2) {
+        return Vec2((float)node[0].ToFloat(), (float)node[1].ToFloat());
+    }
+    LOG("ERROR: Vec2::Load() - node is not a Vec2 or does not have 2 elements");
+
+    return Vec2::Zero;
+}
+
 
 #endif

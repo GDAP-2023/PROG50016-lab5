@@ -64,7 +64,7 @@ public:
 
 
 private:
-	bool keyStates[256];
+	bool  keyStates[SDL_NUM_SCANCODES] = { false };
 	bool mouseButtonStates[5];
 	int gamepadId;
 	InputSystem(const InputSystem&) = delete;

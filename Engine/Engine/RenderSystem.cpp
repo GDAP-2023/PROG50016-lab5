@@ -1,3 +1,10 @@
+/*
+* @RenderSystem
+*
+* Controls the SDL window along with its properties. Also responsible for
+* calling render on anything renderable.
+*/
+
 #include "EngineCore.h"
 #include "RenderSystem.h"
 #include "Renderable.h"
@@ -25,7 +32,7 @@ RenderSystem::~RenderSystem()
 
 void RenderSystem::Initialize()
 {
-	//Pulls the window information from the RenderSettings file loated in Assets
+	//Pulls the window information from the RenderSettings file located in Assets
 	std::ifstream inputStream("../Assets/RenderSettings.json");
 	std::string str((std::istreambuf_iterator<char>(inputStream)), std::istreambuf_iterator<char>());
 	json::JSON document = json::JSON::Load(str);
@@ -78,6 +85,8 @@ void RenderSystem::Destroy()
 {
 	SDL_DestroyWindow(_window);
 	SDL_DestroyRenderer(_renderer);
+
+	delete _instance;
 }
 
 void RenderSystem::Update()
@@ -95,7 +104,7 @@ void RenderSystem::Update()
 
 void RenderSystem::Load()
 {
-	
+
 }
 
 SDL_Window& RenderSystem::GetWindow()
@@ -108,16 +117,34 @@ SDL_Renderer& RenderSystem::GetRenderer()
 	return *_renderer;
 }
 
+/*
+* @AddRenderable
+*
+* When something renderable is created it calls this method and inserts
+* itself into the list of renderables so RenderSystem can call its Render method
+*/
 void RenderSystem::AddRenderable(Renderable* renderable)
 {
 	_renderables.push_back(renderable);
 }
 
+/*
+* @RemoveRenderable
+*
+* When a renderable is destroyed it removes itself from the renderables list using
+* this method so RenderSystem no longer will try to call render on it
+*/
 void RenderSystem::RemoveRenderable(Renderable* renderable)
 {
 	_renderables.remove(renderable);
 }
 
+/*
+* @WindowBackgroundColor
+*
+* Allows the user to set a new background color for the SDL Window by providing
+* RGB Values and an Alpha
+*/
 void RenderSystem::WindowBackgroundColor(int r, int g, int b, int a)
 {
 	_backgroundColor.r = r;
@@ -126,7 +153,12 @@ void RenderSystem::WindowBackgroundColor(int r, int g, int b, int a)
 	_backgroundColor.a = a;
 }
 
-//Allows Window Resizing, makes sure nothing happens if its fullscreen to prevent glitching
+/*
+* @WindowSize
+*
+* Allows the user to set a new width and height for the SDL Window. Won't apply if
+* the Window is in fullscreen mode.
+*/
 void RenderSystem::WindowSize(int width, int height)
 {
 	if (!_fullScreen)

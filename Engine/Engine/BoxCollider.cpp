@@ -1,26 +1,23 @@
-// By Alan
-// BoxCollider.cpp
-// For Lab 5
- 
 #include "EngineCore.h"
 #include "BoxCollider.h"
+#include "Sprite.h"
+#include "AnimatedSprite.h"
 
 IMPLEMENT_DYNAMIC_CLASS(BoxCollider);
 
-//
 BoxCollider::BoxCollider():m_rect({0,0,0,0})
 {
-	int myID = GetId();
-	Entity* thisEntity = SceneManager::Get().FindEntityById(myID);
+	int myID = GetUid();
+	Entity* thisEntity = SceneManager::Get().FindEntity(myID);
 	transform = (Transform*)thisEntity->GetComponent("Transform");
 
 	if (thisEntity->HasComponent("Sprite"))
 	{
-		m_rect = thisEntity->((Sprite)GetComponent("Sprite")).sourceRect;
+		m_rect = ((Sprite*)thisEntity->GetComponent("Sprite"))->targetRect;
 	}
 	else if (thisEntity->HasComponent("AnimatedSprite"))
 	{
-		m_rect = thisEntity->((AnimatedSprite)GetComponent("AnimatedSprite")).sourceRect;
+		m_rect = ((AnimatedSprite*)thisEntity->GetComponent("AnimatedSprite"))->targetRect;
 	}
 
 	CollisionSystem::Instance().AddCollider(this);
@@ -29,6 +26,10 @@ BoxCollider::BoxCollider():m_rect({0,0,0,0})
 BoxCollider::~BoxCollider()
 {
 	CollisionSystem::Instance().RemoveCollider(this);
+}
+
+void BoxCollider::Update()
+{
 }
 
 void BoxCollider::Destroy()
@@ -50,7 +51,7 @@ Vec2 BoxCollider::GetPosition() const
 
 void BoxCollider::SetSize(int width,int height)
 {
-	m_rect= { transform.x, transform.y, width, height };
+	m_rect= { (int) transform->position.x, (int) transform->position.y, width, height };
 }
 
 
@@ -69,18 +70,18 @@ std::list<Entity*> BoxCollider::OnCollisionEnter(ICollider* other) {
 	std::list<Entity*> result;
 	for (auto collisionPairs : CollisionSystem::Instance().enterCollisions)
 	{
-		if (((Component*)collisionPairs.first)->GetId() != ((Component*)collisionPairs.second)->GetId())
+		if (((Component*)collisionPairs.first)->GetUid() != ((Component*)collisionPairs.second)->GetUid())
 		{
-			if (((Component*)collisionPairs.first)->GetId() == ((Component*)other)->GetId() && ((Component*)collisionPairs.second)->GetId() == GetId())
+			if (((Component*)collisionPairs.first)->GetUid() == ((Component*)other)->GetUid() && ((Component*)collisionPairs.second)->GetUid() == GetUid())
 			{
-				int otherId = ((Component*)other)->GetId();
-				Entity* toAdd = SceneManager::Get().FindEntityById(otherId);
+				int otherId = ((Component*)other)->GetUid();
+				Entity* toAdd = SceneManager::Get().FindEntity(otherId);
 				result.push_back(toAdd);
 			}
-			else if (((Component*)collisionPairs.second)->GetId() == ((Component*)other)->GetId() && ((Component*)collisionPairs.first)->GetId() == GetId())
+			else if (((Component*)collisionPairs.second)->GetUid() == ((Component*)other)->GetUid() && ((Component*)collisionPairs.first)->GetUid() == GetUid())
 			{
-				int otherId = ((Component*)other)->GetId();
-				Entity* toAdd = SceneManager::Get().FindEntityById(otherId);
+				int otherId = ((Component*)other)->GetUid();
+				Entity* toAdd = SceneManager::Get().FindEntity(otherId);
 				result.push_back(toAdd);
 			}
 		}
@@ -93,18 +94,18 @@ std::list<Entity*> BoxCollider::OnCollisionStay(ICollider* other) {
 	std::list<Entity*> result;
 	for (auto collisionPairs : CollisionSystem::Instance().stayCollisions)
 	{
-		if (((Component*)collisionPairs.first)->GetId() != ((Component*)collisionPairs.second)->GetId())
+		if (((Component*)collisionPairs.first)->GetUid() != ((Component*)collisionPairs.second)->GetUid())
 		{
-			if (((Component*)collisionPairs.first)->GetId() == ((Component*)other)->GetId() && ((Component*)collisionPairs.second)->GetId() == GetId())
+			if (((Component*)collisionPairs.first)->GetUid() == ((Component*)other)->GetUid() && ((Component*)collisionPairs.second)->GetUid() == GetUid())
 			{
-				int otherId = ((Component*)other)->GetId();
-				Entity* toAdd = SceneManager::Get().FindEntityById(otherId);
+				int otherId = ((Component*)other)->GetUid();
+				Entity* toAdd = SceneManager::Get().FindEntity(otherId);
 				result.push_back(toAdd);
 			}
-			else if (((Component*)collisionPairs.second)->GetId() == ((Component*)other)->GetId() && ((Component*)collisionPairs.first)->GetId() == GetId())
+			else if (((Component*)collisionPairs.second)->GetUid() == ((Component*)other)->GetUid() && ((Component*)collisionPairs.first)->GetUid() == GetUid())
 			{
-				int otherId = ((Component*)other)->GetId();
-				Entity* toAdd = SceneManager::Get().FindEntityById(otherId);
+				int otherId = ((Component*)other)->GetUid();
+				Entity* toAdd = SceneManager::Get().FindEntity(otherId);
 				result.push_back(toAdd);
 			}
 		}
@@ -117,18 +118,18 @@ std::list<Entity*> BoxCollider::OnCollisionExit(ICollider* other) {
 	std::list<Entity*> result;
 	for (auto collisionPairs : CollisionSystem::Instance().exitCollisions)
 	{
-		if (((Component*)collisionPairs.first)->GetId() != ((Component*)collisionPairs.second)->GetId())
+		if (((Component*)collisionPairs.first)->GetUid() != ((Component*)collisionPairs.second)->GetUid())
 		{
-			if (((Component*)collisionPairs.first)->GetId() == ((Component*)other)->GetId() && ((Component*)collisionPairs.second)->GetId() == GetId())
+			if (((Component*)collisionPairs.first)->GetUid() == ((Component*)other)->GetUid() && ((Component*)collisionPairs.second)->GetUid() == GetUid())
 			{
-				int otherId = ((Component*)other)->GetId();
-				Entity* toAdd = SceneManager::Get().FindEntityById(otherId);
+				int otherId = ((Component*)other)->GetUid();
+				Entity* toAdd = SceneManager::Get().FindEntity(otherId);
 				result.push_back(toAdd);
 			}
-			else if (((Component*)collisionPairs.second)->GetId() == ((Component*)other)->GetId() && ((Component*)collisionPairs.first)->GetId() == GetId())
+			else if (((Component*)collisionPairs.second)->GetUid() == ((Component*)other)->GetUid() && ((Component*)collisionPairs.first)->GetUid() == GetUid())
 			{
-				int otherId = ((Component*)other)->GetId();
-				Entity* toAdd = SceneManager::Get().FindEntityById(otherId);
+				int otherId = ((Component*)other)->GetUid();
+				Entity* toAdd = SceneManager::Get().FindEntity(otherId);
 				result.push_back(toAdd);
 			}
 		}

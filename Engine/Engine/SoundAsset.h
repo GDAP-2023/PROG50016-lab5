@@ -6,7 +6,7 @@
 #include "Asset.h"
 #include "SDL_mixer.h"
 
-class SoundAsset : public Asset
+class SoundAsset final : public Asset
 {
     Mix_Chunk* sound = nullptr;
 
@@ -16,6 +16,8 @@ class SoundAsset : public Asset
     void Initialize() override;
     void Destroy() override;
     void Load(json::JSON&) override;
+
+    Mix_Chunk* GetSound() const;
 };
 
 #endif // !_SOUND_ASSET_H_

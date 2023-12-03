@@ -299,7 +299,7 @@ bool SceneManager::UnloadScene(std::string sceneGuid)
 /**
  * @brief Unload a scene.
  *
- * @param sceneGuid UID of the scene.
+ * @param sceneId UID of the scene.
  * @return Boolean represeting if unloading was successful.
  */
 bool SceneManager::UnloadScene(STRCODE sceneId)
@@ -346,7 +346,7 @@ Entity* SceneManager::FindEntity(std::string entityGuid)
 /**
  * @brief Find an entity in the active scene.
  *
- * @param entityGuid GUID of the entity
+ * @param entityId UID of the entity
  * @return Pointer to the found entity. If not found, returns nullptr.
  */
 Entity* SceneManager::FindEntity(STRCODE entityId)

@@ -6,9 +6,10 @@
 #include "SDL_ttf.h"
 
 
-class FontAsset : public Asset
+class FontAsset final : public Asset
 {
     TTF_Font* font = nullptr;
+    int font_size = 12;
 
 	DECLARE_DYNAMIC_DERIVED_CLASS(FontAsset, Asset)
     FontAsset() = default;
@@ -16,10 +17,8 @@ class FontAsset : public Asset
     void Initialize() override;
     void Destroy() override;
     void Load(json::JSON&) override;
-    TTF_Font* GetFont() const
-    {
-	    return font;
-    }
+    TTF_Font* GetFont() const;
+    void SetFontSize(int size) const;
 };
 
 #endif // !_FONT_ASSET_H_

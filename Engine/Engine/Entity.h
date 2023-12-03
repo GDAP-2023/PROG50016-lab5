@@ -1,7 +1,7 @@
 /**
 * @class Entity
 *
-* The Entity class is the base class for all the objects in the game. 
+* The Entity class is the base class for all the objects in the game.
 * It contains a list of Components and a Transform.
 */
 #pragma once
@@ -10,8 +10,8 @@
 #define _ENTITY_H_
 
 #include "Object.h"
-#include "Transform.h"
 
+class Transform;
 class Component;
 
 class Entity final : public Object
@@ -19,7 +19,7 @@ class Entity final : public Object
 	DECLARE_DYNAMIC_DERIVED_CLASS(Entity, Object)
 
 private:
-	Transform transform;
+	Transform* transform = nullptr;
 
 	std::list<Component*> components;
 	std::list<Component*> componentsToAdd;
@@ -38,6 +38,9 @@ protected:
 	void Destroy() override;
 
 public:
+
+	void SetPosition(const Vec2& newPosition);
+
 	/**
 	 * @brief Check if the Entity has a Component with the given name
 	 *
@@ -89,14 +92,7 @@ public:
 	*
 	* @return the transform from the Entity
 	*/
-	Transform& GetTransform() { return transform; }
-
-	/**
-	* @brief Set the Transform of the Entity
-	*
-	* @param _transform Transform information to set
-	*/
-	void SetTransform(Transform _transform) { transform = _transform; }
+	const Transform* GetTransform() { return transform; }
 
 	friend class Scene;
 };

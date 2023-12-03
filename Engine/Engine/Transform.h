@@ -4,12 +4,14 @@
 #include "EngineMath.h"  
 
 class Transform : public Component {
+    DECLARE_DYNAMIC_DERIVED_CLASS(Transform, Component);
 public:
     Transform();
 
     //overriding virtual functions from Component
     void Initialize() override;
     void Update() override;
+    void Load(json::JSON& node) override;
 
     //xyz properties, angle in degrees or radians
     Vec2 position;
