@@ -1,69 +1,69 @@
 {
-    "AssetManager": {
-        "Assets": [
-            {
-                "GUID": "awooga"
-            },
-            {
-                "GUID": "girl"
-            },
-            {
-                "GUID": "meow"
+  "AssetManager": {
+    "Assets": [
+      {
+        "GUID": "awooga"
+      },
+      {
+        "GUID": "girl"
+      },
+      {
+        "GUID": "meow"
+      }
+    ]
+  },
+  "Scene": {
+    "Name": "Level01",
+    "GUID": "1a9e5171-c7ab-47d4-9af4-d490d1494201",
+    "IsEnabled": true,
+    "Entities": [
+      {
+        "Name": "Player",
+        "GUID": "uwu",
+        "Transform": {
+          "Position": [ 300.0, 300.0 ],
+          "Rotation": 22.0,
+          "Scale": [ -1.0, 1.0 ]
+        },
+        "Components": [
+          {
+            "ClassName": "AnimatedSprite",
+            "ClassData": {
+              "Texture": "girl",
+              "SpriteSheet": {
+                "Rows": 1,
+                "Columns": 20,
+                "Frames": 20
+              }
             }
-        ]
-    },
-    "Scene": {
-        "Name": "Level01",
-        "GUID": "1a9e5171-c7ab-47d4-9af4-d490d1494201",
-        "IsEnabled": true,
-        "Entities": [
-            {
-                "Name": "Player",
-                "GUID": "uwu",
-                "Transform": {
-                    "Position": [300.0, 300.0],
-                    "Rotation": 22.0,
-                    "Scale": [-1.0, 1.0]
-                },
-                "Components": [
-                    {
-                        "ClassName": "Player",
-                        "ClassData": {
-                            "Speed": 42.0
-                        }
-                    },
-                    {
-                        "ClassName": "AnimatedSprite",
-                        "ClassData": {
-                            "Texture": "girl",
-                            "SpriteSheet": {
-                                "Rows": 1,
-                                "Columns": 20,
-                                "Frames":  20
-                            }
-                        }
-                    },
-                    {
-                        "ClassName": "BoxCollider",
-                        "ClassData": {}
-                    }
-                ] 
-            },
-            {
-                "Name": "Enemy",
-                "GUID": "uwu2",
-                "Transform": {
-                    "Position": [50.0, 10.0],
-                    "Rotation": 0,
-                    "Scale": [1.0, 1.0]
-                },
-                "Components": [
-                    {
-                        "ClassName": "CircleCollider",
-                        "ClassData": {}
-                    }
-                ]
+          },
+          {
+            "ClassName": "BoxCollider",
+            "ClassData": {}
+          },
+          {
+            "ClassName": "Player",
+            "ClassData": {
+              "Speed": 42.0
             }
+          }
         ]
-    }
+      },
+      {
+        "Name": "Enemy",
+        "GUID": "uwu2",
+        "Transform": {
+          "Position": [ 50.0, 10.0 ],
+          "Rotation": 0,
+          "Scale": [ 1.0, 1.0 ]
+        },
+        "Components": [
+          {
+            "ClassName": "CircleCollider",
+            "ClassData": {}
+          }
+        ]
+      }
+    ]
+  }
 }
