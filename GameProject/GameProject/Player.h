@@ -14,6 +14,7 @@ public:
     void Load(json::JSON&) override;
 private:
     float speed = 5.0f;
+    Vec2 start_pos;
     BoxCollider* collider = nullptr;
     STRCODE game_over_scene = -1;
 };

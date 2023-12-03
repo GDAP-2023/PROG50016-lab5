@@ -44,6 +44,8 @@ void Engine::Initialize()
 void Engine::Destroy()
 {
 	Time::Instance().Destroy();
+	CollisionSystem::Instance().Destroy();
+	SceneManager::Get().Destroy();
 	AssetManager::Get().Destroy();
 	AudioSystem::Get().Destroy();
 	RenderSystem::Instance().Destroy();

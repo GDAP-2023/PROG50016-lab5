@@ -8,6 +8,7 @@ IMPLEMENT_DYNAMIC_CLASS(Player)
 void Player::Initialize()
 {
     Component::Initialize();
+    start_pos = ownerEntity->GetTransform().position;
     collider = (BoxCollider*)ownerEntity->GetComponent("BoxCollider");
 }
 void Player::Update() {
@@ -49,17 +50,23 @@ void Player::Update() {
 
     if (collider == nullptr)
     {
+        LOG("no collider uwu");
         return;
     }
     for (const auto& other: collider->OnCollisionEnter())
     {
-	    if (other->GetOwner()->GetName() == "Enemy")
+	    if (other->GetOwner()->GetName() != "Enemy")
 	    {
-            LOG("Scene: " << SceneManager::Get().GetActiveSceneId());
-            Scene* currentScene = SceneManager::Get().GetActiveScene();
-		    SceneManager::Get().SetActiveScene(game_over_scene);
-            currentScene->isEnabled = false;
-	    }
+            continue;
+        }
+
+    	Scene* current_scene = SceneManager::Get().GetActiveScene();
+    	if (SceneManager::Get().SetActiveScene(game_over_scene))
+    	{
+    		current_scene->isEnabled = false;
+    	}
+
+        ownerEntity->GetTransform().position = start_pos;
     }
 }
 void Player::Load(json::JSON& node)
