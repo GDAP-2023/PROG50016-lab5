@@ -37,8 +37,8 @@
           {
             "ClassName": "BoxCollider",
             "ClassData": {
-                "Width": [ 10.0 ],
-                "Height":  [ 10.0 ],
+                "Width": [ 480.0 ],
+                "Height":  [ 480.0 ],
                 "Position": [ 1000.0, 250.0 ],
                 "Rotation": 0.0,
                 "Scale": [ 0.4, 0.4 ]
@@ -71,7 +71,7 @@
           {
             "ClassName": "CircleCollider",
             "ClassData": {
-                "Radius": [ 10.0 ],
+                "Radius": [ 208.0 ],
                 "Position": [ 1000.0, 250.0 ],
                 "Rotation": 0.0,
                 "Scale": [ 0.4, 0.4 ]
