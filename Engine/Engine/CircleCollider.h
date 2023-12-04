@@ -28,6 +28,7 @@ protected:
 	~CircleCollider() override = default;
 
 public:
+	void Load(json::JSON& node) override;
 	/**
  * @brief Sets the radius of the collider
  *

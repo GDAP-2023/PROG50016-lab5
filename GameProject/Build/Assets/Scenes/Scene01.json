@@ -64,7 +64,9 @@
           },
           {
             "ClassName": "CircleCollider",
-            "ClassData": {}
+            "ClassData": {
+                "Radius": [ 10.0 ]
+            }
           }
         ]
       }

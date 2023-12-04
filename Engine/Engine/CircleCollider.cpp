@@ -2,6 +2,14 @@
 #include "CircleCollider.h"
 
 IMPLEMENT_DYNAMIC_CLASS(CircleCollider);
+
+void CircleCollider::Load(json::JSON& node)
+{
+	if (node.hasKey("Radius")) {
+		m_radius = node[0].ToFloat();
+	}
+}
+
 bool CircleCollider::HandleCollision(ICollider* other)
 {
 	return true;
