@@ -24,6 +24,10 @@ void CircleCollider::SetRadius(float radius)
  */
 float CircleCollider::GetRadius() const
 {
+	if (m_radius == 0)
+	{
+		return Vec2(static_cast<float>(m_rect->w), static_cast<float>(m_rect->h)).Magnitude();
+	}
 	return m_radius;
 }
 /**

@@ -228,8 +228,8 @@ bool CollisionSystem::BoxBoxCollision(ICollider* col1, ICollider* col2) {
 
 // Helper function for Circle-Box collision using AABB (Axis-Aligned Bounding Box)
 bool CollisionSystem::CircleBoxCollision(ICollider* col1, ICollider* col2) {
-	BoxCollider* box = static_cast<BoxCollider*>(col1);
-	CircleCollider* circle = static_cast<CircleCollider*>(col2);
+	BoxCollider* box = static_cast<BoxCollider*>(col2);
+	CircleCollider* circle = static_cast<CircleCollider*>(col1);
 	auto bounds = box->GetBounds();
 	Vec2 circleCenter = circle->GetPosition();
 	float circleRadius = circle->GetRadius();
