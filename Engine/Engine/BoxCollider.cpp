@@ -3,6 +3,16 @@
 
 IMPLEMENT_DYNAMIC_CLASS(BoxCollider);
 
+void BoxCollider::Load(json::JSON& node)
+{
+	if (node.hasKey("Height")) {
+		//m_radius = node[0].ToFloat();
+	}
+	if (node.hasKey("Width")) {
+		//m_radius = node[0].ToFloat();
+	}
+}
+
 bool BoxCollider::HandleCollision(ICollider* other) {
 	return false;
 }

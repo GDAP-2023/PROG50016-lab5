@@ -25,6 +25,7 @@ protected:
 	~BoxCollider() override = default;
 
 public:
+	void Load(json::JSON& node) override;
 	/**
 * @brief Sets the size of the collider
 *

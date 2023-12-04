@@ -36,7 +36,13 @@
           },
           {
             "ClassName": "BoxCollider",
-            "ClassData": {}
+            "ClassData": {
+                "Width": [ 10.0 ],
+                "Height":  [ 10.0 ],
+                "Position": [ 1000.0, 250.0 ],
+                "Rotation": 0.0,
+                "Scale": [ 0.4, 0.4 ]
+            }
           },
           {
             "ClassName": "Player",
@@ -65,7 +71,10 @@
           {
             "ClassName": "CircleCollider",
             "ClassData": {
-                "Radius": [ 10.0 ]
+                "Radius": [ 10.0 ],
+                "Position": [ 1000.0, 250.0 ],
+                "Rotation": 0.0,
+                "Scale": [ 0.4, 0.4 ]
             }
           }
         ]
