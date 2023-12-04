@@ -223,24 +223,6 @@
     <ClInclude Include="TextureAsset.h" />
     <ClInclude Include="TypeClass.h" />
   </ItemGroup>
-  <ItemGroup>
-    <Image Include="..\..\GameProject\Build\Assets\alien.png" />
-    <Image Include="green_slime.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\GameProject\Build\Assets\alien.png.asset" />
-    <None Include="..\..\GameProject\Build\Assets\AssetManager.json" />
-    <None Include="..\..\GameProject\Build\Assets\AudioSystem.json" />
-    <None Include="..\..\GameProject\Build\Assets\hitEffect03.wav.asset" />
-    <None Include="..\..\GameProject\Build\Assets\RenderSettings.json" />
-    <None Include="..\..\GameProject\Build\Assets\SceneManager.json" />
-    <None Include="..\..\GameProject\Build\Assets\Scenes\Scene01.json" />
-    <None Include="..\..\GameProject\Build\Assets\Scenes\Scene02.json" />
-    <None Include="..\..\GameProject\Build\Assets\Scenes\Scene03.json" />
-  </ItemGroup>
-  <ItemGroup>
-    <Media Include="..\..\GameProject\Build\Assets\hitEffect03.wav" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

@@ -6,15 +6,21 @@
 using std::filesystem::directory_iterator;
 using std::filesystem::recursive_directory_iterator;
 
-void AssetManager::HandleAssetEntry(const std::filesystem::directory_entry& entry) {
+/**
+ * @brief Handle a directory entry.
+ * 
+ * @param entry Firectory entry to handle
+ * @return Asset* A pointer to a newly created Asset if one was found, else nullptr.
+ */
+Asset* HandleAssetEntry(const std::filesystem::directory_entry& entry) {
 	// Skip directories
 	if (entry.is_directory()) {
-		return;
+		return nullptr;
 	}
 
 	// Check if the file is a .asset type
 	if (entry.path().extension().compare(".asset") != 0) {
-		return;
+		return nullptr;
 	}
 
 	std::cout << "Found Asset: " << entry.path() << std::endl;
@@ -25,30 +31,32 @@ void AssetManager::HandleAssetEntry(const std::filesystem::directory_entry& entr
 
 	if (!node.hasKey("AssetType")) {
 		LOG("File " << entry.path() << " does not have a 'AssetType' field. Skipping.");
-		return;
+		return nullptr;
 	}
 
 	const auto assetType = node.at("AssetType").ToString();
 	auto asset = (Asset*)CreateObject(assetType.c_str());
-	asset->filepath = entry.path().relative_path().replace_extension("").generic_string();
+	asset->SetFilepath(entry.path().relative_path().replace_extension("").generic_string());
 	asset->Load(node);
-
-	AddAsset(asset);
+	return asset;
 }
 
 void AssetManager::Initialize() {
 	if (recursiveSearch) {
 		for (const auto& entry : recursive_directory_iterator(assetDirectory)) {
-			HandleAssetEntry(entry);
+			AddAsset(HandleAssetEntry(entry));
 		}
 	} else {
 		for (const auto& entry : directory_iterator(assetDirectory)) {
-			HandleAssetEntry(entry);
+			AddAsset(HandleAssetEntry(entry));
 		}
 	}
 }
 
 void AssetManager::AddAsset(Asset* asset) {
+	if (asset == nullptr) {
+		return;
+	}
 	AssetMapEntry entry;
 	entry.asset = asset;
 	entry.ref_count = 0;
@@ -60,7 +68,7 @@ void AssetManager::LoadSceneAsset(std::string guid) {
 	return LoadSceneAsset(id);
 }
 
-void AssetManager::LoadSceneAsset(unsigned id) {
+void AssetManager::LoadSceneAsset(STRCODE id) {
 	if (assets.find(id) == assets.end()) {
 		LOG("Could not find Asset with id: " << id);
 		return;
