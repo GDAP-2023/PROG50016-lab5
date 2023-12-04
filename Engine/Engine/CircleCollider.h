@@ -18,7 +18,7 @@ class CircleCollider : public ICollider
 	DECLARE_DYNAMIC_DERIVED_CLASS(CircleCollider, ICollider);
 
 private:
-	float m_radius = 0;
+	float m_radius;
 public:
 	/**
  * @brief CircleCollider Constructor. Gets transform but not radius

@@ -5,11 +5,15 @@ IMPLEMENT_DYNAMIC_CLASS(BoxCollider);
 
 void BoxCollider::Load(json::JSON& node)
 {
-	if (node.hasKey("Height")) {
-		//m_radius = node[0].ToFloat();
-	}
 	if (node.hasKey("Width")) {
-		//m_radius = node[0].ToFloat();
+		width = node[0].ToInt();
+	}
+	if (node.hasKey("Height")) {
+		height = node[1].ToInt();
+	}
+	if (node.hasKey("Position")) {
+		Vec2 pos = vec2_from_json(node["Position"]);
+		*m_rect = { static_cast<int>(pos.x), static_cast<int>(pos.y), width, height };
 	}
 }
 
@@ -40,6 +44,10 @@ SDL_Rect BoxCollider::GetBounds() const
 	if (m_rect == nullptr) {
 		return { 0, 0, 0, 0 };
 	}
+	//rectangle != transform
+	SDL_Rect result = *m_rect;
+	result.x = ownerEntity->GetTransform().position.x;
+	result.y = ownerEntity->GetTransform().position.y;
 	return *m_rect;
 }
 /**

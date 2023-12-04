@@ -24,6 +24,10 @@ class BoxCollider : public ICollider
 protected:
 	~BoxCollider() override = default;
 
+private:
+	int height = 0;
+	int width = 0;
+
 public:
 	void Load(json::JSON& node) override;
 	/**
@@ -57,6 +61,7 @@ public:
 * @return Always returns false
 */
 	bool HandleCollision(ICollider* other) override;
+
 };
 
 

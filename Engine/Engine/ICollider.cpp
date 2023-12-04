@@ -15,6 +15,9 @@ ICollider::~ICollider() {
 void ICollider::Initialize()
 {
 	Component::Initialize();
+
+	//don't need rect, we'll be getting size from JSON
+
 	if (ownerEntity->HasComponent("Sprite"))
 	{
 		// TODO: unsafe if our Sprite Component is destroyed.
@@ -70,18 +73,19 @@ void ICollider::SetSolid(const bool solid) {
 * */
 Vec2 ICollider::GetPosition() const
 {
+	//need to adjust here to line up both transforms
 	return ownerEntity->GetTransform().position;
 }
 
 
 std::list<ICollider*> ICollider::OnCollisionEnter() {
 	std::list<ICollider*> result;
+
 	for (const auto& [first, second] : CollisionSystem::Instance().enterCollisions) {
 		// Skip checking for collisions if both Colliders are the same
 		if (first->GetUid() == second->GetUid()) {
 			continue;
 		}
-
 		if (first->GetUid() == GetUid()) {
 			result.push_back(second);
 		} else if (second->GetUid() == GetUid()) {

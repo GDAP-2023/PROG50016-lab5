@@ -6,7 +6,8 @@ IMPLEMENT_DYNAMIC_CLASS(CircleCollider);
 void CircleCollider::Load(json::JSON& node)
 {
 	if (node.hasKey("Radius")) {
-		m_radius = node[0].ToFloat();
+		m_radius = (float)node["Radius"].ToFloat();
+		m_radius *= ownerEntity->GetTransform().scale.x;
 	}
 }
 
@@ -20,10 +21,10 @@ bool CircleCollider::HandleCollision(ICollider* other)
  *
  * @param radius The new radius for the collider.
  */
-void CircleCollider::SetRadius(float radius)
+/*void CircleCollider::SetRadius(float radius)
 {
 	m_radius = radius;
-}
+}*/
 
 /**
  * @brief Gets the radius of the CircleCollider.
